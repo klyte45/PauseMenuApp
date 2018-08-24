@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">PauseMenu</string>
+    <string name="pauseMenu.title">Pause Menu</string>
+    <string name="pauseMenu.menuItem.steam">Steam Workshop Status</string>
+    <string name="pauseMenu.menuItem.trab">ValeCard</string>
+    <string name="pauseMenu.menuItem.cidades">Cidades</string>
+    <string name="pauseMenu.menuItem.pessoasSociedade"><![CDATA[Pessoas & Sociedade]]></string>
+    <string name="pauseMenu.menuItem.sva0">Sva0</string>
+    <string name="pauseMenu.menuItem.financas">Finanças</string>
+    <string name="pauseMenu.menuItem.planos">Pl. Carreira</string>
+    <string name="pauseMenu.menuItem.config">Configurações</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="config.dtNasc"  >Data</string>
+    <string name="config.fusoNasc">Fuso Horário</string>
+    <string name="config.hrNasc">Horário</string>
+    <string name="config.nasc">Nascimento</string>
+</resources>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:showIn="@layout/activity_pause_menu_main">
+
+    <com.halkyproject.pausemenu.components.CustomTextView
+            android:id="@+id/item_steam"
+            android:text="@string/pauseMenu.menuItem.steam"
+            app:font_name="VideoGame"
+            android:textSize="@dimen/mainMenu.listItem.fontSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textAllCaps="true"
+            android:textColor="@color/notImplementedMenuItemColor"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"/>
+
+    <com.halkyproject.pausemenu.components.CustomTextView
+            android:id="@+id/item_trb"
+            android:text="@string/pauseMenu.menuItem.trab"
+            app:font_name="VideoGame"
+            android:textSize="@dimen/mainMenu.listItem.fontSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textAllCaps="true"
+            android:textColor="@color/notImplementedMenuItemColor"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"/>
+
+    <com.halkyproject.pausemenu.components.CustomTextView
+            android:id="@+id/item_cidades"
+            android:text="@string/pauseMenu.menuItem.cidades"
+            app:font_name="VideoGame"
+            android:textSize="@dimen/mainMenu.listItem.fontSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textAllCaps="true"
+            android:textColor="@color/notImplementedMenuItemColor"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"/>
+
+    <com.halkyproject.pausemenu.components.CustomTextView
+            android:id="@+id/item_pessoasSociedade"
+            android:text="@string/pauseMenu.menuItem.pessoasSociedade"
+            app:font_name="VideoGame"
+            android:textSize="@dimen/mainMenu.listItem.fontSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textAllCaps="true"
+            android:textColor="@color/notImplementedMenuItemColor"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"/>
+
+    <com.halkyproject.pausemenu.components.CustomTextView
+            android:id="@+id/item_sva"
+            android:text="@string/pauseMenu.menuItem.sva0"
+            app:font_name="VideoGame"
+            android:textSize="@dimen/mainMenu.listItem.fontSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textAllCaps="true"
+            android:textColor="@color/notImplementedMenuItemColor"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"/>
+
+    <com.halkyproject.pausemenu.components.CustomTextView
+            android:text="@string/pauseMenu.menuItem.financas"
+            app:font_name="VideoGame"
+            android:textSize="@dimen/mainMenu.listItem.fontSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textAllCaps="true"
+            android:textColor="@color/notImplementedMenuItemColor"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:id="@+id/item_financas"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.halkyproject.pausemenu.components.CustomTextView
+                android:id="@+id/item_pessoasPlanos"
+                android:text="@string/pauseMenu.menuItem.planos"
+                app:font_name="VideoGame"
+                android:textSize="@dimen/mainMenu.listItem.fontSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:textAllCaps="true"
+                android:textColor="@color/defaultMenuItemColor"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"/>
+
+        <com.halkyproject.pausemenu.components.CustomTextView
+                android:id="@+id/item_pessoasPlanosList"
+                app:font_name="VideoGame"
+                android:textSize="@dimen/mainMenu.listItem.fontSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:textAllCaps="false"
+                android:textColor="@color/defaultMenuItemColor"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:textAlignment="textEnd"/>
+    </LinearLayout>
+
+    <com.halkyproject.pausemenu.components.CustomTextView
+            android:id="@+id/item_configuracoes"
+            android:text="@string/pauseMenu.menuItem.config"
+            app:font_name="VideoGame"
+            android:textSize="@dimen/mainMenu.listItem.fontSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textAllCaps="true"
+            android:textColor="@color/defaultMenuItemColor"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:onClick="goToConfig"
+            android:clickable="true"
+            android:focusable="true"/>
+
+</LinearLayout>

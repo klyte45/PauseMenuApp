@@ -69,4 +69,5 @@ dependencies {
     // optional - Test helpers for LiveData
     testImplementation "android.arch.core:core-testing:$lifecycle_version"
 
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
 }

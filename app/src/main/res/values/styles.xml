@@ -11,4 +11,10 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="default_input">
+        <item name="android:textSize">@dimen/mainMenu.listItem.fontSize</item>
+        <item name="android:textColor">@color/defaultMenuItemColor</item>
+        <item name="android:textCursorDrawable">@drawable/text_caret_1980</item>
+    </style>
+
 </resources>

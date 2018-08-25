@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="CustomTextView">
+    <declare-styleable name="CustomTextFont">
         <attr name="font_name">
             <enum value="1" name="VideoGame"/>
             <enum value="2" name="Sva"/>

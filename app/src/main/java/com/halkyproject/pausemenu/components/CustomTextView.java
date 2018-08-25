@@ -17,11 +17,11 @@ public class CustomTextView extends AppCompatTextView {
         super(context, attrs);
         TypedArray array = context.getTheme().obtainStyledAttributes(
                 attrs,
-                R.styleable.CustomTextView,
+                R.styleable.CustomTextFont,
                 0, 0);
         int typefaceType;
         try {
-            typefaceType = array.getInteger(R.styleable.CustomTextView_font_name, 0);
+            typefaceType = array.getInteger(R.styleable.CustomTextFont_font_name, 0);
         } finally {
             array.recycle();
         }

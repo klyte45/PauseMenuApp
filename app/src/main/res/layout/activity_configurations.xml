@@ -19,57 +19,178 @@
             android:textColor="@color/colorPrimary"
             android:maxLines="1"/>
 
-    <LinearLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:orientation="vertical"
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            tools:showIn="@layout/activity_pause_menu_main">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title">
 
-        <com.halkyproject.pausemenu.components.CustomTextView
+        <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/customTextView"
-                android:layout_weight="1"
-                android:text="@string/config.nasc"
-                app:font_name="Sva"
-                android:textAlignment="center"
-                android:textSize="36sp"
-                android:textColor="@color/colorSubtitle"
-                app:textAllCaps="false"
-                android:maxLines="1"/>
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:onClick="showPickerDtNasc"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_weight="1">
+                app:layout_constraintTop_toBottomOf="@+id/title"
+                tools:showIn="@layout/activity_pause_menu_main">
 
             <com.halkyproject.pausemenu.components.CustomTextView
-                    android:id="@+id/item_dtNasc"
-                    android:text="@string/config.dtNasc"
-                    app:font_name="VideoGame"
-                    android:textSize="@dimen/mainMenu.listItem.fontSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:textAllCaps="true"
-                    android:textColor="@color/defaultMenuItemColor"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1"/>
+                    android:id="@+id/customTextView"
+                    android:layout_weight="1"
+                    android:text="@string/config.nasc"
+                    app:font_name="Sva"
+                    android:textAlignment="center"
+                    android:textSize="36sp"
+                    android:textColor="@color/colorSubtitle"
+                    app:textAllCaps="false"
+                    android:maxLines="1"
+                    tools:layout_editor_absoluteY="324dp"
+                    tools:layout_editor_absoluteX="8dp"/>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:onClick="showPickerDtNasc"
+                    android:clickable="true"
+                    android:focusable="true"
+                    >
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:id="@+id/item_dtNasc"
+                        android:text="@string/config.dtNasc"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:textColor="@color/defaultMenuItemColor"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"/>
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:id="@+id/val_dtNasc"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:textAlignment="textEnd"
+                        android:tag="value"
+                        android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:onClick="showPickerHrNasc"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:id="@+id/item_hrNasc"
+                        android:text="@string/config.hrNasc"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:textColor="@color/defaultMenuItemColor"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"/>
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:id="@+id/val_hrNasc"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:textAlignment="textEnd"
+                        android:tag="value"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:onClick="showPickerTzNasc"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:id="@+id/item_fusoNasc"
+                        android:text="@string/config.fusoNasc"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:textColor="@color/defaultMenuItemColor"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"/>
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:id="@+id/val_tzNasc"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:textAlignment="textEnd"
+                        android:tag="value"/>
+
+            </LinearLayout>
 
             <com.halkyproject.pausemenu.components.CustomTextView
-                    android:id="@+id/val_dtNasc"
-                    android:text="29/05/1991"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/customTextView2"
+                    android:layout_weight="1"
+                    android:text="@string/config.companies"
+                    app:font_name="Sva"
+                    android:textAlignment="center"
+                    android:textSize="36sp"
+                    android:textColor="@color/colorSubtitle"
+                    app:textAllCaps="false"
+                    android:maxLines="1"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/config.companies.goToList"
                     app:font_name="VideoGame"
                     android:textSize="@dimen/mainMenu.listItem.fontSize"
                     android:layout_width="match_parent"
@@ -81,97 +202,24 @@
                     android:layout_marginBottom="2dp"
                     android:layout_marginTop="2dp"
                     android:layout_weight="1"
-                    android:textAlignment="textEnd"
-                    android:tag="value"/>
+                    android:id="@+id/customTextView4"
+                    android:onClick="goToCompanyCrud"
+                    android:clickable="true"
+                    android:focusable="true"/>
 
-        </LinearLayout>
-
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:onClick="showPickerHrNasc"
-                android:clickable="true"
-                android:focusable="true">
-
-            <com.halkyproject.pausemenu.components.CustomTextView
-                    android:id="@+id/item_hrNasc"
-                    android:text="@string/config.hrNasc"
-                    app:font_name="VideoGame"
-                    android:textSize="@dimen/mainMenu.listItem.fontSize"
+            <com.halkyproject.pausemenu.components.CustomEditText
+                    android:text="@string/config.companies.goToList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:textAllCaps="true"
-                    android:textColor="@color/defaultMenuItemColor"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1"/>
-
-            <com.halkyproject.pausemenu.components.CustomTextView
-                    android:id="@+id/val_hrNasc"
-                    android:text="21:43"
-                    app:font_name="VideoGame"
-                    android:textSize="@dimen/mainMenu.listItem.fontSize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:textAllCaps="true"
-                    android:textColor="@color/colorAccent"
                     android:layout_marginBottom="2dp"
                     android:layout_marginTop="2dp"
                     android:layout_weight="1"
-                    android:textAlignment="textEnd"
-                    android:tag="value"/>
+                    style="@style/default_input"/>
 
         </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:onClick="showPickerTzNasc"
-                android:clickable="true"
-                android:focusable="true">
-
-            <com.halkyproject.pausemenu.components.CustomTextView
-                    android:id="@+id/item_fusoNasc"
-                    android:text="@string/config.fusoNasc"
-                    app:font_name="VideoGame"
-                    android:textSize="@dimen/mainMenu.listItem.fontSize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:textAllCaps="true"
-                    android:textColor="@color/defaultMenuItemColor"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1"/>
-
-            <com.halkyproject.pausemenu.components.CustomTextView
-                    android:id="@+id/val_tzNasc"
-                    android:text="GMT -03:00"
-                    app:font_name="VideoGame"
-                    android:textSize="@dimen/mainMenu.listItem.fontSize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:textAllCaps="true"
-                    android:textColor="@color/colorAccent"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1"
-                    android:textAlignment="textEnd"
-                    android:tag="value"/>
-
-        </LinearLayout>
-
-
-    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

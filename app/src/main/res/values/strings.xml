@@ -11,8 +11,18 @@
     <string name="pauseMenu.menuItem.config">Configurações</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="config.dtNasc"  >Data</string>
+    <string name="config.dtNasc">Data</string>
     <string name="config.fusoNasc">Fuso Horário</string>
     <string name="config.hrNasc">Horário</string>
     <string name="config.nasc">Nascimento</string>
+    <string name="config.companies">Empresas</string>
+    <string name="config.companies.goToList">CRUD</string>
+    <string name="all.id">ID</string>
+    <string name="all.name">Nome</string>
+    <string name="all.city">Cidade</string>
+    <string name="all.actions">Ações</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="all.createNew">Criar Novo Item</string>
 </resources>

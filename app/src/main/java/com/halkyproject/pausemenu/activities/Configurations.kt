@@ -1,5 +1,6 @@
 package com.halkyproject.pausemenu.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -66,5 +67,9 @@ class Configurations : AppCompatActivity() {
             ConfigSingleton.getInstance().setBirthTimeZone(tz)
         }
         tzSpinner.show()
+    }
+
+    fun goToCompanyCrud(v: View) {
+        startActivity(Intent(this, CompanyCrud::class.java))
     }
 }

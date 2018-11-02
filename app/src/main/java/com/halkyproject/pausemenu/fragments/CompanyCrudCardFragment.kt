@@ -1,15 +1,19 @@
 package com.halkyproject.pausemenu.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.halkyproject.pausemenu.R
-import com.halkyproject.pausemenu.database.entities.Company
+import com.halkyproject.pausemenu.activities.CompanyEdit
+import com.halkyproject.pausemenu.components.CustomTextView
+import com.halkyproject.pausemenu.model.Company
+import com.halkyproject.pausemenu.util.MaskEditUtil
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -27,7 +31,7 @@ private const val ARG_COMPANY = "company"
  */
 class CompanyCrudCardFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var company: Company? = null
+    private lateinit var company: Company
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,10 +41,26 @@ class CompanyCrudCardFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_company_crud_card, container, false)
+        val v = inflater.inflate(R.layout.fragment_company_crud_card, container, false)
+
+        v.findViewById<CustomTextView>(R.id.cityName).text = "${company.cityDisplayName} (${company.getCountryEnum().emoji})"
+        v.findViewById<CustomTextView>(R.id.companyName).text = company.mainName
+        v.findViewById<CustomTextView>(R.id.realName).text = company.realName
+        v.findViewById<CustomTextView>(R.id.documentNumber).text = MaskEditUtil.mask(company.documentNumber, MaskEditUtil.FORMAT_CNPJ)
+        v.isClickable = true
+        v.isFocusable = true
+        v.setOnClickListener {
+            val intent = Intent(context, CompanyEdit::class.java)
+            val b = Bundle()
+            b.putInt(CompanyEdit.KEY_EDIT_ID, company.id ?: -1)
+            intent.putExtras(b)
+            startActivityForResult(intent, 0)
+        }
+        return v
     }
 
     // TODO: Rename method, update argument and hook method into UI event

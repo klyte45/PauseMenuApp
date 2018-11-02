@@ -6,4 +6,5 @@
     <color name="defaultMenuItemColor">#ffffff</color>
     <color name="notImplementedMenuItemColor">#747474</color>
     <color name="colorSubtitle">#00ffff</color>
+    <color name="defaultBg">#000000</color>
 </resources>

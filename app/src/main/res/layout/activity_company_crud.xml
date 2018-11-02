@@ -36,7 +36,10 @@
             android:textColor="@color/colorAccent"
             app:textAllCaps="true"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="15dp"/>
+            android:layout_marginEnd="15dp"
+            android:clickable="true"
+            android:onClick="addNewCompany"
+            android:focusable="true"/>
 
     <ScrollView
             android:layout_width="match_parent"
@@ -46,6 +49,12 @@
             app:layout_constraintTop_toBottomOf="@+id/customTextView3"
             android:layout_marginTop="8dp">
 
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scrollLayout">
+        </LinearLayout>
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

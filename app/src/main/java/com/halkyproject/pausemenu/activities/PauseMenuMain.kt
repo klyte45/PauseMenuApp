@@ -1,11 +1,13 @@
 package com.halkyproject.pausemenu.activities
 
+import android.Manifest
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.Transformations
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -24,6 +26,9 @@ class PauseMenuMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pause_menu_main)
+        ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                0)
         val thread = object : Thread() {
             override fun run() {
                 try {
@@ -70,7 +75,7 @@ class PauseMenuMain : AppCompatActivity() {
 
     private fun getCurrentScore(): LiveData<Long> {
         return Transformations.map(ConfigSingleton.getInstance().getBirthDate()) {
-             (Date().time - it.time.time) / 1000L
+            (Date().time - it.time.time) / 1000L
         }
     }
 

@@ -1,8 +1,8 @@
-package com.halkyproject.pausemenu.database.dao
+package com.halkyproject.pausemenu.database.main.dao
 
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
-import com.halkyproject.pausemenu.database.entities.GeneralConfig
+import com.halkyproject.pausemenu.database.main.entities.GeneralConfig
 
 
 @Dao

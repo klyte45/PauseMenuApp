@@ -3,8 +3,8 @@ package com.halkyproject.pausemenu.singletons
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.os.AsyncTask
-import com.halkyproject.pausemenu.database.MainDatabase
-import com.halkyproject.pausemenu.database.entities.GeneralConfig
+import com.halkyproject.pausemenu.database.main.MainDatabase
+import com.halkyproject.pausemenu.database.main.entities.GeneralConfig
 import java.util.*
 
 

@@ -25,4 +25,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="all.createNew">Criar Novo Item</string>
+    <string name="company.editTitle">Editar Empresa</string>
+    <string name="all.commonName">Nome Comum</string>
+    <string name="all.realName">Nome Real</string>
+    <string name="all.documentNumber">Número do documento</string>
+    <string name="all.location">Localização</string>
+    <string name="all.locationPlaceholder"><![CDATA[<Endereço>]]></string>
+    <string name="all.save">Salvar</string>
 </resources>

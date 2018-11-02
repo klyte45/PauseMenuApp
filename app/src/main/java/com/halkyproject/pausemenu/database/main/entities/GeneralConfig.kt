@@ -1,4 +1,4 @@
-package com.halkyproject.pausemenu.database.entities
+package com.halkyproject.pausemenu.database.main.entities
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity

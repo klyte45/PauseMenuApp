@@ -1,41 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:orientation="horizontal"
-              tools:context=".fragments.CompanyCrudCardFragment"
-              android:layout_height="wrap_content"
-              android:backgroundTint="@color/colorPrimaryDark"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             tools:context=".fragments.CompanyCrudCardFragment"
+             android:layout_height="wrap_content"
+             android:backgroundTint="@color/colorPrimaryDark"
         >
 
     <!-- TODO: Update blank fragment layout -->
 
 
-    <ImageView
-            android:src="@color/colorPrimaryDark"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/imageView"
-            android:layout_weight="1"
-            android:minHeight="50dp"
-            android:minWidth="75dp"
-            android:maxHeight="50dp"
-            android:maxWidth="75dp"/>
-
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2"
             android:paddingLeft="4dp"
-            android:paddingRight="4dp">
+            android:paddingRight="4dp"
+            android:background="@drawable/default_bg"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp">
 
         <com.halkyproject.pausemenu.components.CustomTextView
                 android:id="@+id/companyName"
                 android:text="@string/config.dtNasc"
                 app:font_name="Sva"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +41,7 @@
                 android:id="@+id/realName"
                 android:text="@string/config.dtNasc"
                 app:font_name="VideoGame"
-                android:textSize="8sp"
+                android:textSize="10sp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -102,4 +93,4 @@
         </LinearLayout>
 
     </LinearLayout>
-</LinearLayout>
+</FrameLayout>

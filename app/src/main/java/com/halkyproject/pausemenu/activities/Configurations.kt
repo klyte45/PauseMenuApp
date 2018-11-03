@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.view.KeyEvent
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -16,6 +14,7 @@ import com.halkyproject.pausemenu.components.CustomTextView
 import com.halkyproject.pausemenu.fragments.DatePickerFragment
 import com.halkyproject.pausemenu.fragments.TimePickerFragment
 import com.halkyproject.pausemenu.singletons.ConfigSingleton
+import kotlinx.android.synthetic.main.activity_configurations.*
 import java.util.*
 
 
@@ -32,13 +31,8 @@ class Configurations : AppCompatActivity() {
         ConfigSingleton.getInstance().getServerUrl().observe(this, android.arch.lifecycle.Observer {
             val input = findViewById<CustomEditText>(R.id.val_serverUrl)
             input.setText(it, TextView.BufferType.EDITABLE)
-            input.setOnFocusChangeListener { _, hasFocus ->
-                if (!hasFocus) {
-                    ConfigSingleton.getInstance().setServerUrl("" + input.text)
-                    Toast.makeText(applicationContext, "Servidor salvo!", Toast.LENGTH_SHORT).show()
-                }
-            }
         })
+        loadingFrame.visibility = View.GONE
     }
 
     fun showPickerDtNasc(v: View) {
@@ -82,6 +76,50 @@ class Configurations : AppCompatActivity() {
             ConfigSingleton.getInstance().setBirthTimeZone(tz)
         }
         tzSpinner.show()
+    }
+
+    fun savePin(v: View) {
+        loadingFrame.visibility = View.VISIBLE
+
+        ConfigSingleton.getInstance().getPin().observe(this, android.arch.lifecycle.Observer {
+            try {
+                if (it == val_currentPin.text.toString()) {
+                    if (val_newPin.text.toString().length >= 6) {
+                        if (val_confirmPin.text.toString() == val_newPin.text.toString()) {
+                            if (ConfigSingleton.getInstance().setPin(val_confirmPin.text.toString()).get()) {
+                                Toast.makeText(applicationContext, "Senha alterada com sucesso!", Toast.LENGTH_SHORT).show()
+                                val_newPin.setText("", TextView.BufferType.EDITABLE)
+                                val_confirmPin.setText("", TextView.BufferType.EDITABLE)
+                                val_currentPin.setText("", TextView.BufferType.EDITABLE)
+                            } else {
+                                Toast.makeText(applicationContext, "Erro ao salvar!", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(applicationContext, "Senhas novas não conferem!", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(applicationContext, "Senha nova muito curta!", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(applicationContext, "Senha atual inválida!", Toast.LENGTH_SHORT).show()
+                }
+            } finally {
+                loadingFrame.visibility = View.GONE
+            }
+        })
+    }
+
+    fun saveServerUrl(v: View) {
+        loadingFrame.visibility = View.VISIBLE
+        try {
+            if (ConfigSingleton.getInstance().setServerUrl(val_serverUrl.text.toString()).get()) {
+                Toast.makeText(applicationContext, "Servidor salvo!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(applicationContext, "Erro ao salvar servidor!", Toast.LENGTH_SHORT).show()
+            }
+        } finally {
+            loadingFrame.visibility = View.GONE
+        }
     }
 
     fun goToCompanyCrud(v: View) {

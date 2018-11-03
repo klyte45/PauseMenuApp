@@ -22,17 +22,31 @@ class ConfigSingleton private constructor() {
         private const val KEY_HR_NASC = "hrNasc";
         private const val KEY_TZ_NASC = "TZNasc";
         private const val KEY_URL_SERVER = "urlServer";
+        private const val KEY_PIN = "pin";
 
+        private class RunUpdatePIN : AsyncTask<String, Void, Boolean>() {
+            override fun doInBackground(vararg value: String): Boolean? {
+                if (value.isNotEmpty()) {
+                    val db = MainDatabase.getInstance().generalConfigDao()
+                    db.insertAll(
+                            GeneralConfig(KEY_PIN, value[0])
+                    )
+                    return true
+                }
+                return false
+            }
+        }
 
-        private class RunUpdateUrlServer : AsyncTask<String, Void, Void>() {
-            override fun doInBackground(vararg value: String): Void? {
+        private class RunUpdateUrlServer : AsyncTask<String, Void, Boolean>() {
+            override fun doInBackground(vararg value: String): Boolean {
                 if (value.isNotEmpty()) {
                     val db = MainDatabase.getInstance().generalConfigDao()
                     db.insertAll(
                             GeneralConfig(KEY_URL_SERVER, value[0])
                     )
+                    return true
                 }
-                return null
+                return false
             }
         }
 
@@ -119,8 +133,8 @@ class ConfigSingleton private constructor() {
         return cachedServerUrl;
     }
 
-    fun setServerUrl(value: String) {
-        RunUpdateUrlServer().execute(value)
+    fun setServerUrl(value: String): AsyncTask<String, Void, Boolean> {
+        return RunUpdateUrlServer().execute(value)
     }
 
 
@@ -188,4 +202,24 @@ class ConfigSingleton private constructor() {
         RunUpdateNascTimeZone().execute(value)
     }
 
+    fun getPinSync(): String {
+        val db = MainDatabase.getInstance().generalConfigDao()
+        return db.getByKeySync(KEY_PIN)?.value ?: "012345"
+    }
+
+    fun getPin(): MediatorLiveData<String> {
+        val mMediatorLiveData = MediatorLiveData<String>()
+        val db = MainDatabase.getInstance().generalConfigDao()
+        val urlServer = db.getByKey(KEY_PIN)
+
+        mMediatorLiveData.addSource(urlServer) { dt ->
+            mMediatorLiveData.removeSource(urlServer)
+            mMediatorLiveData.setValue(dt?.value ?: "012345")
+        }
+        return mMediatorLiveData
+    }
+
+    fun setPin(value: String): AsyncTask<String, Void, Boolean> {
+        return RunUpdatePIN().execute(value)
+    }
 }

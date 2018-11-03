@@ -246,7 +246,218 @@
 
             </LinearLayout>
 
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/all.save"
+                    app:font_name="VideoGame"
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textColor="@color/defaultBg"
+                    android:layout_weight="1"
+                    app:textAllCaps="true"
+                    android:id="@+id/saveButtonServer"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/text_caret_1980"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="saveServerUrl"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/titleSecurityConfig"
+                    android:layout_weight="1"
+                    android:text="@string/config.securityConfig"
+                    app:font_name="Sva"
+                    android:textAlignment="center"
+                    android:textSize="36sp"
+                    android:textColor="@color/colorSubtitle"
+                    app:textAllCaps="false"
+                    android:maxLines="1"/>
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_weight="1">
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:id="@+id/item_currentPIN"
+                        android:text="@string/config.currentPIN"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:textColor="@color/defaultMenuItemColor"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        />
+
+                <com.halkyproject.pausemenu.components.CustomEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        style="@style/default_input"
+                        android:id="@+id/val_currentPin"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:inputType="numberPassword"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_weight="1">
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:id="@+id/item_newPIN"
+                        android:text="@string/config.newPin"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:textColor="@color/defaultMenuItemColor"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        />
+
+                <com.halkyproject.pausemenu.components.CustomEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        style="@style/default_input"
+                        android:id="@+id/val_newPin"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:inputType="numberPassword"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_weight="1">
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:id="@+id/item_confirmPIN"
+                        android:text="@string/config.confirmPIN"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:textColor="@color/defaultMenuItemColor"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        />
+
+                <com.halkyproject.pausemenu.components.CustomEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        style="@style/default_input"
+                        android:id="@+id/val_confirmPin"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:inputType="numberPassword"/>
+
+            </LinearLayout>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/all.save"
+                    app:font_name="VideoGame"
+                    android:textSize="18sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textColor="@color/defaultBg"
+                    android:layout_weight="1"
+                    app:textAllCaps="true"
+                    android:id="@+id/saveButton2"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/text_caret_1980"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="savePin"/>
+
         </LinearLayout>
     </ScrollView>
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:focusable="true"
+            android:clickable="true"
+            android:background="@drawable/default_bg"
+            android:backgroundTint="@color/common_google_signin_btn_text_light_pressed"
+            android:visibility="visible"
+            android:id="@+id/loadingFrame"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.halkyproject.pausemenu.components.CustomTextView
+                android:id="@+id/carregandoLabel"
+                android:text="@string/all.loading"
+                app:font_name="VideoGame"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimary"
+                android:maxLines="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:singleLine="true"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="8dp"
+                app:textAllCaps="true"/>
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

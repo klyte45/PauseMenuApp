@@ -39,4 +39,8 @@
     <string name="all.loading">Carregando...</string>
     <string name="config.serverConfigs">Servidor</string>
     <string name="config.urlServer">URL do Servidor</string>
+    <string name="config.currentPIN">Senha Atual</string>
+    <string name="config.securityConfig">Segurança</string>
+    <string name="config.newPin">Nova Senha</string>
+    <string name="config.confirmPIN">Confirmar nova senha</string>
 </resources>

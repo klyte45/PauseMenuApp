@@ -23,16 +23,16 @@ class Configurations : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_configurations)
-        ConfigSingleton.getInstance().getBirthDate().observe(this, android.arch.lifecycle.Observer {
+        ConfigSingleton.getBirthDate().observe(this, android.arch.lifecycle.Observer {
             findViewById<CustomTextView>(R.id.val_dtNasc).text = String.format("%1\$td/%1\$Tb/%1\$tY", it)
             findViewById<CustomTextView>(R.id.val_hrNasc).text = String.format("%1\$tR", it)
             findViewById<CustomTextView>(R.id.val_tzNasc).text = String.format("GMT %1\$tz", it)
         })
-        ConfigSingleton.getInstance().getServerUrl().observe(this, android.arch.lifecycle.Observer {
+        ConfigSingleton.getServerUrl().observe(this, android.arch.lifecycle.Observer {
             val input = findViewById<CustomEditText>(R.id.val_serverUrl)
             input.setText(it, TextView.BufferType.EDITABLE)
         })
-        loadingFrame.visibility = View.GONE
+        m_loadingFrame.visibility = View.GONE
     }
 
     fun showPickerDtNasc(v: View) {
@@ -42,9 +42,9 @@ class Configurations : AppCompatActivity() {
         val newFragment = DatePickerFragment()
         newFragment.setCallback {
             ctv.text = String.format("%1\$td/%1\$Tb/%1\$tY", it)
-            ConfigSingleton.getInstance().setBirthDate(it)
+            ConfigSingleton.setBirthDate(it)
         }
-        newFragment.currentValue = ConfigSingleton.getInstance().getBirthDateCache()
+        newFragment.currentValue = ConfigSingleton.getBirthDateCache()
         newFragment.show(supportFragmentManager, "nascDatePicker")
     }
 
@@ -54,9 +54,9 @@ class Configurations : AppCompatActivity() {
         val newFragment = TimePickerFragment()
         newFragment.setCallback {
             ctv.text = String.format("%1\$tR", it)
-            ConfigSingleton.getInstance().setBirthHour(it)
+            ConfigSingleton.setBirthHour(it)
         }
-        newFragment.currentValue = ConfigSingleton.getInstance().getBirthDateCache()
+        newFragment.currentValue = ConfigSingleton.getBirthDateCache()
         newFragment.show(supportFragmentManager, "nascTimePicker")
     }
 
@@ -73,20 +73,20 @@ class Configurations : AppCompatActivity() {
             val cal = Calendar.getInstance()
             cal.timeZone = tz
             ctv.text = String.format("GMT %1\$tz", cal)
-            ConfigSingleton.getInstance().setBirthTimeZone(tz)
+            ConfigSingleton.setBirthTimeZone(tz)
         }
         tzSpinner.show()
     }
 
     fun savePin(v: View) {
-        loadingFrame.visibility = View.VISIBLE
+        m_loadingFrame.visibility = View.VISIBLE
 
-        ConfigSingleton.getInstance().getPin().observe(this, android.arch.lifecycle.Observer {
+        ConfigSingleton.getPin().observe(this, android.arch.lifecycle.Observer {
             try {
                 if (it == val_currentPin.text.toString()) {
                     if (val_newPin.text.toString().length >= 6) {
                         if (val_confirmPin.text.toString() == val_newPin.text.toString()) {
-                            if (ConfigSingleton.getInstance().setPin(val_confirmPin.text.toString()).get()) {
+                            if (ConfigSingleton.setPin(val_confirmPin.text.toString()).get()) {
                                 Toast.makeText(applicationContext, "Senha alterada com sucesso!", Toast.LENGTH_SHORT).show()
                                 val_newPin.setText("", TextView.BufferType.EDITABLE)
                                 val_confirmPin.setText("", TextView.BufferType.EDITABLE)
@@ -104,21 +104,21 @@ class Configurations : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Senha atual inválida!", Toast.LENGTH_SHORT).show()
                 }
             } finally {
-                loadingFrame.visibility = View.GONE
+                m_loadingFrame.visibility = View.GONE
             }
         })
     }
 
     fun saveServerUrl(v: View) {
-        loadingFrame.visibility = View.VISIBLE
+        m_loadingFrame.visibility = View.VISIBLE
         try {
-            if (ConfigSingleton.getInstance().setServerUrl(val_serverUrl.text.toString()).get()) {
+            if (ConfigSingleton.setServerUrl(val_serverUrl.text.toString()).get()) {
                 Toast.makeText(applicationContext, "Servidor salvo!", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(applicationContext, "Erro ao salvar servidor!", Toast.LENGTH_SHORT).show()
             }
         } finally {
-            loadingFrame.visibility = View.GONE
+            m_loadingFrame.visibility = View.GONE
         }
     }
 

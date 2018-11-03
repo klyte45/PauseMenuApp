@@ -28,5 +28,6 @@ public class CustomTextView extends AppCompatTextView {
         if (!isInEditMode()) {
             setTypeface(PauseApp.getApp().getTypeFace(typefaceType));
         }
+
     }
 }

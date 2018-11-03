@@ -41,16 +41,16 @@ class CompanyCrud : AppCompatActivity(), CompanyCrudCardFragment.OnFragmentInter
     }
 
     private fun loadCompanies() {
-        val trRemove = supportFragmentManager.beginTransaction();
+        val trRemove = supportFragmentManager.beginTransaction()
         for (fragment in supportFragmentManager.fragments) {
             trRemove.remove(fragment)
         }
         trRemove.commit()
 
-        val companies = CompanyService.getInstance().findAll()
+        val companies = CompanyService.findAll()
         val trAdd = supportFragmentManager.beginTransaction()
         for (comp in companies) {
-            val frag = CompanyCrudCardFragment.newInstance(comp);
+            val frag = CompanyCrudCardFragment.newInstance(comp)
             trAdd.add(scrollLayout.id, frag, "item" + comp.id)
         }
         trAdd.commit()

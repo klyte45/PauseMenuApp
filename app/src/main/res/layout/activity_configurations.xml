@@ -435,7 +435,7 @@
             android:background="@drawable/default_bg"
             android:backgroundTint="@color/common_google_signin_btn_text_light_pressed"
             android:visibility="visible"
-            android:id="@+id/loadingFrame"
+            android:id="@+id/m_loadingFrame"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

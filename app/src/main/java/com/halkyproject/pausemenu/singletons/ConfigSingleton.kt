@@ -8,103 +8,95 @@ import com.halkyproject.pausemenu.database.main.entities.GeneralConfig
 import java.util.*
 
 
-class ConfigSingleton private constructor() {
-    companion object {
-        private var _instance: ConfigSingleton? = null
-        fun getInstance(): ConfigSingleton {
-            if (_instance == null) {
-                _instance = ConfigSingleton()
+object ConfigSingleton {
+
+
+    private const val KEY_DT_NASC = "dtNasc"
+    private const val KEY_HR_NASC = "hrNasc"
+    private const val KEY_TZ_NASC = "TZNasc"
+    private const val KEY_URL_SERVER = "urlServer"
+    private const val KEY_PIN = "pin"
+
+    private class RunUpdatePIN : AsyncTask<String, Void, Boolean>() {
+        override fun doInBackground(vararg value: String): Boolean? {
+            if (value.isNotEmpty()) {
+                val db = MainDatabase.getInstance().generalConfigDao()
+                db.insertAll(
+                        GeneralConfig(KEY_PIN, value[0])
+                )
+                return true
             }
-            return _instance as ConfigSingleton
+            return false
         }
-
-        private const val KEY_DT_NASC = "dtNasc";
-        private const val KEY_HR_NASC = "hrNasc";
-        private const val KEY_TZ_NASC = "TZNasc";
-        private const val KEY_URL_SERVER = "urlServer";
-        private const val KEY_PIN = "pin";
-
-        private class RunUpdatePIN : AsyncTask<String, Void, Boolean>() {
-            override fun doInBackground(vararg value: String): Boolean? {
-                if (value.isNotEmpty()) {
-                    val db = MainDatabase.getInstance().generalConfigDao()
-                    db.insertAll(
-                            GeneralConfig(KEY_PIN, value[0])
-                    )
-                    return true
-                }
-                return false
-            }
-        }
-
-        private class RunUpdateUrlServer : AsyncTask<String, Void, Boolean>() {
-            override fun doInBackground(vararg value: String): Boolean {
-                if (value.isNotEmpty()) {
-                    val db = MainDatabase.getInstance().generalConfigDao()
-                    db.insertAll(
-                            GeneralConfig(KEY_URL_SERVER, value[0])
-                    )
-                    return true
-                }
-                return false
-            }
-        }
-
-        private class RunUpdateNascDate : AsyncTask<Calendar, Void, Void>() {
-            override fun doInBackground(vararg value: Calendar): Void? {
-                if (value.isNotEmpty()) {
-                    val db = MainDatabase.getInstance().generalConfigDao()
-                    val cal = value[0];
-                    db.insertAll(
-                            GeneralConfig(KEY_DT_NASC, (cal.get(Calendar.YEAR) * 10000 + cal.get(Calendar.MONTH) * 100 + cal.get(Calendar.DAY_OF_MONTH)).toString())
-                    )
-                    cachedBirthDate?.set(Calendar.YEAR, cal.get(Calendar.YEAR))
-                    cachedBirthDate?.set(Calendar.MONTH, cal.get(Calendar.MONTH))
-                    cachedBirthDate?.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH))
-                }
-                return null
-            }
-        }
-
-        private class RunUpdateNascHour : AsyncTask<Calendar, Void, Void>() {
-            override fun doInBackground(vararg value: Calendar): Void? {
-                if (value.isNotEmpty()) {
-                    val db = MainDatabase.getInstance().generalConfigDao()
-                    val cal = value[0];
-                    db.insertAll(
-                            GeneralConfig(KEY_HR_NASC, (cal.get(Calendar.HOUR_OF_DAY) * 100 + cal.get(Calendar.MINUTE)).toString())
-                    )
-                    cachedBirthDate?.set(Calendar.HOUR_OF_DAY, cal.get(Calendar.HOUR_OF_DAY))
-                    cachedBirthDate?.set(Calendar.MINUTE, cal.get(Calendar.MINUTE))
-                }
-                return null
-            }
-        }
-
-        private class RunUpdateNascTimeZone : AsyncTask<TimeZone, Void, Void>() {
-            override fun doInBackground(vararg value: TimeZone): Void? {
-                if (value.isNotEmpty()) {
-                    val db = MainDatabase.getInstance().generalConfigDao()
-                    val tz = value[0];
-                    db.insertAll(
-                            GeneralConfig(KEY_TZ_NASC, tz.id)
-                    )
-
-                    val oldOffset = cachedBirthDate?.timeZone?.rawOffset ?: 0
-                    cachedBirthDate?.timeZone = TimeZone.getTimeZone(tz.id)
-                    val deltaOffset = oldOffset - (cachedBirthDate?.timeZone?.rawOffset ?: 0)
-                    cachedBirthDate?.timeInMillis = (cachedBirthDate?.timeInMillis ?: 0) + deltaOffset
-                }
-                return null
-            }
-        }
-
-        private var cachedBirthDate: Calendar? = null
-        private var cachedServerUrl: String? = null
     }
 
+    private class RunUpdateUrlServer : AsyncTask<String, Void, Boolean>() {
+        override fun doInBackground(vararg value: String): Boolean {
+            if (value.isNotEmpty()) {
+                val db = MainDatabase.getInstance().generalConfigDao()
+                db.insertAll(
+                        GeneralConfig(KEY_URL_SERVER, value[0])
+                )
+                return true
+            }
+            return false
+        }
+    }
+
+    private class RunUpdateNascDate : AsyncTask<Calendar, Void, Void>() {
+        override fun doInBackground(vararg value: Calendar): Void? {
+            if (value.isNotEmpty()) {
+                val db = MainDatabase.getInstance().generalConfigDao()
+                val cal = value[0]
+                db.insertAll(
+                        GeneralConfig(KEY_DT_NASC, (cal.get(Calendar.YEAR) * 10000 + cal.get(Calendar.MONTH) * 100 + cal.get(Calendar.DAY_OF_MONTH)).toString())
+                )
+                cachedBirthDate?.set(Calendar.YEAR, cal.get(Calendar.YEAR))
+                cachedBirthDate?.set(Calendar.MONTH, cal.get(Calendar.MONTH))
+                cachedBirthDate?.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH))
+            }
+            return null
+        }
+    }
+
+    private class RunUpdateNascHour : AsyncTask<Calendar, Void, Void>() {
+        override fun doInBackground(vararg value: Calendar): Void? {
+            if (value.isNotEmpty()) {
+                val db = MainDatabase.getInstance().generalConfigDao()
+                val cal = value[0]
+                db.insertAll(
+                        GeneralConfig(KEY_HR_NASC, (cal.get(Calendar.HOUR_OF_DAY) * 100 + cal.get(Calendar.MINUTE)).toString())
+                )
+                cachedBirthDate?.set(Calendar.HOUR_OF_DAY, cal.get(Calendar.HOUR_OF_DAY))
+                cachedBirthDate?.set(Calendar.MINUTE, cal.get(Calendar.MINUTE))
+            }
+            return null
+        }
+    }
+
+    private class RunUpdateNascTimeZone : AsyncTask<TimeZone, Void, Void>() {
+        override fun doInBackground(vararg value: TimeZone): Void? {
+            if (value.isNotEmpty()) {
+                val db = MainDatabase.getInstance().generalConfigDao()
+                val tz = value[0]
+                db.insertAll(
+                        GeneralConfig(KEY_TZ_NASC, tz.id)
+                )
+
+                val oldOffset = cachedBirthDate?.timeZone?.rawOffset ?: 0
+                cachedBirthDate?.timeZone = TimeZone.getTimeZone(tz.id)
+                val deltaOffset = oldOffset - (cachedBirthDate?.timeZone?.rawOffset ?: 0)
+                cachedBirthDate?.timeInMillis = (cachedBirthDate?.timeInMillis ?: 0) + deltaOffset
+            }
+            return null
+        }
+    }
+
+    private var cachedBirthDate: Calendar? = null
+    private var cachedServerUrl: String? = null
+
     fun getServerUrlCache(): String? {
-        return cachedServerUrl;
+        return cachedServerUrl
     }
 
     fun getServerUrl(): MediatorLiveData<String> {
@@ -130,7 +122,7 @@ class ConfigSingleton private constructor() {
             val db = MainDatabase.getInstance().generalConfigDao()
             cachedServerUrl = db.getByKeySync(KEY_URL_SERVER)?.value
         }
-        return cachedServerUrl;
+        return cachedServerUrl
     }
 
     fun setServerUrl(value: String): AsyncTask<String, Void, Boolean> {
@@ -139,7 +131,7 @@ class ConfigSingleton private constructor() {
 
 
     fun getBirthDateCache(): Calendar? {
-        return cachedBirthDate;
+        return cachedBirthDate
     }
 
     fun getBirthDate(): LiveData<Calendar> {

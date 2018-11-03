@@ -27,7 +27,7 @@ import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.enum.Country
 import com.halkyproject.pausemenu.model.Company
 import com.halkyproject.pausemenu.singletons.CompanyService
-import com.halkyproject.pausemenu.util.MaskEditUtil
+import com.halkyproject.pausemenu.singletons.FormatSingleton
 import kotlinx.android.synthetic.main.activity_company_edit.*
 import java.util.*
 
@@ -44,12 +44,12 @@ class CompanyEdit : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_company_edit)
 
-        companyDocument.addTextChangedListener(MaskEditUtil.mask(companyDocument, MaskEditUtil.FORMAT_CNPJ))
+        companyDocument.addTextChangedListener(FormatSingleton.mask(companyDocument, FormatSingleton.FORMAT_CNPJ))
         val editId: Int = intent?.extras?.getInt(KEY_EDIT_ID) ?: -1
         val map = (supportFragmentManager.findFragmentById(R.id.company_mapView) as SupportMapFragment)
 
         if (editId != -1) {
-            editingCompany = CompanyService.getInstance().findById(editId)
+            editingCompany = CompanyService.findById(editId)
             if (editingCompany != null) {
                 companyCommonName.setText(editingCompany!!.mainName, TextView.BufferType.EDITABLE)
                 companyRealName.setText(editingCompany!!.realName, TextView.BufferType.EDITABLE)
@@ -117,7 +117,7 @@ class CompanyEdit : AppCompatActivity() {
     fun saveCompany(v: View) {
         val commonName = companyCommonName.text.toString()
         val realName = companyRealName.text.toString()
-        val docNum = MaskEditUtil.unmask(companyDocument.text.toString())
+        val docNum = FormatSingleton.unmask(companyDocument.text.toString())
         if (commonName.length < 2) {
             Toast.makeText(applicationContext, "Nome comum muito curto!", Toast.LENGTH_SHORT).show()
             return
@@ -138,7 +138,7 @@ class CompanyEdit : AppCompatActivity() {
         if (!country.isPresent) {
             Toast.makeText(applicationContext, "Local inválido!", Toast.LENGTH_SHORT).show()
         }
-        loagingFrame.visibility = View.VISIBLE
+        m_loadingFrame.visibility = View.VISIBLE
 
         try {
             val companyObj: Company = editingCompany ?: Company()
@@ -150,9 +150,9 @@ class CompanyEdit : AppCompatActivity() {
             companyObj.cityDisplayName = addressValue!!.locality
             companyObj.country = country.get().acronym
             if (companyObj.id == null) {
-                CompanyService.getInstance().insertCompany(companyObj)
+                CompanyService.insertCompany(companyObj)
             } else {
-                CompanyService.getInstance().updateCompany(companyObj)
+                CompanyService.updateCompany(companyObj)
             }
             Toast.makeText(applicationContext, "Salvo com sucesso!", Toast.LENGTH_SHORT).show()
             setResult(RESULT_OK)
@@ -160,33 +160,33 @@ class CompanyEdit : AppCompatActivity() {
         } catch (e: Exception) {
             Toast.makeText(applicationContext, "Erro ao salvar: " + e.message, Toast.LENGTH_SHORT).show()
             Log.e("ERROR", "Erro salvando companhia", e)
-            loagingFrame.visibility = View.GONE
+            m_loadingFrame.visibility = View.GONE
         }
     }
 
     fun confirmDelete(v: View) {
         linearLayout4.visibility = View.VISIBLE;
-        title3.text = getString(R.string.all_confirmDelete)
+        titleLbl.text = getString(R.string.all_confirmDelete)
     }
 
     fun cancelDelete(v: View) {
         linearLayout4.visibility = View.GONE;
-        title3.text = getString(R.string.company_editTitle)
+        titleLbl.text = getString(R.string.company_editTitle)
     }
 
     fun doDelete(v: View) {
-        loagingFrame.visibility = View.VISIBLE
+        m_loadingFrame.visibility = View.VISIBLE
         linearLayout4.visibility = View.GONE
-        title3.text = getString(R.string.company_editTitle)
+        titleLbl.text = getString(R.string.company_editTitle)
         try {
             if (editingCompany!!.id != null) {
-                CompanyService.getInstance().deleteCompany(editingCompany!!)
+                CompanyService.deleteCompany(editingCompany!!)
             }
             Toast.makeText(applicationContext, "Apagado com sucesso!", Toast.LENGTH_SHORT).show()
             setResult(RESULT_OK)
             finish()
         } catch (e: Exception) {
-            loagingFrame.visibility = View.GONE
+            m_loadingFrame.visibility = View.GONE
         }
     }
 }

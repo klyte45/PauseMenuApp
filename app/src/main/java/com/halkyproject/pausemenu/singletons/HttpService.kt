@@ -1,9 +1,6 @@
 package com.halkyproject.pausemenu.singletons
 
-import android.widget.TextView
 import com.google.gson.Gson
-import com.halkyproject.pausemenu.R
-import com.halkyproject.pausemenu.components.CustomEditText
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -11,43 +8,31 @@ import java.net.URL
 import java.util.*
 
 
-public class HttpService {
-    companion object {
-        private var instance: HttpService? = null
-        fun getInstance(): HttpService {
-            if (instance == null) {
-                instance = HttpService()
-            }
-            return instance!!
-        }
-
-        private val READ_TIMEOUT = 15000
-        private val CONNECTION_TIMEOUT = 15000
-        private const val URI_BASE: String = "/api";
-    }
+object HttpService {
+    private val READ_TIMEOUT = 15000
+    private val CONNECTION_TIMEOUT = 15000
 
 
-    public fun <T> doRequest(stringUrl: String, resultClass: Class<T>, requestMethod: HttpRequestMethod, body: String? = null, contentType: String = "application/json"): T? {
-        val result: String
-        var inputLine: String
-        var reader: BufferedReader? = null
+    fun <T> doRequest(stringUrl: String, resultClass: Class<T>, requestMethod: HttpRequestMethod, body: String? = null, contentType: String = "application/json"): T? {
+
+        val reader: BufferedReader? = null
         var streamReader: InputStreamReader? = null
         var connection: HttpURLConnection? = null
 
         try {
             //Create a URL object holding our url
-            val myUrl = URL(ConfigSingleton.getInstance().getServerUrlSync() + URI_BASE + stringUrl)
+            val myUrl = URL(ConfigSingleton.getServerUrlSync() + stringUrl)
 
             //Create a connection
             connection = myUrl.openConnection() as HttpURLConnection
 
             //Set methods and timeouts
-            connection.requestMethod = requestMethod.getValue()
+            connection.requestMethod = requestMethod.value
             connection.readTimeout = READ_TIMEOUT
             connection.connectTimeout = CONNECTION_TIMEOUT
             val reqDate = Date()
             connection.setRequestProperty("X-Welber2", reqDate.toString())
-            connection.setRequestProperty("X-Welber", SecuritySingleton.getInstance().getHash(reqDate.toString()))
+            connection.setRequestProperty("X-Welber", SecuritySingleton.getHash(reqDate.toString()))
 
             if (body != null && requestMethod != HttpRequestMethod.GET) {
                 connection.setRequestProperty("Content-Type", contentType)
@@ -81,15 +66,11 @@ public class HttpService {
         }
     }
 
-    public enum class HttpRequestMethod(private var value: String) {
+    enum class HttpRequestMethod(val value: String) {
         GET("GET"),
         POST("POST"),
         DELETE("DELETE"),
         PUT("PUT");
-
-        public fun getValue(): String {
-            return value;
-        }
     }
 
 }

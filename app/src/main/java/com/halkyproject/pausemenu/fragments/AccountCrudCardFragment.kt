@@ -3,6 +3,7 @@ package com.halkyproject.pausemenu.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.icu.text.NumberFormat
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,15 +11,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.halkyproject.pausemenu.R
-import com.halkyproject.pausemenu.activities.CompanyEdit
+import com.halkyproject.pausemenu.activities.finance.FinancesAccountEdit
 import com.halkyproject.pausemenu.components.CustomTextView
-import com.halkyproject.pausemenu.model.Company
+import com.halkyproject.pausemenu.model.finances.Currency
+import com.halkyproject.pausemenu.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.singletons.FormatSingleton
 
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_COMPANY = "company"
+private const val ARG_FIN_ACC = "finAccount"
+val ACCOUNT_VALUES_TYPE_BANK = arrayOf(FinancialAccount.AccountType.CURRENT, FinancialAccount.AccountType.SAVINGS)
 
 /**
  * A simple [Fragment] subclass.
@@ -29,15 +32,15 @@ private const val ARG_COMPANY = "company"
  * create an instance of this fragment.
  *
  */
-class CompanyCrudCardFragment : Fragment() {
+class AccountCrudCardFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private lateinit var company: Company
+    private lateinit var obj: FinancialAccount
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            company = it.getSerializable(ARG_COMPANY) as Company
+            obj = it.getSerializable(ARG_FIN_ACC) as FinancialAccount
         }
     }
 
@@ -45,18 +48,19 @@ class CompanyCrudCardFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_company_crud_card, container, false)
+        val v = inflater.inflate(R.layout.fragment_fin_account_crud_card, container, false)
 
-        v.findViewById<CustomTextView>(R.id.cityName).text = "${company.cityDisplayName} (${company.getCountryEnum().emoji})"
-        v.findViewById<CustomTextView>(R.id.companyName).text = company.mainName
-        v.findViewById<CustomTextView>(R.id.realName).text = company.realName
-        v.findViewById<CustomTextView>(R.id.documentNumber).text = FormatSingleton.mask(company.documentNumber, FormatSingleton.FORMAT_CNPJ)
+        v.findViewById<CustomTextView>(R.id.m_accountName).text = obj.name
+        v.findViewById<CustomTextView>(R.id.accountInfo).text = if (ACCOUNT_VALUES_TYPE_BANK.contains(obj.type) && obj.currency == Currency.BRL) "${obj.bankNumber} - ${obj.branch} - ${FormatSingleton.mask(obj.number
+                ?: "", FormatSingleton.FORMAT_FINANCIAL_ACCOUNT)}" else "${obj.type}"
+        v.findViewById<CustomTextView>(R.id.accountType).text = getString(resources.getIdentifier(obj.type.localeEntry, "string", "com.halkyproject.pausemenu"))
+        v.findViewById<CustomTextView>(R.id.accountBalance).text = NumberFormat.getCurrencyInstance(obj.currency.locale).format(obj.balance)
         v.isClickable = true
         v.isFocusable = true
         v.setOnClickListener {
-            val intent = Intent(context, CompanyEdit::class.java)
+            val intent = Intent(context, FinancesAccountEdit::class.java)
             val b = Bundle()
-            b.putInt(CompanyEdit.KEY_EDIT_ID, company.id ?: -1)
+            b.putInt(FinancesAccountEdit.KEY_EDIT_ID, obj.id ?: -1)
             intent.putExtras(b)
             startActivityForResult(intent, 0)
         }
@@ -103,16 +107,14 @@ class CompanyCrudCardFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CompanyCrudCardFragment.
+         * @return A new instance of fragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(company: Company) =
-                CompanyCrudCardFragment().apply {
+        fun newInstance(obj: FinancialAccount) =
+                AccountCrudCardFragment().apply {
                     arguments = Bundle().apply {
-                        putSerializable(ARG_COMPANY, company)
+                        putSerializable(ARG_FIN_ACC, obj)
                     }
                 }
     }

@@ -1,6 +1,7 @@
 package com.halkyproject.pausemenu.activities
 
 import android.Manifest
+import android.app.Activity
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.Transformations
@@ -15,6 +16,7 @@ import android.text.style.RelativeSizeSpan
 import android.view.View
 import android.widget.TextView
 import com.halkyproject.pausemenu.R
+import com.halkyproject.pausemenu.activities.finance.FinancesMain
 import com.halkyproject.pausemenu.components.CustomTextView
 import com.halkyproject.pausemenu.singletons.ConfigSingleton
 import org.apache.commons.lang3.StringUtils
@@ -22,6 +24,10 @@ import java.util.*
 
 
 class PauseMenuMain : AppCompatActivity() {
+
+    companion object {
+        private const val FINANCES_PIN_REQUEST_CODE = 1
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +80,7 @@ class PauseMenuMain : AppCompatActivity() {
     private val PLN_STATUS = arrayOf(PlanStatus.ACTIVE, PlanStatus.WAITING, PlanStatus.DENIED, PlanStatus.WAITING)
 
     private fun getCurrentScore(): LiveData<Long> {
-        return Transformations.map(ConfigSingleton.getInstance().getBirthDate()) {
+        return Transformations.map(ConfigSingleton.getBirthDate()) {
             (Date().time - it.time.time) / 1000L
         }
     }
@@ -103,5 +109,18 @@ class PauseMenuMain : AppCompatActivity() {
     //ações
     fun goToConfig(v: View) {
         startActivity(Intent(this, Configurations::class.java))
+    }
+
+
+    fun goToFinances(v: View) {
+        startActivityForResult(Intent(this, PinInput::class.java), FINANCES_PIN_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == FINANCES_PIN_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                startActivity(Intent(this, FinancesMain::class.java))
+            }
+        }
     }
 }

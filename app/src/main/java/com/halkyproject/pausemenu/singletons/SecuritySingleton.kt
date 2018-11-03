@@ -5,16 +5,7 @@ import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
 
-class SecuritySingleton private constructor() {
-    companion object {
-        private var _instance: SecuritySingleton? = null
-        fun getInstance(): SecuritySingleton {
-            if (_instance == null) {
-                _instance = SecuritySingleton()
-            }
-            return _instance as SecuritySingleton
-        }
-    }
+object SecuritySingleton {
 
     fun getHash(s: String): String? {
         return try {

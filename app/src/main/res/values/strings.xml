@@ -43,4 +43,23 @@
     <string name="config.securityConfig">Segurança</string>
     <string name="config.newPin">Nova Senha</string>
     <string name="config.confirmPIN">Confirmar nova senha</string>
+    <string name="all.insertPin">Insira a Senha</string>
+    <string name="all.validate">Validar</string>
+    <string name="finances.accounts">Contas</string>
+    <string name="finances.movSources">Fontes de Movimentação</string>
+    <string name="finances.editAccount">Editar Conta</string>
+    <string name="finances.bankNumber">Código Bancário</string>
+    <string name="finances.accountBranch">Agência</string>
+    <string name="finances.accountNumber">Número da Conta</string>
+    <string name="finances.currentBalance">Saldo Atual</string>
+    <string name="finances.accountType">Tipo de conta</string>
+    <string name="finance.accountType.savings">Poupança</string>
+    <string name="finance.accountType.current">Corrente</string>
+    <string name="finance.accountType.local">Local</string>
+    <string name="finance.accountType.virtual">Virtual</string>
+    <string name="finance.currency.brl">Real</string>
+    <string name="finances.accountCurrency">Moeda da conta</string>
+    <string name="finance.currency.dolar">Dólar</string>
+    <string name="finance.currency.eur">Euro</string>
+    <string name="finances.additionalAccountInfo">Informações Adicionais</string>
 </resources>

@@ -1,6 +1,9 @@
 package com.halkyproject.pausemenu.model.finances
 
-class FinancialAccount {
+import java.io.Serializable
+import java.math.BigDecimal
+
+class FinancialAccount : Serializable {
     companion object {
         const val URI_NAME = "finAccount"
     }
@@ -10,15 +13,18 @@ class FinancialAccount {
     var bankNumber: String? = null
     var branch: String? = null
     var number: String? = null
+    var balance: BigDecimal? = null
     lateinit var type: AccountType
     lateinit var currency: Currency
 
-    enum class AccountType {
-        SAVINGS,
-        CURRENT,
-        LOCAL,
-        VIRTUAL
+    enum class AccountType(val localeEntry: String) {
+        SAVINGS("finance.accountType.savings"),
+        CURRENT("finance.accountType.current"),
+        LOCAL("finance.accountType.local"),
+        VIRTUAL("finance.accountType.virtual")
     }
+
+
 }
 /*
 {
@@ -49,6 +55,12 @@ class FinancialAccount {
       {
           "fieldName": "number",
           "fieldType": "String"
+      },
+      {
+          "fieldName": "balance",
+          "fieldType": "Decimal",
+          "nullable": false,
+          "defaultValue": 0.0
       },
       {
           "fieldName": "type",

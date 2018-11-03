@@ -15,7 +15,7 @@
             >
 
         <com.halkyproject.pausemenu.components.CustomTextView
-                android:id="@+id/title3"
+                android:id="@+id/titleLbl"
                 android:text="@string/company.editTitle"
                 app:font_name="Sva"
                 android:textSize="60sp"
@@ -34,15 +34,15 @@
         <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@+id/title3"
+                app:layout_constraintTop_toBottomOf="@+id/titleLbl"
                 android:id="@+id/scrollView3"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
                 app:layout_constraintVertical_bias="0.0"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="8dp">
+                android:clipChildren="false"
+                >
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -248,11 +248,10 @@
                 android:background="@drawable/default_bg"
                 android:backgroundTint="@color/common_google_signin_btn_text_light_pressed"
                 android:visibility="gone"
-                android:layout_marginTop="60dp"
-                app:layout_constraintTop_toTopOf="@+id/title3"
                 android:clickable="true"
                 android:focusableInTouchMode="false"
-                android:focusable="true">
+                android:focusable="true"
+                app:layout_constraintTop_toBottomOf="@+id/titleLbl">
 
             <com.halkyproject.pausemenu.components.CustomTextView
                     android:text="@string/all.no"
@@ -308,13 +307,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                tools:layout_editor_absoluteY="302dp"
                 android:focusable="true"
                 android:clickable="true"
                 android:background="@drawable/default_bg"
                 android:backgroundTint="@color/common_google_signin_btn_text_light_pressed"
                 android:visibility="gone"
-                android:id="@+id/loagingFrame">
+                android:id="@+id/m_loadingFrame"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/linearLayout4">
 
             <com.halkyproject.pausemenu.components.CustomTextView
                     android:id="@+id/carregandoLabel"

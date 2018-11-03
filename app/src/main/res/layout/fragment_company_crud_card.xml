@@ -18,7 +18,7 @@
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
             android:background="@drawable/default_bg"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:backgroundTint="@color/colorSaturation1"
             android:paddingTop="4dp"
             android:paddingBottom="4dp">
 

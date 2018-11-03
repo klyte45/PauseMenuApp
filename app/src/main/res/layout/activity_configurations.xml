@@ -183,41 +183,68 @@
                     android:layout_weight="1"
                     android:text="@string/config.companies"
                     app:font_name="Sva"
+                    android:textAlignment="viewStart"
+                    android:textSize="36sp"
+                    android:textColor="@color/colorAccent"
+                    app:textAllCaps="false"
+                    android:maxLines="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="goToCompanyCrud"
+                    android:textStyle="normal"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/titleServerConfig"
+                    android:layout_weight="1"
+                    android:text="@string/config.serverConfigs"
+                    app:font_name="Sva"
                     android:textAlignment="center"
                     android:textSize="36sp"
                     android:textColor="@color/colorSubtitle"
                     app:textAllCaps="false"
                     android:maxLines="1"/>
 
-            <com.halkyproject.pausemenu.components.CustomTextView
-                    android:text="@string/config.companies.goToList"
-                    app:font_name="VideoGame"
-                    android:textSize="@dimen/mainMenu.listItem.fontSize"
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:textAllCaps="true"
-                    android:textColor="@color/colorAccent"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1"
-                    android:id="@+id/customTextView4"
-                    android:onClick="goToCompanyCrud"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:clickable="true"
-                    android:focusable="true"/>
+                    android:focusable="true"
+                    android:layout_weight="1">
 
-            <com.halkyproject.pausemenu.components.CustomEditText
-                    android:text="@string/config.companies.goToList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:textAllCaps="true"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1"
-                    style="@style/default_input"/>
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:id="@+id/item_serverUrl"
+                        android:text="@string/config.urlServer"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:textColor="@color/defaultMenuItemColor"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        />
+
+                <com.halkyproject.pausemenu.components.CustomEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        style="@style/default_input"
+                        android:id="@+id/val_serverUrl"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:singleLine="true"/>
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

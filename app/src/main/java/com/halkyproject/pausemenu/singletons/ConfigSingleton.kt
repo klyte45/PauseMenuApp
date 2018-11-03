@@ -21,6 +21,20 @@ class ConfigSingleton private constructor() {
         private const val KEY_DT_NASC = "dtNasc";
         private const val KEY_HR_NASC = "hrNasc";
         private const val KEY_TZ_NASC = "TZNasc";
+        private const val KEY_URL_SERVER = "urlServer";
+
+
+        private class RunUpdateUrlServer : AsyncTask<String, Void, Void>() {
+            override fun doInBackground(vararg value: String): Void? {
+                if (value.isNotEmpty()) {
+                    val db = MainDatabase.getInstance().generalConfigDao()
+                    db.insertAll(
+                            GeneralConfig(KEY_URL_SERVER, value[0])
+                    )
+                }
+                return null
+            }
+        }
 
         private class RunUpdateNascDate : AsyncTask<Calendar, Void, Void>() {
             override fun doInBackground(vararg value: Calendar): Void? {
@@ -72,7 +86,43 @@ class ConfigSingleton private constructor() {
         }
 
         private var cachedBirthDate: Calendar? = null
+        private var cachedServerUrl: String? = null
     }
+
+    fun getServerUrlCache(): String? {
+        return cachedServerUrl;
+    }
+
+    fun getServerUrl(): MediatorLiveData<String> {
+        val mMediatorLiveData = MediatorLiveData<String>()
+        if (cachedServerUrl == null) {
+            val db = MainDatabase.getInstance().generalConfigDao()
+            val urlServer = db.getByKey(KEY_URL_SERVER)
+
+            mMediatorLiveData.addSource(urlServer) { dt ->
+                mMediatorLiveData.removeSource(urlServer)
+                cachedServerUrl = dt?.value
+                mMediatorLiveData.setValue(cachedServerUrl)
+            }
+            return mMediatorLiveData
+        } else {
+            mMediatorLiveData.value = cachedServerUrl
+            return mMediatorLiveData
+        }
+    }
+
+    fun getServerUrlSync(): String? {
+        if (cachedServerUrl == null) {
+            val db = MainDatabase.getInstance().generalConfigDao()
+            cachedServerUrl = db.getByKeySync(KEY_URL_SERVER)?.value
+        }
+        return cachedServerUrl;
+    }
+
+    fun setServerUrl(value: String) {
+        RunUpdateUrlServer().execute(value)
+    }
+
 
     fun getBirthDateCache(): Calendar? {
         return cachedBirthDate;

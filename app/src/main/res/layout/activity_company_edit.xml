@@ -35,8 +35,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintTop_toBottomOf="@+id/title3"
+                android:id="@+id/scrollView3"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/saveButton">
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp">
 
             <LinearLayout
                     android:layout_width="match_parent"
@@ -175,27 +181,159 @@
             </LinearLayout>
         </ScrollView>
 
-        <com.halkyproject.pausemenu.components.CustomTextView
-                android:text="@string/all.save"
-                app:font_name="VideoGame"
-                android:textSize="18sp"
+
+        <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:textColor="@color/defaultBg"
-                android:layout_weight="1"
-                app:textAllCaps="true"
-                android:id="@+id/saveButton"
-                android:textAlignment="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="5dp"
-                android:background="@drawable/text_caret_1980"
-                app:layout_constraintHorizontal_bias="0.0"
+                android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/linearLayout3"
+                android:layout_weight="1">
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/all.save"
+                    app:font_name="VideoGame"
+                    android:textSize="18sp"
+                    android:layout_width="192dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textColor="@color/defaultBg"
+                    android:layout_weight="1"
+                    app:textAllCaps="true"
+                    android:id="@+id/saveButton"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/text_caret_1980"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="saveCompany"
+                    app:layout_constraintVertical_weight="1"
+                    app:layout_constraintWidth_percent="50"
+                    app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+                    app:layout_constraintHorizontal_bias="0.0"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/all.delete"
+                    app:font_name="VideoGame"
+                    android:textSize="18sp"
+                    android:layout_width="192dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/defaultMenuItemColor"
+                    android:layout_weight="1"
+                    app:textAllCaps="true"
+                    android:id="@+id/deleteButton"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/default_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="confirmDelete"
+                    android:textColorLink="@color/colorAccent"
+                    android:backgroundTint="@color/colorProblem"
+                    app:layout_constraintVertical_weight="1"
+                    app:layout_constraintWidth_percent="50"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/linearLayout4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/default_bg"
+                android:backgroundTint="@color/common_google_signin_btn_text_light_pressed"
+                android:visibility="gone"
+                android:layout_marginTop="60dp"
+                app:layout_constraintTop_toTopOf="@+id/title3"
                 android:clickable="true"
+                android:focusableInTouchMode="false"
+                android:focusable="true">
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/all.no"
+                    app:font_name="VideoGame"
+                    android:textSize="18sp"
+                    android:layout_width="192dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/defaultMenuItemColor"
+                    android:layout_weight="1"
+                    app:textAllCaps="true"
+                    android:id="@+id/noButton"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/default_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="cancelDelete"
+                    android:textColorLink="@color/colorAccent"
+                    android:backgroundTint="@color/colorProblem"
+                    app:layout_constraintVertical_weight="1"
+                    app:layout_constraintWidth_percent="50"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/all.yes"
+                    app:font_name="VideoGame"
+                    android:textSize="18sp"
+                    android:layout_width="192dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textColor="@color/defaultBg"
+                    android:layout_weight="1"
+                    app:textAllCaps="true"
+                    android:id="@+id/yesButton"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/text_caret_1980"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="doDelete"
+                    app:layout_constraintVertical_weight="1"
+                    app:layout_constraintWidth_percent="50"
+                    app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+                    app:layout_constraintHorizontal_bias="0.0"/>
+
+        </LinearLayout>
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                tools:layout_editor_absoluteY="302dp"
                 android:focusable="true"
-                android:onClick="saveCompany"/>
+                android:clickable="true"
+                android:background="@drawable/default_bg"
+                android:backgroundTint="@color/common_google_signin_btn_text_light_pressed"
+                android:visibility="gone"
+                android:id="@+id/loagingFrame">
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:id="@+id/carregandoLabel"
+                    android:text="@string/all.loading"
+                    app:font_name="VideoGame"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:maxLines="1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:singleLine="true"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:textAllCaps="true"/>
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 </android.support.design.widget.CoordinatorLayout>

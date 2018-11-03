@@ -55,6 +55,10 @@ class CompanyEdit : AppCompatActivity() {
                 companyRealName.setText(editingCompany!!.realName, TextView.BufferType.EDITABLE)
                 companyDocument.setText(editingCompany!!.documentNumber, TextView.BufferType.EDITABLE)
             }
+
+            deleteButton.visibility = View.VISIBLE;
+        } else {
+            deleteButton.visibility = View.GONE;
         }
         map.getMapAsync { googleMap ->
             val mLocationManager = getSystemService(LOCATION_SERVICE) as LocationManager
@@ -134,22 +138,17 @@ class CompanyEdit : AppCompatActivity() {
         if (!country.isPresent) {
             Toast.makeText(applicationContext, "Local inválido!", Toast.LENGTH_SHORT).show()
         }
-        companyCommonName.isEnabled = false
-        companyRealName.isEnabled = false
-        companyDocument.isEnabled = false
-        saveButton.isEnabled = false
-
-
-        val companyObj: Company = editingCompany ?: Company()
-        companyObj.documentNumber = docNum
-        companyObj.mainName = commonName
-        companyObj.realName = realName
-        companyObj.latitude = addressValue!!.latitude
-        companyObj.longitude = addressValue!!.longitude
-        companyObj.cityDisplayName = addressValue!!.locality
-        companyObj.country = country.get().acronym
+        loagingFrame.visibility = View.VISIBLE
 
         try {
+            val companyObj: Company = editingCompany ?: Company()
+            companyObj.documentNumber = docNum
+            companyObj.mainName = commonName
+            companyObj.realName = realName
+            companyObj.latitude = addressValue!!.latitude
+            companyObj.longitude = addressValue!!.longitude
+            companyObj.cityDisplayName = addressValue!!.locality
+            companyObj.country = country.get().acronym
             if (companyObj.id == null) {
                 CompanyService.getInstance().insertCompany(companyObj)
             } else {
@@ -159,14 +158,35 @@ class CompanyEdit : AppCompatActivity() {
             setResult(RESULT_OK)
             finish()
         } catch (e: Exception) {
-            companyCommonName.isEnabled = true
-            companyRealName.isEnabled = true
-            companyDocument.isEnabled = true
-            saveButton.isEnabled = true
             Toast.makeText(applicationContext, "Erro ao salvar: " + e.message, Toast.LENGTH_SHORT).show()
             Log.e("ERROR", "Erro salvando companhia", e)
+            loagingFrame.visibility = View.GONE
         }
     }
 
+    fun confirmDelete(v: View) {
+        linearLayout4.visibility = View.VISIBLE;
+        title3.text = getString(R.string.all_confirmDelete)
+    }
 
+    fun cancelDelete(v: View) {
+        linearLayout4.visibility = View.GONE;
+        title3.text = getString(R.string.company_editTitle)
+    }
+
+    fun doDelete(v: View) {
+        loagingFrame.visibility = View.VISIBLE
+        linearLayout4.visibility = View.GONE
+        title3.text = getString(R.string.company_editTitle)
+        try {
+            if (editingCompany!!.id != null) {
+                CompanyService.getInstance().deleteCompany(editingCompany!!)
+            }
+            Toast.makeText(applicationContext, "Apagado com sucesso!", Toast.LENGTH_SHORT).show()
+            setResult(RESULT_OK)
+            finish()
+        } catch (e: Exception) {
+            loagingFrame.visibility = View.GONE
+        }
+    }
 }

@@ -16,6 +16,9 @@ interface GeneralConfigDao {
     @Query("SELECT * FROM generalconfig WHERE `key` = :key")
     fun getByKey(key: String): LiveData<GeneralConfig?>
 
+    @Query("SELECT * FROM generalconfig WHERE `key` = :key")
+    fun getByKeySync(key: String): GeneralConfig?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg values: GeneralConfig)
 

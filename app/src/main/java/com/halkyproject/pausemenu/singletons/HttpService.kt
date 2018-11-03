@@ -1,6 +1,9 @@
 package com.halkyproject.pausemenu.singletons
 
+import android.widget.TextView
 import com.google.gson.Gson
+import com.halkyproject.pausemenu.R
+import com.halkyproject.pausemenu.components.CustomEditText
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -20,7 +23,7 @@ public class HttpService {
 
         private val READ_TIMEOUT = 15000
         private val CONNECTION_TIMEOUT = 15000
-        private const val URL_BASE: String = "http://10.0.2.2:8080/api";
+        private const val URI_BASE: String = "/api";
     }
 
 
@@ -30,9 +33,10 @@ public class HttpService {
         var reader: BufferedReader? = null
         var streamReader: InputStreamReader? = null
         var connection: HttpURLConnection? = null
+
         try {
             //Create a URL object holding our url
-            val myUrl = URL(URL_BASE + stringUrl)
+            val myUrl = URL(ConfigSingleton.getInstance().getServerUrlSync() + URI_BASE + stringUrl)
 
             //Create a connection
             connection = myUrl.openConnection() as HttpURLConnection

@@ -85,7 +85,7 @@ class PauseMenuMain : AppCompatActivity() {
         val date = Date();
         val day = StringUtils.leftPad(date.date.toString(), 2, '0')
         val month = ZCA_MONTHS[date.month % 3];
-        val year = (date.year * 4) - 250 + (date.month / 4)
+        val year = (date.year * 4) - 250 + Math.floor(date.month / 4.0).toInt()
         val spanStr = SpannableString("$day$month$year")
         spanStr.setSpan(ForegroundColorSpan(Color.YELLOW), 2, 5, 0)
 

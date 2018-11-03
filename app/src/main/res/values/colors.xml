@@ -7,4 +7,6 @@
     <color name="notImplementedMenuItemColor">#747474</color>
     <color name="colorSubtitle">#00ffff</color>
     <color name="defaultBg">#000000</color>
+    <color name="colorProblem">#ff0000</color>
+    <color name="colorSaturation1">#000080</color>
 </resources>

@@ -4,9 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import com.halkyproject.pausemenu.R
+import com.halkyproject.pausemenu.components.CustomEditText
 import com.halkyproject.pausemenu.components.CustomTextView
 import com.halkyproject.pausemenu.fragments.DatePickerFragment
 import com.halkyproject.pausemenu.fragments.TimePickerFragment
@@ -24,6 +29,16 @@ class Configurations : AppCompatActivity() {
             findViewById<CustomTextView>(R.id.val_hrNasc).text = String.format("%1\$tR", it)
             findViewById<CustomTextView>(R.id.val_tzNasc).text = String.format("GMT %1\$tz", it)
         })
+        ConfigSingleton.getInstance().getServerUrl().observe(this, android.arch.lifecycle.Observer {
+            val input = findViewById<CustomEditText>(R.id.val_serverUrl)
+            input.setText(it, TextView.BufferType.EDITABLE)
+            input.setOnFocusChangeListener { _, hasFocus ->
+                if (!hasFocus) {
+                    ConfigSingleton.getInstance().setServerUrl("" + input.text)
+                    Toast.makeText(applicationContext, "Servidor salvo!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
     fun showPickerDtNasc(v: View) {
@@ -35,7 +50,7 @@ class Configurations : AppCompatActivity() {
             ctv.text = String.format("%1\$td/%1\$Tb/%1\$tY", it)
             ConfigSingleton.getInstance().setBirthDate(it)
         }
-        newFragment.currentValue = ConfigSingleton.getInstance().getBirthDateCache();
+        newFragment.currentValue = ConfigSingleton.getInstance().getBirthDateCache()
         newFragment.show(supportFragmentManager, "nascDatePicker")
     }
 
@@ -47,7 +62,7 @@ class Configurations : AppCompatActivity() {
             ctv.text = String.format("%1\$tR", it)
             ConfigSingleton.getInstance().setBirthHour(it)
         }
-        newFragment.currentValue = ConfigSingleton.getInstance().getBirthDateCache();
+        newFragment.currentValue = ConfigSingleton.getInstance().getBirthDateCache()
         newFragment.show(supportFragmentManager, "nascTimePicker")
     }
 
@@ -63,7 +78,7 @@ class Configurations : AppCompatActivity() {
             val tz: TimeZone = TimeZone.getTimeZone(types[which])
             val cal = Calendar.getInstance()
             cal.timeZone = tz
-            ctv.text = String.format("GMT %1\$tz", cal);
+            ctv.text = String.format("GMT %1\$tz", cal)
             ConfigSingleton.getInstance().setBirthTimeZone(tz)
         }
         tzSpinner.show()

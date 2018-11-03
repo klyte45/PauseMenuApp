@@ -32,4 +32,11 @@
     <string name="all.location">Localização</string>
     <string name="all.locationPlaceholder"><![CDATA[<Endereço>]]></string>
     <string name="all.save">Salvar</string>
+    <string name="all.delete">Apagar</string>
+    <string name="all.confirmDelete">Tem certeza?</string>
+    <string name="all.no">Não</string>
+    <string name="all.yes">Sim</string>
+    <string name="all.loading">Carregando...</string>
+    <string name="config.serverConfigs">Servidor</string>
+    <string name="config.urlServer">URL do Servidor</string>
 </resources>

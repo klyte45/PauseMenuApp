@@ -1,14 +1,9 @@
 package com.halkyproject.pausemenu.activities.finance
 
-import android.annotation.SuppressLint
 import android.icu.text.DecimalFormat
 import android.icu.text.NumberFormat
-import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.text.Editable
-import android.text.InputFilter
-import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -35,56 +30,8 @@ class FinancesAccountEdit : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_finances_account_edit)
-
-        val amountTextWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-
-            }
-
-            @SuppressLint("SetTextI18n")
-            override fun afterTextChanged(s: Editable) {
-                val cursorPosition = m_accountBalance.selectionEnd
-                val originalStr = m_accountBalance.text.toString()
-
-                //To restrict only two digits after decimal place
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    m_accountBalance.filters = arrayOf<InputFilter>(FormatSingleton.MoneyValueFilter(2, resources.configuration.locale))
-                }
-                val nf = NumberFormat.getInstance() as DecimalFormat
-                val decSep = nf.decimalFormatSymbols.decimalSeparator
-                val tsdSep = nf.decimalFormatSymbols.groupingSeparator
-
-                try {
-                    m_accountBalance.removeTextChangedListener(this)
-                    val value = m_accountBalance.text.toString()
-
-                    if (value != "") {
-                        if (value.startsWith(decSep)) {
-                            m_accountBalance.setText("0$value")
-                        }
-                        if (value.startsWith("-$decSep")) {
-                            m_accountBalance.setText("-0$value")
-                        }
-                        val str = m_accountBalance.text.toString().replace("$tsdSep", "")
-                        if (value != "")
-                            m_accountBalance.setText(FormatSingleton.getDecimalFormattedString(str, decSep, tsdSep))
-                        val diff = m_accountBalance.text.toString().length - originalStr.length
-                        m_accountBalance.setSelection(cursorPosition + diff)
-                    }
-                    m_accountBalance.addTextChangedListener(this)
-                } catch (ex: Throwable) {
-                    ex.printStackTrace()
-                    m_accountBalance.addTextChangedListener(this)
-                }
-
-            }
-        }
-        m_accountBalance.addTextChangedListener(amountTextWatcher)
-
+        m_accountBalance.addTextChangedListener(FormatSingleton.maskNumberInput(m_accountBalance, resources.configuration.locale))
+        m_accountLimit.addTextChangedListener(FormatSingleton.maskNumberInput(m_accountLimit, resources.configuration.locale))
         m_accountNumber.addTextChangedListener(FormatSingleton.mask(m_accountNumber, FormatSingleton.FORMAT_FINANCIAL_ACCOUNT))
 
         m_groupAccountType.setOnCheckedChangeListener { _, id ->
@@ -120,7 +67,8 @@ class FinancesAccountEdit : AppCompatActivity() {
                 for (x in arrayOf(op_virtual, op_savings, op_current, op_local, op_euro, op_dolar, op_real, m_bankNumber, m_accountBranch, m_accountNumber)) {
                     x.isEnabled = false
                 }
-                m_accountBalance.setText(editingObject!!.balance.toString(), TextView.BufferType.EDITABLE)
+                m_accountBalance.setText(editingObject!!.balance!!.multiply(BigDecimal(100)).intValueExact().toString(), TextView.BufferType.EDITABLE)
+                m_accountLimit.setText(editingObject!!.creditLimit!!.multiply(BigDecimal(100)).intValueExact().toString(), TextView.BufferType.EDITABLE)
             }
         }
         m_loadingFrame.visibility = View.GONE
@@ -136,6 +84,7 @@ class FinancesAccountEdit : AppCompatActivity() {
         var branch: String? = m_accountBranch.text.toString()
         var accountNum: String? = FormatSingleton.unmask(m_accountNumber.text.toString())
         val accountBalance: BigDecimal = toBigDecimal(m_accountBalance.text.toString(), decSep, tsdSep)
+        val credLimit: BigDecimal = toBigDecimal(m_accountLimit.text.toString(), decSep, tsdSep)
         val selectedAccountType = when (m_groupAccountType.checkedRadioButtonId) {
             op_current.id -> FinancialAccount.AccountType.CURRENT
             op_local.id -> FinancialAccount.AccountType.LOCAL
@@ -184,13 +133,16 @@ class FinancesAccountEdit : AppCompatActivity() {
         m_loadingFrame.visibility = View.VISIBLE
         try {
             val obj: T = editingObject ?: T()
-            obj.branch = branch
-            obj.bankNumber = bankNum
-            obj.number = accountNum
+            if (editingObject == null) {
+                obj.branch = branch
+                obj.bankNumber = bankNum
+                obj.number = accountNum
+                obj.currency = selectedCurrency
+                obj.type = selectedAccountType
+            }
             obj.name = accountName
             obj.balance = accountBalance
-            obj.currency = selectedCurrency
-            obj.type = selectedAccountType
+            obj.creditLimit = credLimit
 
             if (obj.id == null) {
                 if (!AccountService.insert(obj).get()) {

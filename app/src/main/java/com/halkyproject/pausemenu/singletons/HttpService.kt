@@ -31,8 +31,8 @@ object HttpService {
             connection.readTimeout = READ_TIMEOUT
             connection.connectTimeout = CONNECTION_TIMEOUT
             val reqDate = Date()
-            connection.setRequestProperty("X-Welber2", reqDate.toString())
-            connection.setRequestProperty("X-Welber", SecuritySingleton.getHash(reqDate.toString()))
+            connection.setRequestProperty("X-Welber2", reqDate.time.toString())
+            connection.setRequestProperty("X-Welber", SecuritySingleton.getHash(reqDate.time.toString()))
 
             if (body != null && requestMethod != HttpRequestMethod.GET) {
                 connection.setRequestProperty("Content-Type", contentType)

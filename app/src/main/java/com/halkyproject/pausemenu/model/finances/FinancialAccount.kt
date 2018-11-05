@@ -6,6 +6,7 @@ import java.math.BigDecimal
 class FinancialAccount : Serializable {
     companion object {
         const val URI_NAME = "finAccount"
+        const val BASE_URL = "/fin/accounts"
     }
 
     var id: Int? = null
@@ -14,6 +15,7 @@ class FinancialAccount : Serializable {
     var branch: String? = null
     var number: String? = null
     var balance: BigDecimal? = null
+    var creditLimit: BigDecimal? = null
     lateinit var type: AccountType
     lateinit var currency: Currency
 

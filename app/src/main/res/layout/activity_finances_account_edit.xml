@@ -267,6 +267,37 @@
                         android:textDirection="ltr"/>
 
                 <com.halkyproject.pausemenu.components.CustomTextView
+                        android:text="@string/finances.creditLimit"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/colorSubtitle"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        app:textAllCaps="true"
+                        android:id="@+id/customTextView12"/>
+
+                <com.halkyproject.pausemenu.components.CustomEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        style="@style/default_input"
+                        android:id="@+id/m_accountLimit"
+                        android:digits="0123456798,."
+                        android:inputType="numberDecimal"
+                        android:textAlignment="textEnd"
+                        android:textDirection="ltr"/>
+
+                <com.halkyproject.pausemenu.components.CustomTextView
                         android:text="@string/finances.accountCurrency"
                         app:font_name="VideoGame"
                         android:textSize="@dimen/mainMenu.listItem.fontSize"

@@ -62,4 +62,5 @@
     <string name="finance.currency.dolar">Dólar</string>
     <string name="finance.currency.eur">Euro</string>
     <string name="finances.additionalAccountInfo">Informações Adicionais</string>
+    <string name="finances.creditLimit">Limite de Crédito</string>
 </resources>

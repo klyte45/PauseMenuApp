@@ -5,8 +5,8 @@
              android:layout_width="match_parent"
              tools:context=".fragments.CompanyCrudCardFragment"
              android:layout_height="wrap_content"
-             android:backgroundTint="@color/colorPrimaryDark"
-        >
+             android:backgroundTint="@color/colorSaturation1"
+             android:background="@drawable/default_bg">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -17,7 +17,6 @@
             android:layout_height="match_parent"
             android:paddingLeft="4dp"
             android:paddingRight="4dp"
-            android:background="@drawable/default_bg"
             android:backgroundTint="@color/colorSaturation1"
             android:paddingTop="4dp"
             android:paddingBottom="4dp">
@@ -43,7 +42,7 @@
                 app:font_name="VideoGame"
                 android:textSize="10sp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:textAllCaps="true"
@@ -57,14 +56,14 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                >
 
             <com.halkyproject.pausemenu.components.CustomTextView
                     android:id="@+id/accountType"
                     android:text="@string/config.dtNasc"
                     app:font_name="VideoGame"
                     android:textSize="8sp"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -73,14 +72,15 @@
                     android:layout_marginBottom="1dp"
                     android:layout_marginTop="1dp"
 
-                    tools:ignore="SmallSp"/>
+                    tools:ignore="SmallSp"
+                    android:layout_weight="1"/>
 
             <com.halkyproject.pausemenu.components.CustomTextView
                     android:id="@+id/accountBalance"
                     android:text="@string/config.dtNasc"
                     app:font_name="VideoGame"
                     android:textSize="8sp"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +89,8 @@
                     android:layout_marginBottom="1dp"
                     android:layout_marginTop="1dp"
                     android:textAlignment="viewEnd"
-                    tools:ignore="SmallSp"/>
+                    tools:ignore="SmallSp"
+                    android:layout_weight="1"/>
         </LinearLayout>
 
     </LinearLayout>

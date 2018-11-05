@@ -1,5 +1,6 @@
 package com.halkyproject.pausemenu.singletons
 
+import android.annotation.SuppressLint
 import android.icu.text.DecimalFormat
 import android.icu.text.NumberFormat
 import android.os.Build
@@ -11,11 +12,12 @@ import android.text.TextWatcher
 import android.text.method.DigitsKeyListener
 import android.widget.EditText
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.*
 
 
 object FormatSingleton {
-    fun getDecimalFormattedString(value: String, decimalSeparator: Char, thousandSeparator: Char): String {
+    fun getDecimalFormattedString(value: String, decimalSeparator: Char, thousandSeparator: Char, requiredDecimalPlaces: Int = 2): String {
         if (!value.equals("", ignoreCase = true)) {
             val lst = StringTokenizer(value, "$decimalSeparator")
             var str1: String = value
@@ -31,6 +33,10 @@ object FormatSingleton {
                 j--
                 str3 = "$decimalSeparator"
             }
+            while (str2.length < requiredDecimalPlaces) {
+                str2 += '0'
+            }
+
             var k = j
             while (true) {
                 if (k < 0) {
@@ -52,9 +58,48 @@ object FormatSingleton {
 
     fun toBigDecimal(value: String, decimalSeparator: Char, thousandSeparator: Char): BigDecimal {
         if (!value.equals("", ignoreCase = true)) {
-            return BigDecimal(value.replace("$thousandSeparator", "").replace("$decimalSeparator", ".").replace(Regex("/[^0-9.-]/"), ""))
+            return BigDecimal(value.replace("$thousandSeparator", "").replace("$decimalSeparator", ".").replace(Regex("[^0-9.-]"), ""))
         }
         return BigDecimal.ZERO
+    }
+
+    fun maskNumberInput(edtTxt: EditText, locale: Locale): TextWatcher {
+        return object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+            }
+
+            @SuppressLint("SetTextI18n")
+            override fun afterTextChanged(s: Editable) {
+                val cursorPosition = edtTxt.selectionEnd
+                val originalStr = edtTxt.text.toString()
+                val neg = originalStr.startsWith("-")
+
+                val nf = NumberFormat.getInstance() as DecimalFormat
+                val decSep = nf.decimalFormatSymbols.decimalSeparator
+                val tsdSep = nf.decimalFormatSymbols.groupingSeparator
+
+                val value = BigDecimal(originalStr.replace(Regex("[^0-9]"), "")).setScale(2, RoundingMode.FLOOR).div(BigDecimal(100))
+
+
+                try {
+                    edtTxt.removeTextChangedListener(this)
+                    edtTxt.setText((if (neg) "-" else "") + FormatSingleton.getDecimalFormattedString(value.toString().replace(".", "$decSep"), decSep, tsdSep))
+                    val diff = edtTxt.text.toString().length - originalStr.length
+                    edtTxt.setSelection(cursorPosition + diff)
+
+                    edtTxt.addTextChangedListener(this)
+                } catch (ex: Throwable) {
+                    ex.printStackTrace()
+                    edtTxt.addTextChangedListener(this)
+                }
+
+            }
+        }
     }
 
     val FORMAT_CPF = "###.###.###-##"

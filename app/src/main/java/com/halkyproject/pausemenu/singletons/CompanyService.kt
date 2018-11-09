@@ -2,7 +2,7 @@ package com.halkyproject.pausemenu.singletons
 
 import android.os.AsyncTask
 import com.google.gson.Gson
-import com.halkyproject.pausemenu.model.Company
+import com.halkyproject.lifehack.model.Company
 
 
 object CompanyService {

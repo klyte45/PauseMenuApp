@@ -1,15 +1,14 @@
-//com.halkyproject.pausemenu.singletons=FinancialAccount=AccountService;
+//com.halkyproject.pausemenu.singletons=com.halkyproject.lifehack.model.finances.FinancialAccount=AccountService;
 package @@NEW_CLASS_PACKAGE@@
 
 import android.os.AsyncTask
 import com.google.gson.Gson
-import com.halkyproject.pausemenu.model.finances.FinancialAccount
-import @@NEW_CLASS_PACKAGE@@.*
+import com.halkyproject.pausemenu.singletons.*
 
 typealias T = @@FULL_CLASS_0@@
 
 
-object @@NEW_CLASS_NAME@@ {
+object @@NEW_CLASS_NAME@@ {                            
     private const val BASE_URL: String = T.BASE_URL
 
     private class Insert : AsyncTask<T, Void, Boolean>() {

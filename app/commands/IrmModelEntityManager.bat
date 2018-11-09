@@ -1,0 +1,1 @@
+ irm -Method "@@METHOD@@" -H @{"X-Welber"="ZAOCA"; "Content-type"="application/json"} -Body '@@REQUEST_BODY@@' -Uri '@@HOST_URL@@/entityManagement/@@ENTITY_ID@@'

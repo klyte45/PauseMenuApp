@@ -1,0 +1,82 @@
+<project>
+    <target name="runCommands">
+        <loadfile property="baseCommand" srcFile="commands/IrmModelEntityManager.bat"/>
+        <property name="entitiesDir" value="src/main/java/com/halkyproject/pausemenu/model/"/>
+        <fileset id="filesref" dir="${entitiesDir}" includes="**/*.kt"/>
+        <property name="entities" refid="filesref"/>
+
+        <echo message="Files: ${models}/ ${basedir}"/>
+
+
+
+        <script language="javascript">   <![CDATA[
+            var modelDir = project.getProperty("basedir") +"/"+ project.getProperty("modelDir");
+            var models = project.getProperty("models").split(";");
+            var File = Java.type('java.io.File');
+            var HeadFilter = Java.type('org.apache.tools.ant.filters.HeadFilter');
+            var FilterChain = Java.type('org.apache.tools.ant.types.FilterChain');
+
+            var filterHeader = new HeadFilter();
+            filterHeader.setLines(1);
+
+            var filterChainHeader = new FilterChain();
+            filterChainHeader.add(filterHeader);
+
+            for (var i = 0; i < models.length; i++) {
+                var currentModel = models[i];
+
+                var readClassTask = project.createTask("loadfile");
+                readClassTask.setSrcFile(new File(modelDir+currentModel));
+                readClassTask.setProperty("tmp.headLines");
+
+
+                readClassTask.addFilterChain(filterChainHeader);
+                readClassTask.perform();
+
+                var modelSubItems = project.getProperty("tmp.headLines").substring(2).trim().split(";");
+
+
+
+                for(var j = 0; j < modelSubItems.length; j++){
+                    var params =  modelSubItems[j].split("=");
+                    if(params.length != 3) continue;
+
+                    var implClasses = params[1].split(",");
+
+                    var t = project.createTask("antcall");
+                    t.setTarget("classGen");
+                    var p;
+                    p = t.createParam();p.setName("modelPath");p.setValue(modelDir+currentModel);
+                    p = t.createParam();p.setName("newClassPackage");p.setValue(params[0]);
+                    p = t.createParam();p.setName("newClassFullPath");p.setValue(params[0].replaceAll("\\.","/")+"/"+params[2]);
+                    p = t.createParam();p.setName("newClassName");p.setValue(params[2]);
+
+                    echo = project.createTask("echo");
+                    echo.setMessage(implClasses);
+                    echo.perform();
+
+                    for(var k = 0; k < implClasses.length; k++) {
+                        p = t.createParam();p.setName("classImplQualifiedName"+k);p.setValue(implClasses[k].trim());
+                    }
+                   t.perform();
+                }
+
+
+
+            }
+]]>
+        </script>
+    </target>
+    irm -Method "@@METHOD@@" -H @{"X-Welber"="ZAOCA"; "Content-type"="application/json"} -Body '@@REQUEST_BODY@@' -Uri '@@HOST_URL@@/entityManagement/@@ENTITY_ID@@'
+    <target name="commandGen">
+        <copy tofile="${buildDir}/${newClassFullPath}.kt" file="${modelPath}" failonerror="true" verbose="true"
+              overwrite="true"/>
+        <replace file="${buildDir}/${newClassFullPath}.kt" token="@@METHOD@@" value="${newClassPackage}"/>
+        <replace file="${buildDir}/${newClassFullPath}.kt" token="@@REQUEST_BODY@@" value="${newClassName}"/>
+        <replace file="${buildDir}/${newClassFullPath}.kt" token="@@HOST_URL@@" value="${classImplQualifiedName0}"/>
+        <replace file="${buildDir}/${newClassFullPath}.kt" token="@@ENTITY_ID@@" value="${classImplQualifiedName1}"/>
+
+        <echo>${buildDir}/${newClassFullPath}.kt Created From ${modelPath}</echo>
+    </target>
+</project>
+

@@ -13,8 +13,8 @@ import android.view.ViewGroup
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.activities.finance.FinancesAccountEdit
 import com.halkyproject.pausemenu.components.CustomTextView
-import com.halkyproject.pausemenu.model.finances.Currency
-import com.halkyproject.pausemenu.model.finances.FinancialAccount
+import com.halkyproject.lifehack.model.finances.Currency
+import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.singletons.FormatSingleton
 
 

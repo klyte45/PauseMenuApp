@@ -24,8 +24,8 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.common.base.Enums
 import com.halkyproject.pausemenu.R
+import com.halkyproject.lifehack.model.Company
 import com.halkyproject.pausemenu.enum.Country
-import com.halkyproject.pausemenu.model.Company
 import com.halkyproject.pausemenu.singletons.CompanyService
 import com.halkyproject.pausemenu.singletons.FormatSingleton
 import kotlinx.android.synthetic.main.activity_company_edit.*

@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.activities.CompanyEdit
 import com.halkyproject.pausemenu.components.CustomTextView
-import com.halkyproject.pausemenu.model.Company
+import com.halkyproject.lifehack.model.Company
 import com.halkyproject.pausemenu.singletons.FormatSingleton
 
 

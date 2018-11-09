@@ -10,8 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.fragments.ACCOUNT_VALUES_TYPE_BANK
-import com.halkyproject.pausemenu.model.finances.Currency
-import com.halkyproject.pausemenu.model.finances.FinancialAccount
+import com.halkyproject.lifehack.model.finances.Currency
+import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.singletons.AccountService
 import com.halkyproject.pausemenu.singletons.FormatSingleton
 import com.halkyproject.pausemenu.singletons.FormatSingleton.toBigDecimal

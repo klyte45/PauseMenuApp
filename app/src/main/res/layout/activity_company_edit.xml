@@ -171,7 +171,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:textColor="@color/notImplementedMenuItemColor"
+                        android:textColor="@color/inactiveFg"
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"

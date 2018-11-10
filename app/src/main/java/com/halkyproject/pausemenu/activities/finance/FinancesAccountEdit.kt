@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
+import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
 import com.halkyproject.lifehack.model.finances.Currency
@@ -14,6 +15,7 @@ import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_BANK
 import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_NO_BALANCE
 import com.halkyproject.pausemenu.R
+import com.halkyproject.pausemenu.adapter.SpinnerTypeAdapter
 import com.halkyproject.pausemenu.singletons.AccountService
 import com.halkyproject.pausemenu.singletons.FormatSingleton
 import com.halkyproject.pausemenu.singletons.FormatSingleton.toBigDecimal
@@ -28,6 +30,17 @@ class FinancesAccountEdit : AppCompatActivity() {
         const val KEY_EDIT_ID = "EditItemId"
     }
 
+    private val defaultListenerSpinners = object : AdapterView.OnItemSelectedListener {
+        override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
+            redrawForm(Currency.values()[m_spinnerCurrency.selectedItemPosition], FinancialAccount.AccountType.values()[m_spinnerType.selectedItemPosition])
+        }
+
+        override fun onNothingSelected(parentView: AdapterView<*>?) {
+            m_additionalAccountInfoGroup.visibility = View.GONE
+            m_accountBalanceInfoGroup.visibility = View.GONE
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_finances_account_edit)
@@ -35,26 +48,19 @@ class FinancesAccountEdit : AppCompatActivity() {
         m_accountLimit.addTextChangedListener(FormatSingleton.maskNumberInput(m_accountLimit, resources.configuration.locale))
         m_accountNumber.addTextChangedListener(FormatSingleton.mask(m_accountNumber, FormatSingleton.FORMAT_FINANCIAL_ACCOUNT))
 
-        m_groupAccountType.setOnCheckedChangeListener { _, id ->
-            if ((id == op_savings.id || id == op_current.id) && m_groupCurrency.checkedRadioButtonId == op_real.id) {
-                m_additionalAccountInfoGroup.visibility = View.VISIBLE
-            } else {
-                m_additionalAccountInfoGroup.visibility = View.GONE
-            }
-            if (id == op_inf_exp.id || id == op_inf_ear.id) {
-                m_accountBalanceInfoGroup.visibility = View.GONE
-            } else {
-                m_accountBalanceInfoGroup.visibility = View.VISIBLE
-            }
+        val currencyOptions = ArrayList<String>()
+        for (cur in Currency.values()) {
+            currencyOptions.add(getString(resources.getIdentifier("finances.currency.${cur.name}", "string", "com.halkyproject.pausemenu")))
         }
+        m_spinnerCurrency.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, currencyOptions, 14f)
+        m_spinnerCurrency.onItemSelectedListener = defaultListenerSpinners
 
-        m_groupCurrency.setOnCheckedChangeListener { _, id ->
-            if ((m_groupAccountType.checkedRadioButtonId == op_savings.id || m_groupAccountType.checkedRadioButtonId == op_current.id) && id == op_real.id) {
-                m_additionalAccountInfoGroup.visibility = View.VISIBLE
-            } else {
-                m_additionalAccountInfoGroup.visibility = View.GONE
-            }
+        val accountTypeOptions = ArrayList<String>()
+        for (typ in FinancialAccount.AccountType.values()) {
+            accountTypeOptions.add(getString(resources.getIdentifier(typ.localeEntry, "string", "com.halkyproject.pausemenu")))
         }
+        m_spinnerType.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, accountTypeOptions, 14f)
+        m_spinnerType.onItemSelectedListener = defaultListenerSpinners
 
         val editId: Int = intent?.extras?.getInt(KEY_EDIT_ID) ?: -1
 
@@ -65,23 +71,12 @@ class FinancesAccountEdit : AppCompatActivity() {
                 m_bankNumber.setText(editingObject!!.bankNumber, TextView.BufferType.EDITABLE)
                 m_accountBranch.setText(editingObject!!.branch, TextView.BufferType.EDITABLE)
                 m_accountNumber.setText(editingObject!!.number, TextView.BufferType.EDITABLE)
-                when (editingObject!!.type) {
-                    FinancialAccount.AccountType.VIRTUAL -> op_virtual.isChecked = true
-                    FinancialAccount.AccountType.SAVINGS -> op_savings.isChecked = true
-                    FinancialAccount.AccountType.CURRENT -> op_current.isChecked = true
-                    FinancialAccount.AccountType.LOCAL -> op_local.isChecked = true
-                    FinancialAccount.AccountType.INFINITE_EARNING -> op_inf_ear.isChecked = true
-                    FinancialAccount.AccountType.INFINITE_EXPENSE -> op_inf_exp.isChecked = true
-                }
-                when (editingObject!!.currency) {
-                    Currency.EUR -> op_euro.isChecked = true
-                    Currency.USD -> op_dolar.isChecked = true
-                    Currency.BRL -> op_real.isChecked = true
-                }
+                m_spinnerType.setSelection(editingObject!!.type.ordinal)
+                m_spinnerCurrency.setSelection(editingObject!!.currency.ordinal)
 
 
-                for (x in arrayOf(op_virtual, op_savings, op_current, op_local, op_inf_exp, op_inf_ear, op_euro, op_dolar, op_real, m_bankNumber, m_accountBranch, m_accountNumber)) {
-                    x.isEnabled = false
+                for (x in arrayOf(m_spinnerType, m_spinnerType.selectedView, m_spinnerCurrency, m_spinnerCurrency.selectedView, m_bankNumber, m_accountBranch, m_accountNumber)) {
+                    x?.isEnabled = false
                 }
                 if (editingObject!!.type in ACCOUNT_VALUES_TYPE_NO_BALANCE) {
                     m_accountBalanceInfoGroup.visibility = View.GONE
@@ -100,9 +95,23 @@ class FinancesAccountEdit : AppCompatActivity() {
             }
         }
         if (editingObject == null) {
+            m_spinnerType.setSelection(-1)
             m_active.visibility = View.GONE
         }
         m_loadingFrame.visibility = View.GONE
+    }
+
+    private fun redrawForm(currencySelected: Currency, accountTypeSelected: FinancialAccount.AccountType) {
+        if (currencySelected == Currency.BRL && accountTypeSelected in ACCOUNT_VALUES_TYPE_BANK) {
+            m_additionalAccountInfoGroup.visibility = View.VISIBLE
+        } else {
+            m_additionalAccountInfoGroup.visibility = View.GONE
+        }
+        if (accountTypeSelected in ACCOUNT_VALUES_TYPE_NO_BALANCE) {
+            m_accountBalanceInfoGroup.visibility = View.GONE
+        } else {
+            m_accountBalanceInfoGroup.visibility = View.VISIBLE
+        }
     }
 
 
@@ -148,30 +157,17 @@ class FinancesAccountEdit : AppCompatActivity() {
         var accountNum: String? = FormatSingleton.unmask(m_accountNumber.text.toString())
         val accountBalance: BigDecimal = toBigDecimal(m_accountBalance.text.toString(), decSep, tsdSep)
         val credLimit: BigDecimal = toBigDecimal(m_accountLimit.text.toString(), decSep, tsdSep)
-        val selectedAccountType = when (m_groupAccountType.checkedRadioButtonId) {
-            op_current.id -> FinancialAccount.AccountType.CURRENT
-            op_local.id -> FinancialAccount.AccountType.LOCAL
-            op_savings.id -> FinancialAccount.AccountType.SAVINGS
-            op_virtual.id -> FinancialAccount.AccountType.VIRTUAL
-            op_inf_ear.id -> FinancialAccount.AccountType.INFINITE_EARNING
-            op_inf_exp.id -> FinancialAccount.AccountType.INFINITE_EXPENSE
-            else -> null
-        }
-        val selectedCurrency = when (m_groupCurrency.checkedRadioButtonId) {
-            op_real.id -> Currency.BRL
-            op_dolar.id -> Currency.USD
-            op_euro.id -> Currency.EUR
-            else -> null
-        }
-
-        if (selectedAccountType == null) {
+        if (m_spinnerType.selectedItemPosition == -1) {
             Toast.makeText(applicationContext, "Selecione o tipo de conta!", Toast.LENGTH_SHORT).show()
             return
         }
-        if (selectedCurrency == null) {
+        if (m_spinnerCurrency.selectedItemPosition == -1) {
             Toast.makeText(applicationContext, "Selecione a moeda da conta!", Toast.LENGTH_SHORT).show()
             return
         }
+        val selectedAccountType = FinancialAccount.AccountType.values()[m_spinnerType.selectedItemPosition]
+        val selectedCurrency = Currency.values()[m_spinnerCurrency.selectedItemPosition]
+
         if (accountName.length < 2) {
             Toast.makeText(applicationContext, "Nome muito curto!", Toast.LENGTH_SHORT).show()
             return

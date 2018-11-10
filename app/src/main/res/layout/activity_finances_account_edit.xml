@@ -93,37 +93,11 @@
                         app:textAllCaps="true"
                         android:id="@+id/customTextView9"/>
 
-                <RadioGroup
+                <Spinner
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:id="@+id/m_groupCurrency">
-
-                    <com.halkyproject.pausemenu.components.CustomRadioButton
-                            android:text="@string/finance.currency.brl"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/op_real"
-                            android:layout_weight="1"
-                            android:textAllCaps="true"
-                            android:checked="true"/>
-
-                    <com.halkyproject.pausemenu.components.CustomRadioButton
-                            android:text="@string/finance.currency.dolar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/op_dolar"
-                            android:layout_weight="1"
-                            android:textAllCaps="true"/>
-
-                    <com.halkyproject.pausemenu.components.CustomRadioButton
-                            android:text="@string/finance.currency.eur"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/op_euro"
-                            android:layout_weight="1"
-                            android:textAllCaps="true"/>
-                </RadioGroup>
+                        android:layout_height="wrap_content"
+                        android:id="@+id/m_spinnerCurrency"
+                        android:layout_weight="1"/>
 
 
                 <com.halkyproject.pausemenu.components.CustomTextView
@@ -139,57 +113,11 @@
                         app:textAllCaps="true"
                         android:id="@+id/customTextView10"/>
 
-                <RadioGroup
+                <Spinner
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:id="@+id/m_groupAccountType">
-
-                    <com.halkyproject.pausemenu.components.CustomRadioButton
-                            android:text="@string/finance.accountType.savings"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/op_savings"
-                            android:textAllCaps="true"
-                            android:layout_weight="1"/>
-
-                    <com.halkyproject.pausemenu.components.CustomRadioButton
-                            android:text="@string/finance.accountType.current"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/op_current"
-                            android:textAllCaps="true"
-                            android:layout_weight="1"/>
-
-                    <com.halkyproject.pausemenu.components.CustomRadioButton
-                            android:text="@string/finance.accountType.local"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/op_local"
-                            android:textAllCaps="true"
-                            android:layout_weight="1"/>
-
-                    <com.halkyproject.pausemenu.components.CustomRadioButton
-                            android:text="@string/finance.accountType.virtual"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/op_virtual"
-                            android:textAllCaps="true"/>
-
-                    <com.halkyproject.pausemenu.components.CustomRadioButton
-                            android:text="@string/finance.accountType.infiniteEarning"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/op_inf_ear"
-                            android:textAllCaps="true"/>
-
-                    <com.halkyproject.pausemenu.components.CustomRadioButton
-                            android:text="@string/finance.accountType.infiniteExpense"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/op_inf_exp"
-                            android:textAllCaps="true"/>
-                </RadioGroup>
+                        android:layout_height="wrap_content"
+                        android:id="@+id/m_spinnerType"
+                        android:layout_weight="1"/>
 
                 <LinearLayout
                         android:orientation="vertical"

@@ -82,9 +82,12 @@ object FormatSingleton {
                 val nf = NumberFormat.getInstance() as DecimalFormat
                 val decSep = nf.decimalFormatSymbols.decimalSeparator
                 val tsdSep = nf.decimalFormatSymbols.groupingSeparator
-
-                val value = BigDecimal(originalStr.replace(Regex("[^0-9]"), "")).setScale(2, RoundingMode.FLOOR).div(BigDecimal(100))
-
+                val value: BigDecimal
+                try {
+                    value = BigDecimal(originalStr.replace(Regex("[^0-9]"), "")).setScale(2, RoundingMode.FLOOR).div(BigDecimal(100))
+                } catch (e: NumberFormatException) {
+                    return
+                }
 
                 try {
                     edtTxt.removeTextChangedListener(this)

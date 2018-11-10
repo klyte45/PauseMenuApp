@@ -19,7 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:textAllCaps="true"
-            android:textColor="@color/notImplementedMenuItemColor"
+            android:textColor="@color/inactiveFg"
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"/>
 
@@ -33,7 +33,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:textAllCaps="true"
-            android:textColor="@color/notImplementedMenuItemColor"
+            android:textColor="@color/inactiveFg"
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"/>
 
@@ -47,7 +47,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:textAllCaps="true"
-            android:textColor="@color/notImplementedMenuItemColor"
+            android:textColor="@color/inactiveFg"
             android:layout_marginBottom="2dp"
             android:layout_marginTop="2dp"/>
 

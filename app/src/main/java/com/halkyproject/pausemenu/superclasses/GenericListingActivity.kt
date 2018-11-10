@@ -10,16 +10,21 @@ import com.halkyproject.lifehack.model.BasicEntityModel
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.adapter.SpinnerTypeAdapter
-import com.halkyproject.pausemenu.fragments.AccountCrudCardFragment
 import kotlinx.android.synthetic.main.activity__basic_listing_2filters.*
 
 
-abstract class GenericListingActivity<Entity, Activity, Fragment> : BasicListingActivity<Entity, GenericListingActivity<Entity, Activity, Fragment>, Fragment>(), AccountCrudCardFragment.OnFragmentInteractionListener where Entity : BasicEntityModel, Activity : GenericListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
+abstract class GenericListingActivity<Entity, Activity, Fragment> : BasicListingActivity<Entity, GenericListingActivity<Entity, Activity, Fragment>, Fragment>() where Entity : BasicEntityModel, Activity : GenericListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
 
     abstract fun getEditActivityClass(): Class<*>
-    abstract fun getOptionsFilter1(): List<String>?
-    abstract fun getOptionsFilter2(): List<String>?
     abstract fun getListTitle(): Int
+
+    open fun getOptionsFilter1(): List<String>? {
+        return null
+    }
+
+    open fun getOptionsFilter2(): List<String>? {
+        return null
+    }
 
     override fun getScrollLayout(): LinearLayout {
         return scrollLayout
@@ -58,7 +63,7 @@ abstract class GenericListingActivity<Entity, Activity, Fragment> : BasicListing
         } else {
             m_spinnerFilter2.visibility = View.GONE
         }
-
+        reload()
     }
 
     fun addNew(v: View) {

@@ -1,58 +1,28 @@
 package com.halkyproject.pausemenu.activities
 
-import android.content.Intent
-import android.net.Uri
-import android.os.AsyncTask
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.view.View
+import com.halkyproject.lifehack.model.Company
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.fragments.CompanyCrudCardFragment
 import com.halkyproject.pausemenu.singletons.CompanyService
-import kotlinx.android.synthetic.main.activity_company_edit.*
+import com.halkyproject.pausemenu.superclasses.GenericListingActivity
 
-class CompanyCrud : AppCompatActivity(), CompanyCrudCardFragment.OnFragmentInteractionListener {
-
-    companion object {
-        class ReloadAsync : AsyncTask<CompanyCrud, Void, Unit>() {
-            override fun doInBackground(vararg params: CompanyCrud?) {
-                params[0]?.loadCompanies()
-            }
-        }
+class CompanyCrud : GenericListingActivity<Company, CompanyCrud, CompanyCrudCardFragment>() {
+    override fun getListTitle(): Int {
+        return R.string.config_companies
     }
 
-    override fun onFragmentInteraction(uri: Uri) {
-
+    override fun getEditActivityClass(): Class<*> {
+        return CompanyEdit::class.java
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_company_crud)
-        loadCompanies()
+    override fun runOnBackground(): List<Company> {
+//        val searchFilter = AccountService.FinancialAccountFilter(optionsAccountType[m_spinnerFilter1.selectedItemPosition], if (m_spinnerFilter2.selectedItemPosition == 2) null else m_spinnerFilter2.selectedItemPosition == 0)
+        return CompanyService.findAll()
     }
 
-    fun addNewCompany(v: View) {
-        startActivityForResult(Intent(this, CompanyEdit::class.java), 0)
+
+    override fun getFragmentClass(): Class<CompanyCrudCardFragment> {
+        return CompanyCrudCardFragment::class.java
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadCompanies()
-    }
-
-    private fun loadCompanies() {
-        val trRemove = supportFragmentManager.beginTransaction()
-        for (fragment in supportFragmentManager.fragments) {
-            trRemove.remove(fragment)
-        }
-        trRemove.commit()
-
-        val companies = CompanyService.findAll()
-        val trAdd = supportFragmentManager.beginTransaction()
-        for (comp in companies) {
-            val frag = CompanyCrudCardFragment.newInstance(comp)
-            trAdd.add(scrollLayout.id, frag, "item" + comp.id)
-        }
-        trAdd.commit()
-    }
 }

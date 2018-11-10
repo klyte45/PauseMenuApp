@@ -1,16 +1,17 @@
 package com.halkyproject.pausemenu.superclasses
 
+import android.net.Uri
 import android.os.AsyncTask
 import android.support.constraint.ConstraintLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.LinearLayout
-import android.widget.ScrollView
 import com.halkyproject.lifehack.model.BasicEntityModel
 import com.halkyproject.lifehack.model.finances.FinancialAccount
+import com.halkyproject.pausemenu.interfaces.OnFragmentInteractionListener
 
-abstract class BasicListingActivity<Entity, Activity, Fragment> : AppCompatActivity() where Entity : BasicEntityModel, Activity : BasicListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
+abstract class BasicListingActivity<Entity, Activity, Fragment> : AppCompatActivity(), OnFragmentInteractionListener where Entity : BasicEntityModel, Activity : BasicListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
 
     private class ReloadAsync<Entity, Activity, Fragment>(private val fragmentClass: Class<Fragment>) : AsyncTask<Activity, Void, Pair<Activity, List<Entity>>>() where Entity : BasicEntityModel, Activity : BasicListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
 
@@ -64,7 +65,8 @@ abstract class BasicListingActivity<Entity, Activity, Fragment> : AppCompatActiv
     }
 
 
-    private fun reload() {
+    @Suppress("UNCHECKED_CAST")
+    protected fun reload() {
         getLoadingFrame().visibility = View.VISIBLE
         synchronized(this) {
             if (currentRunningAsyncTask == null) {
@@ -74,5 +76,12 @@ abstract class BasicListingActivity<Entity, Activity, Fragment> : AppCompatActiv
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        reload()
+    }
 
+    override fun onFragmentInteraction(uri: Uri) {
+
+    }
 }

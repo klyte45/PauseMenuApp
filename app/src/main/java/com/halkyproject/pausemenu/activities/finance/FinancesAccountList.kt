@@ -11,7 +11,7 @@ import com.halkyproject.pausemenu.superclasses.GenericListingActivity
 import kotlinx.android.synthetic.main.activity__basic_listing_2filters.*
 
 
-class FinancesAccountList : GenericListingActivity<FinancialAccount, FinancesAccountList, AccountCrudCardFragment>(), AccountCrudCardFragment.OnFragmentInteractionListener {
+class FinancesAccountList : GenericListingActivity<FinancialAccount, FinancesAccountList, AccountCrudCardFragment>() {
     override fun getListTitle(): Int {
         return R.string.finances_accounts
     }
@@ -58,7 +58,4 @@ class FinancesAccountList : GenericListingActivity<FinancialAccount, FinancesAcc
         return AccountCrudCardFragment::class.java
     }
 
-    override fun onFragmentInteraction(uri: Uri) {
-
-    }
 }

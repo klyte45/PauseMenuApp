@@ -150,9 +150,9 @@ class CompanyEdit : AppCompatActivity() {
             companyObj.cityDisplayName = addressValue!!.locality
             companyObj.country = country.get().acronym
             if (companyObj.id == null) {
-                CompanyService.insertCompany(companyObj)
+                CompanyService.insert(companyObj)
             } else {
-                CompanyService.updateCompany(companyObj)
+                CompanyService.update(companyObj)
             }
             Toast.makeText(applicationContext, "Salvo com sucesso!", Toast.LENGTH_SHORT).show()
             setResult(RESULT_OK)
@@ -180,7 +180,7 @@ class CompanyEdit : AppCompatActivity() {
         titleLbl.text = getString(R.string.company_editTitle)
         try {
             if (editingCompany!!.id != null) {
-                CompanyService.deleteCompany(editingCompany!!)
+                CompanyService.delete(editingCompany!!)
             }
             Toast.makeText(applicationContext, "Apagado com sucesso!", Toast.LENGTH_SHORT).show()
             setResult(RESULT_OK)

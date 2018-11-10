@@ -11,22 +11,21 @@ import android.widget.TextView
 import android.widget.Toast
 import com.halkyproject.lifehack.model.finances.Currency
 import com.halkyproject.lifehack.model.finances.FinancialAccount
+import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_BANK
+import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_NO_BALANCE
 import com.halkyproject.pausemenu.R
-import com.halkyproject.pausemenu.fragments.ACCOUNT_VALUES_TYPE_BANK
-import com.halkyproject.pausemenu.fragments.ACCOUNT_VALUES_TYPE_NO_BALANCE
 import com.halkyproject.pausemenu.singletons.AccountService
 import com.halkyproject.pausemenu.singletons.FormatSingleton
 import com.halkyproject.pausemenu.singletons.FormatSingleton.toBigDecimal
 import kotlinx.android.synthetic.main.activity_finances_account_edit.*
 import java.math.BigDecimal
 
-typealias T = FinancialAccount
 
 class FinancesAccountEdit : AppCompatActivity() {
-    private var editingObject: T? = null
+    private var editingObject: FinancialAccount? = null
 
     companion object {
-        val KEY_EDIT_ID = "EditItemId"
+        const val KEY_EDIT_ID = "EditItemId"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +48,7 @@ class FinancesAccountEdit : AppCompatActivity() {
             }
         }
 
-        m_groupCurrency. setOnCheckedChangeListener { _, id ->
+        m_groupCurrency.setOnCheckedChangeListener { _, id ->
             if ((m_groupAccountType.checkedRadioButtonId == op_savings.id || m_groupAccountType.checkedRadioButtonId == op_current.id) && id == op_real.id) {
                 m_additionalAccountInfoGroup.visibility = View.VISIBLE
             } else {
@@ -81,7 +80,7 @@ class FinancesAccountEdit : AppCompatActivity() {
                 }
 
 
-                for (x in arrayOf(op_virtual, op_savings, op_current, op_local,op_inf_exp,op_inf_ear, op_euro, op_dolar, op_real, m_bankNumber, m_accountBranch, m_accountNumber)) {
+                for (x in arrayOf(op_virtual, op_savings, op_current, op_local, op_inf_exp, op_inf_ear, op_euro, op_dolar, op_real, m_bankNumber, m_accountBranch, m_accountNumber)) {
                     x.isEnabled = false
                 }
                 if (editingObject!!.type in ACCOUNT_VALUES_TYPE_NO_BALANCE) {
@@ -198,7 +197,7 @@ class FinancesAccountEdit : AppCompatActivity() {
 
         m_loadingFrame.visibility = View.VISIBLE
         try {
-            val obj: T = editingObject ?: T()
+            val obj: FinancialAccount = editingObject ?: FinancialAccount()
             with(obj) {
                 if (editingObject == null) {
                     branch = branchVal

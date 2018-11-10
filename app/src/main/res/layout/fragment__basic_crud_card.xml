@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:paddingLeft="4dp"
+              android:paddingRight="4dp"
+              android:background="@drawable/default_bg"
+              android:id="@+id/m_bgLayer"
+              android:backgroundTint="@color/colorSaturation1"
+              android:paddingTop="4dp"
+              android:paddingBottom="4dp">
+
+    <com.halkyproject.pausemenu.components.CustomTextView
+            android:id="@+id/m_title"
+            android:text="@string/config.dtNasc"
+            app:font_name="Sva"
+            android:textSize="24sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textAllCaps="false"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginBottom="1dp"
+            android:layout_marginTop="1dp"
+            />
+
+    <com.halkyproject.pausemenu.components.CustomTextView
+            android:id="@+id/m_subtitle"
+            android:text="@string/config.dtNasc"
+            app:font_name="VideoGame"
+            android:textSize="10sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textAllCaps="true"
+            android:textColor="@color/colorSubtitle"
+            android:layout_marginBottom="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            tools:ignore="SmallSp"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        <com.halkyproject.pausemenu.components.CustomTextView
+                android:id="@+id/m_bottomDataLeft"
+                android:text="@string/config.dtNasc"
+                app:font_name="VideoGame"
+                android:textSize="8sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:textAllCaps="true"
+                android:textColor="@color/defaultMenuItemColor"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                />
+
+        <com.halkyproject.pausemenu.components.CustomTextView
+                android:id="@+id/m_bottomDataRight"
+                android:text="@string/config.dtNasc"
+                app:font_name="VideoGame"
+                android:textSize="8sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:textAllCaps="true"
+                android:textColor="@color/defaultMenuItemColor"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="1dp"
+                android:layout_weight="1"
+                android:textAlignment="viewEnd"/>
+    </LinearLayout>
+
+</LinearLayout>

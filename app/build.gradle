@@ -12,16 +12,11 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.halkyproject.pausemenu"
-        minSdkVersion 24
+        minSdkVersion 26
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
-            cmake {
-                cppFlags "-fexceptions"
-            }
-        }
     }
     buildTypes {
         release {
@@ -46,15 +41,22 @@ android {
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
         resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
     }
+    configurations {
+        lifehack
+        lifehackFull
+    }
+    dependencies {
+        lifehack('com.halkyproject:lifehack:0.0.0-SNAPSHOT') {
+            transitive = false
+        }
+        lifehackFull 'com.halkyproject:lifehack:0.0.0-SNAPSHOT'
+    }
+
 }
 
-configurations {
-    lifehack
-}
+
 
 dependencies {
-    lifehack 'com.halkyproject:lifehack:0.0.0-SNAPSHOT'
-    
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -87,14 +89,14 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     implementation 'org.reflections:reflections:0.9.11'
     implementation "org.jetbrains.kotlin:kotlin-script-runtime:$kotlin_version"
-    compileOnly configurations.lifehack
+    implementation configurations.lifehack
 }
 android {
     lintOptions {
         abortOnError false
     }
-}
 
+}
 
 task generateKotlin {
     doLast {
@@ -105,7 +107,7 @@ task generateKotlin {
 }
 
 task runDatabaseCreation(type: JavaExec) {
-    classpath configurations.lifehack.asPath
+    classpath configurations.lifehackFull.asPath
     main = 'com.halkyproject.lifehack.routines.EntityProcessorRunner'
 }
 

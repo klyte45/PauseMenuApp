@@ -36,7 +36,7 @@
     <string name="all.confirmDelete">Tem certeza?</string>
     <string name="all.no">Não</string>
     <string name="all.yes">Sim</string>
-    <string name="all.loading">Carregando...</string>
+    <string name="all.loading">Carregando…</string>
     <string name="config.serverConfigs">Servidor</string>
     <string name="config.urlServer">URL do Servidor</string>
     <string name="config.currentPIN">Senha Atual</string>
@@ -57,10 +57,17 @@
     <string name="finance.accountType.current">Corrente</string>
     <string name="finance.accountType.local">Local</string>
     <string name="finance.accountType.virtual">Virtual</string>
+    <string name="finance.accountType.infiniteEarning">Fonte de ganhos</string>
+    <string name="finance.accountType.infiniteExpense">Fonte de despesas</string>
     <string name="finance.currency.brl">Real</string>
     <string name="finances.accountCurrency">Moeda da conta</string>
     <string name="finance.currency.dolar">Dólar</string>
     <string name="finance.currency.eur">Euro</string>
     <string name="finances.additionalAccountInfo">Informações Adicionais</string>
     <string name="finances.creditLimit">Limite de Crédito</string>
+    <string name="all.active">Ativo</string>
+    <string name="all.inactive">Inativo</string>
+    <string name="all.removeCantUndo">O item não pode ser reativado.\nContinuar?</string>
+    <string name="all.allTypes">Todos os tipos</string>
+    <string name="all.all">Todos</string>
 </resources>

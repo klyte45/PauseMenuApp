@@ -6,6 +6,7 @@
              tools:context=".fragments.CompanyCrudCardFragment"
              android:layout_height="wrap_content"
              android:backgroundTint="@color/colorSaturation1"
+             android:id="@+id/m_bgLayer"
              android:background="@drawable/default_bg">
 
     <!-- TODO: Update blank fragment layout -->

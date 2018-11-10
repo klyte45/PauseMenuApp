@@ -1,55 +1,61 @@
 package com.halkyproject.pausemenu.activities.finance
 
-import android.content.Intent
 import android.net.Uri
-import android.os.AsyncTask
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.view.View
+import android.support.constraint.ConstraintLayout
+import android.widget.LinearLayout
+import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.fragments.AccountCrudCardFragment
 import com.halkyproject.pausemenu.singletons.AccountService
-import kotlinx.android.synthetic.main.activity_finances_account_list.*
+import com.halkyproject.pausemenu.superclasses.GenericListingActivity
+import kotlinx.android.synthetic.main.activity__basic_listing_2filters.*
 
-class FinancesAccountList : AppCompatActivity(), AccountCrudCardFragment.OnFragmentInteractionListener {
 
-    companion object {
-        class ReloadAsync : AsyncTask<FinancesAccountList, Void, Unit>() {
-            override fun doInBackground(vararg params: FinancesAccountList?) {
-                params[0]?.reload()
-            }
+class FinancesAccountList : GenericListingActivity<FinancialAccount, FinancesAccountList, AccountCrudCardFragment>(), AccountCrudCardFragment.OnFragmentInteractionListener {
+    override fun getListTitle(): Int {
+        return R.string.finances_accounts
+    }
+
+    private var optionsAccountType: List<FinancialAccount.AccountType?> = ArrayList()
+
+    override fun getEditActivityClass(): Class<*> {
+        return FinancesAccountEdit::class.java
+    }
+
+    override fun getOptionsFilter1(): List<String>? {
+        val accountTypeList = arrayListOf(getString(resources.getIdentifier("all.allTypes", "string", "com.halkyproject.pausemenu")))
+        optionsAccountType = ArrayList()
+        (optionsAccountType as ArrayList<FinancialAccount.AccountType?>).add(null)
+        for (type in FinancialAccount.AccountType.values()) {
+            accountTypeList.add(getString(resources.getIdentifier(type.localeEntry, "string", "com.halkyproject.pausemenu")))
+            (optionsAccountType as ArrayList<FinancialAccount.AccountType?>).add(type)
         }
+        return accountTypeList
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_finances_account_list)
-        reload()
+    override fun getOptionsFilter2(): List<String>? {
+        return arrayListOf(
+                getString(resources.getIdentifier("all.active", "string", "com.halkyproject.pausemenu")),
+                getString(resources.getIdentifier("all.inactive", "string", "com.halkyproject.pausemenu")),
+                getString(resources.getIdentifier("all.all", "string", "com.halkyproject.pausemenu"))
+        )
     }
 
-    private fun reload() {
-        val trRemove = supportFragmentManager.beginTransaction();
-        for (fragment in supportFragmentManager.fragments) {
-            trRemove.remove(fragment)
-        }
-        trRemove.commit()
-
-        val companies = AccountService.findAll()
-        val trAdd = supportFragmentManager.beginTransaction()
-        for (comp in companies) {
-            val frag = AccountCrudCardFragment.newInstance(comp);
-            trAdd.add(scrollLayout.id, frag, "item" + comp.id)
-        }
-        trAdd.commit()
+    override fun runOnBackground(): List<FinancialAccount> {
+        val searchFilter = AccountService.FinancialAccountFilter(optionsAccountType[m_spinnerFilter1.selectedItemPosition], if (m_spinnerFilter2.selectedItemPosition == 2) null else m_spinnerFilter2.selectedItemPosition == 0)
+        return AccountService.search(searchFilter)
     }
 
-    fun addNew(v: View) {
-        startActivityForResult(Intent(this, FinancesAccountEdit::class.java), 0)
+    override fun getScrollLayout(): LinearLayout {
+        return scrollLayout
     }
 
-    override fun onResume() {
-        super.onResume()
-        reload()
+    override fun getLoadingFrame(): ConstraintLayout {
+        return m_loadingFrame
+    }
+
+    override fun getFragmentClass(): Class<AccountCrudCardFragment> {
+        return AccountCrudCardFragment::class.java
     }
 
     override fun onFragmentInteraction(uri: Uri) {

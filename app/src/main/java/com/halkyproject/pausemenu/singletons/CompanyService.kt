@@ -2,12 +2,13 @@ package com.halkyproject.pausemenu.singletons
 
 import android.os.AsyncTask
 import com.google.gson.Gson
+import com.halkyproject.lifehack.controller.entities.DynamicEntityController
 import com.halkyproject.lifehack.model.Company
 
 
 object CompanyService {
 
-    private const val BASE_URL: String = "/api/company"
+    private const val BASE_URL: String = DynamicEntityController.BASE_URI
 
     private class InsertCompany : AsyncTask<Company, Void, Void>() {
         override fun doInBackground(vararg arr: Company): Void? {

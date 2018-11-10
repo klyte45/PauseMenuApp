@@ -1,14 +1,16 @@
-//
-package @@NEW_CLASS_PACKAGE@@
+//com.halkyproject.pausemenu.singletons=com.halkyproject.lifehack.model.finances.FinancialAccount=AccountService;
+package com.halkyproject.pausemenu.singletons
 
 import android.os.AsyncTask
 import com.google.gson.Gson
-import com.halkyproject.pausemenu.singletons.*
+import com.google.gson.reflect.TypeToken
+import com.halkyproject.lifehack.model.finances.FinancialAccount
+import com.halkyproject.pausemenu.superclasses.BasicEntityService
 
-typealias T = @@FULL_CLASS_0@@
+typealias T = com.halkyproject.lifehack.model.finances.FinancialAccount
 
 
-object @@NEW_CLASS_NAME@@ {                            
+object AccountService : BasicEntityService<T> {
     private const val BASE_URL: String = T.BASE_URL
 
     private class Insert : AsyncTask<T, Void, Boolean>() {
@@ -65,6 +67,16 @@ object @@NEW_CLASS_NAME@@ {
         }
     }
 
+    private class SearchByFilter : AsyncTask<FinancialAccountFilter, Void, Array<T>>() {
+        override fun doInBackground(vararg arr: FinancialAccountFilter): Array<T>? {
+            val gson = Gson()
+            val filterMap: Map<String, Any?> = gson.fromJson(gson.toJson(arr[0]), object : TypeToken<Map<String, Any?>>() {}.type)
+            return HttpService.doRequest(
+                    "$BASE_URL/search", Array<T>::class.java, HttpService.HttpRequestMethod.POST, gson.toJson(filterMap.filterValues { x -> x != null })
+            )
+        }
+    }
+
     private class FindById : AsyncTask<Int, Void, T>() {
         override fun doInBackground(vararg params: Int?): T? {
             if (params.isNotEmpty() && params[0] != null) {
@@ -77,19 +89,19 @@ object @@NEW_CLASS_NAME@@ {
 
     }
 
-    fun insert(T: T): AsyncTask<T, Void, Boolean> {
+    override fun insert(T: T): AsyncTask<T, Void, Boolean> {
         return Insert().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, T)
     }
 
-    fun update(T: T): AsyncTask<T, Void, Boolean> {
+    override fun update(T: T): AsyncTask<T, Void, Boolean> {
         return Update().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, T)
     }
 
-    fun delete(T: T): AsyncTask<T, Void, Boolean> {
+    override fun delete(T: T): AsyncTask<T, Void, Boolean> {
         return Delete().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, T)
     }
 
-    fun findAll(): List<T> {
+    override fun findAll(): List<T> {
         val list = ArrayList<T>()
         val result = GetAll().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR).get()
         if (result != null) {
@@ -98,8 +110,18 @@ object @@NEW_CLASS_NAME@@ {
         return list
     }
 
-    fun findById(id: Int): T? {
+    override fun search(accountFilter: FinancialAccountFilter): List<T> {
+        val list = ArrayList<T>()
+        val result = SearchByFilter().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, accountFilter).get()
+        if (result != null) {
+            list.addAll(result)
+        }
+        return list
+    }
+
+    override fun findById(id: Int): T? {
         return FindById().executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, id).get()
     }
 
+    class FinancialAccountFilter(val type: FinancialAccount.AccountType?, val active: Boolean?) {}
 }

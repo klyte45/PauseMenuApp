@@ -71,6 +71,61 @@
                         style="@style/default_input"
                         android:id="@+id/m_accountName"/>
 
+                <com.halkyproject.pausemenu.components.CustomCheckBox
+                        android:text="@string/all.active"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/m_active"
+                        android:layout_weight="1"/>
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:text="@string/finances.accountCurrency"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/colorSubtitle"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        app:textAllCaps="true"
+                        android:id="@+id/customTextView9"/>
+
+                <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:id="@+id/m_groupCurrency">
+
+                    <com.halkyproject.pausemenu.components.CustomRadioButton
+                            android:text="@string/finance.currency.brl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/op_real"
+                            android:layout_weight="1"
+                            android:textAllCaps="true"
+                            android:checked="true"/>
+
+                    <com.halkyproject.pausemenu.components.CustomRadioButton
+                            android:text="@string/finance.currency.dolar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/op_dolar"
+                            android:layout_weight="1"
+                            android:textAllCaps="true"/>
+
+                    <com.halkyproject.pausemenu.components.CustomRadioButton
+                            android:text="@string/finance.currency.eur"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/op_euro"
+                            android:layout_weight="1"
+                            android:textAllCaps="true"/>
+                </RadioGroup>
+
+
                 <com.halkyproject.pausemenu.components.CustomTextView
                         android:text="@string/finances.accountType"
                         app:font_name="VideoGame"
@@ -119,6 +174,20 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/op_virtual"
+                            android:textAllCaps="true"/>
+
+                    <com.halkyproject.pausemenu.components.CustomRadioButton
+                            android:text="@string/finance.accountType.infiniteEarning"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/op_inf_ear"
+                            android:textAllCaps="true"/>
+
+                    <com.halkyproject.pausemenu.components.CustomRadioButton
+                            android:text="@string/finance.accountType.infiniteExpense"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/op_inf_exp"
                             android:textAllCaps="true"/>
                 </RadioGroup>
 
@@ -235,114 +304,75 @@
 
                 </LinearLayout>
 
-                <com.halkyproject.pausemenu.components.CustomTextView
-                        android:text="@string/finances.currentBalance"
-                        app:font_name="VideoGame"
-                        android:textSize="@dimen/mainMenu.listItem.fontSize"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:textColor="@color/colorSubtitle"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_weight="1"
-                        app:textAllCaps="true"
-                        android:id="@+id/customTextView8"/>
-
-                <com.halkyproject.pausemenu.components.CustomEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:textAllCaps="true"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_weight="1"
-                        style="@style/default_input"
-                        android:id="@+id/m_accountBalance"
-                        android:digits="0123456798,.-"
-                        android:inputType="numberSigned|numberDecimal"
-                        android:textAlignment="textEnd"
-                        android:textDirection="ltr"/>
-
-                <com.halkyproject.pausemenu.components.CustomTextView
-                        android:text="@string/finances.creditLimit"
-                        app:font_name="VideoGame"
-                        android:textSize="@dimen/mainMenu.listItem.fontSize"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:textColor="@color/colorSubtitle"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_weight="1"
-                        app:textAllCaps="true"
-                        android:id="@+id/customTextView12"/>
-
-                <com.halkyproject.pausemenu.components.CustomEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:textAllCaps="true"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_weight="1"
-                        style="@style/default_input"
-                        android:id="@+id/m_accountLimit"
-                        android:digits="0123456798,."
-                        android:inputType="numberDecimal"
-                        android:textAlignment="textEnd"
-                        android:textDirection="ltr"/>
-
-                <com.halkyproject.pausemenu.components.CustomTextView
-                        android:text="@string/finances.accountCurrency"
-                        app:font_name="VideoGame"
-                        android:textSize="@dimen/mainMenu.listItem.fontSize"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:textColor="@color/colorSubtitle"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_weight="1"
-                        app:textAllCaps="true"
-                        android:id="@+id/customTextView9"/>
-
-                <RadioGroup
+                <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:id="@+id/m_groupCurrency">
+                        android:visibility="gone"
+                        android:id="@+id/m_accountBalanceInfoGroup"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp">
 
-                    <com.halkyproject.pausemenu.components.CustomRadioButton
-                            android:text="@string/finance.currency.brl"
-                            android:layout_width="wrap_content"
+                    <com.halkyproject.pausemenu.components.CustomTextView
+                            android:text="@string/finances.currentBalance"
+                            app:font_name="VideoGame"
+                            android:textSize="@dimen/mainMenu.listItem.fontSize"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/op_real"
-                            android:layout_weight="1"
-                            android:textAllCaps="true"
-                            android:checked="true"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textColor="@color/colorSubtitle"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="2dp"
+                            app:textAllCaps="true"
+                            android:id="@+id/customTextView8"/>
 
-                    <com.halkyproject.pausemenu.components.CustomRadioButton
-                            android:text="@string/finance.currency.dolar"
-                            android:layout_width="wrap_content"
+                    <com.halkyproject.pausemenu.components.CustomEditText
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/op_dolar"
-                            android:layout_weight="1"
-                            android:textAllCaps="true"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:textAllCaps="true"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="2dp"
+                            style="@style/default_input"
+                            android:id="@+id/m_accountBalance"
+                            android:digits="0123456798,.-"
+                            android:inputType="numberSigned|numberDecimal"
+                            android:textAlignment="textEnd"
+                            android:textDirection="ltr"/>
 
-                    <com.halkyproject.pausemenu.components.CustomRadioButton
-                            android:text="@string/finance.currency.eur"
-                            android:layout_width="wrap_content"
+                    <com.halkyproject.pausemenu.components.CustomTextView
+                            android:text="@string/finances.creditLimit"
+                            app:font_name="VideoGame"
+                            android:textSize="@dimen/mainMenu.listItem.fontSize"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/op_euro"
-                            android:layout_weight="1"
-                            android:textAllCaps="true"/>
-                </RadioGroup>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:textColor="@color/colorSubtitle"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="2dp"
+                            app:textAllCaps="true"
+                            android:id="@+id/customTextView12"/>
+
+                    <com.halkyproject.pausemenu.components.CustomEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:textAllCaps="true"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="2dp"
+                            style="@style/default_input"
+                            android:id="@+id/m_accountLimit"
+                            android:digits="0123456798,."
+                            android:inputType="numberDecimal"
+                            android:textAlignment="textEnd"
+                            android:textDirection="ltr"/>
+
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>
@@ -381,6 +411,69 @@
                     android:onClick="save"/>
         </LinearLayout>
 
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/linearLayout4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@drawable/default_bg"
+                android:backgroundTint="@color/common_google_signin_btn_text_light_pressed"
+                android:visibility="gone"
+                android:clickable="true"
+                android:focusableInTouchMode="false"
+                android:focusable="true"
+                app:layout_constraintTop_toBottomOf="@+id/titleLbl">
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/all.no"
+                    app:font_name="VideoGame"
+                    android:textSize="18sp"
+                    android:layout_width="192dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/defaultMenuItemColor"
+                    android:layout_weight="1"
+                    app:textAllCaps="true"
+                    android:id="@+id/noButton"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/default_bg"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="cancelDelete"
+                    android:textColorLink="@color/colorAccent"
+                    android:backgroundTint="@color/colorProblem"
+                    app:layout_constraintVertical_weight="1"
+                    app:layout_constraintWidth_percent="50"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/all.yes"
+                    app:font_name="VideoGame"
+                    android:textSize="18sp"
+                    android:layout_width="192dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textColor="@color/defaultBg"
+                    android:layout_weight="1"
+                    app:textAllCaps="true"
+                    android:id="@+id/yesButton"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/text_caret_1980"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="execSave"
+                    app:layout_constraintVertical_weight="1"
+                    app:layout_constraintWidth_percent="50"
+                    app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+                    app:layout_constraintHorizontal_bias="0.0"/>
+
+        </LinearLayout>
 
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"

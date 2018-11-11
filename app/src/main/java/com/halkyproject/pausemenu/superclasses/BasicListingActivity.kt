@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.LinearLayout
-import com.halkyproject.lifehack.model.BasicEntityModel
+import com.halkyproject.lifehack.interfaces.BasicEntityModel
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.interfaces.OnFragmentInteractionListener
 

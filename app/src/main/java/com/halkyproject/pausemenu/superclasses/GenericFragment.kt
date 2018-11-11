@@ -9,7 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.halkyproject.lifehack.model.BasicEntityModel
+import com.halkyproject.lifehack.interfaces.BasicEntityModel
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.components.CustomTextView
 

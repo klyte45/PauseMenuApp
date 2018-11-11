@@ -10,7 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
-import com.halkyproject.lifehack.model.finances.Currency
+import com.halkyproject.lifehack.model.enums.Currency
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_BANK
 import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_NO_BALANCE
@@ -87,7 +87,7 @@ class FinancesAccountEdit : AppCompatActivity() {
                 }
                 m_active.isChecked = editingObject!!.active
                 if (!editingObject!!.active) {
-                    for (x in arrayOf(m_active, m_accountLimit, m_accountBalance)) {
+                    for (x in arrayOf(m_active, m_accountLimit, m_accountBalance, m_accountName)) {
                         x.isEnabled = false
                     }
                     saveButton.visibility = View.GONE

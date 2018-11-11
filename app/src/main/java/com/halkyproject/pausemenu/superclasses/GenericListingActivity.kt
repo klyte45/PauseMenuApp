@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.view.View
 import android.widget.LinearLayout
-import com.halkyproject.lifehack.model.BasicEntityModel
+import com.halkyproject.lifehack.interfaces.BasicEntityModel
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.adapter.SpinnerTypeAdapter

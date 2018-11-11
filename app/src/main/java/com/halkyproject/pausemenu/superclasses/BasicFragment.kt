@@ -3,7 +3,7 @@ package com.halkyproject.pausemenu.superclasses
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import com.halkyproject.lifehack.model.BasicEntityModel
+import com.halkyproject.lifehack.interfaces.BasicEntityModel
 import com.halkyproject.pausemenu.interfaces.OnFragmentInteractionListener
 
 abstract class BasicFragment<Entity> : Fragment() where Entity : BasicEntityModel {

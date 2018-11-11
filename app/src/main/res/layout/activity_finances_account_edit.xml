@@ -69,7 +69,8 @@
                         android:layout_marginTop="2dp"
                         android:layout_weight="1"
                         style="@style/default_input"
-                        android:id="@+id/m_accountName"/>
+                        android:id="@+id/m_accountName"
+                        android:singleLine="true"/>
 
                 <com.halkyproject.pausemenu.components.CustomCheckBox
                         android:text="@string/all.active"

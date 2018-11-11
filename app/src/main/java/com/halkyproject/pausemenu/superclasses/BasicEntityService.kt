@@ -3,7 +3,7 @@ package com.halkyproject.pausemenu.superclasses
 import android.os.AsyncTask
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.halkyproject.lifehack.model.BasicEntityModel
+import com.halkyproject.lifehack.interfaces.BasicEntityModel
 import com.halkyproject.pausemenu.singletons.HttpService
 
 abstract class BasicEntityService<T, U> where T : BasicEntityModel {
@@ -59,7 +59,7 @@ abstract class BasicEntityService<T, U> where T : BasicEntityModel {
         }
     }
 
-    private class GetAll<T>(val baseUrl: String, val resultClass: Class<Array<T>>) : AsyncTask<Void, Void, Array<T>>() where T : com.halkyproject.lifehack.model.BasicEntityModel {
+    private class GetAll<T>(val baseUrl: String, val resultClass: Class<Array<T>>) : AsyncTask<Void, Void, Array<T>>() where T : BasicEntityModel {
         override fun doInBackground(vararg arr: Void): Array<T>? {
             return HttpService.doRequest(
                     baseUrl, resultClass, HttpService.HttpRequestMethod.GET
@@ -67,7 +67,7 @@ abstract class BasicEntityService<T, U> where T : BasicEntityModel {
         }
     }
 
-    private class SearchByFilter<T, U>(val baseUrl: String, val resultClass: Class<Array<T>>) : AsyncTask<U, Void, Array<T>>() where T : com.halkyproject.lifehack.model.BasicEntityModel {
+    private class SearchByFilter<T, U>(val baseUrl: String, val resultClass: Class<Array<T>>) : AsyncTask<U, Void, Array<T>>() where T : BasicEntityModel {
         override fun doInBackground(vararg arr: U): Array<T>? {
             val gson = Gson()
             val filterMap: Map<String, Any?> = gson.fromJson(gson.toJson(arr[0]), object : TypeToken<Map<String, Any?>>() {}.type)
@@ -77,7 +77,7 @@ abstract class BasicEntityService<T, U> where T : BasicEntityModel {
         }
     }
 
-    private class FindById<T>(val baseUrl: String, val resultClass: Class<T>) : AsyncTask<Int, Void, T>() where T : com.halkyproject.lifehack.model.BasicEntityModel {
+    private class FindById<T>(val baseUrl: String, val resultClass: Class<T>) : AsyncTask<Int, Void, T>() where T : BasicEntityModel {
         override fun doInBackground(vararg params: Int?): T? {
             if (params.isNotEmpty() && params[0] != null) {
                 return HttpService.doRequest(

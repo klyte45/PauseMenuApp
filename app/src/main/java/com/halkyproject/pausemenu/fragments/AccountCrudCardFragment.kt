@@ -2,7 +2,7 @@ package com.halkyproject.pausemenu.fragments
 
 import android.icu.text.NumberFormat
 import android.support.v4.app.Fragment
-import com.halkyproject.lifehack.model.finances.Currency
+import com.halkyproject.lifehack.model.enums.Currency
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_BANK
 import com.halkyproject.pausemenu.activities.finance.FinancesAccountEdit

@@ -1,9 +1,8 @@
 package com.halkyproject.pausemenu.fragments
 
 import android.support.v4.app.Fragment
-import com.halkyproject.lifehack.model.Company
-import com.halkyproject.pausemenu.activities.CompanyEdit
-import com.halkyproject.pausemenu.singletons.FormatSingleton
+import com.halkyproject.lifehack.model.finances.MovementSource
+import com.halkyproject.pausemenu.activities.finance.MovementSourceEdit
 import com.halkyproject.pausemenu.superclasses.GenericFragment
 
 /**
@@ -15,25 +14,29 @@ import com.halkyproject.pausemenu.superclasses.GenericFragment
  * create an instance of this fragment.
  *
  */
-class CompanyCrudCardFragment : GenericFragment<Company>() {
+class MovementSourceListFragment : GenericFragment<MovementSource>() {
     override fun getMainTitle(): String {
-        return obj.mainName
+        return obj.name
     }
 
     override fun getSubTitle(): String {
-        return obj.realName
+        return ""
     }
 
     override fun getBottomTextLeft(): String {
-        return "${obj.getCountryEnum().emoji} ${obj.cityDisplayName}"
+        return "<font color='#FF0000'>${obj.outAccount!!.name}</font>"
     }
 
     override fun getBottomTextRight(): String {
-        return FormatSingleton.mask(obj.documentNumber, FormatSingleton.FORMAT_CNPJ)
+        return "<font color='#00FF00'>${obj.inAccount!!.name}</font>"
     }
 
     override fun getBgState(): BgState {
-        return BgState.NORMAL
+        return if (obj.inAccount!!.active && obj.outAccount!!.active) {
+            BgState.NORMAL
+        } else {
+            BgState.INACTIVE
+        }
     }
 
     override fun getIdForAction(): Int? {
@@ -41,6 +44,7 @@ class CompanyCrudCardFragment : GenericFragment<Company>() {
     }
 
     override fun getEditClass(): Class<*> {
-        return CompanyEdit::class.java
+        return MovementSourceEdit::class.java
     }
+
 }

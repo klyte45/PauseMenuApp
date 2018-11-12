@@ -10,4 +10,14 @@
     <color name="defaultBg">#000000</color>
     <color name="colorProblem">#ff0000</color>
     <color name="colorSaturation1">#000080</color>
+    <color name="colorEarning">#00ff00</color>
+    <color name="colorExpense">#ff0000</color>
+    <color name="colourizableRed">#ff0000</color>
+    <color name="colourizableYellow">#ffff00</color>
+    <color name="colourizableGreen">#00ff00</color>
+    <color name="colourizableCyan">#00ffff</color>
+    <color name="colourizableBlue">#0000ff</color>
+    <color name="colourizableMagenta">#ff00ff</color>
+    <color name="colourizableWhite">#ffffff</color>
+    <color name="colourizableBlack">#000000</color>
 </resources>

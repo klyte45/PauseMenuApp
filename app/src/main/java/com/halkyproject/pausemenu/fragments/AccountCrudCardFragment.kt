@@ -2,6 +2,7 @@ package com.halkyproject.pausemenu.fragments
 
 import android.icu.text.NumberFormat
 import android.support.v4.app.Fragment
+import android.util.Log
 import com.halkyproject.lifehack.model.enums.Currency
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_BANK
@@ -40,7 +41,7 @@ class AccountCrudCardFragment : GenericFragment<FinancialAccount>() {
         return when {
             obj.type == FinancialAccount.AccountType.INFINITE_EXPENSE -> "<font color=\"#FF0000\">${NumberFormat.getCurrencyInstance(obj.currency.locale).currency.symbol} ∞</font>"
             obj.type == FinancialAccount.AccountType.INFINITE_EARNING -> "<font color=\"#00FF00\">${NumberFormat.getCurrencyInstance(obj.currency.locale).currency.symbol} ∞</font>"
-            else -> NumberFormat.getCurrencyInstance(obj.currency.locale).format(obj.balance)
+            else -> NumberFormat.getCurrencyInstance(obj.currency.locale).format(obj.balance ?: 0)
         }
     }
 
@@ -54,10 +55,6 @@ class AccountCrudCardFragment : GenericFragment<FinancialAccount>() {
 
     override fun getIdForAction(): Int? {
         return obj.id
-    }
-
-    override fun getBundleKey(): String {
-        return FinancesAccountEdit.KEY_EDIT_ID
     }
 
     override fun getEditClass(): Class<*> {

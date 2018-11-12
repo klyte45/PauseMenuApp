@@ -6,13 +6,14 @@ import com.google.gson.reflect.TypeToken
 import com.halkyproject.lifehack.interfaces.BasicEntityModel
 import com.halkyproject.pausemenu.singletons.HttpService
 
-abstract class BasicEntityService<T, U> where T : BasicEntityModel {
+abstract class BasicEntityService<T, U> where T : BasicEntityModel<T> {
 
     abstract fun getBaseUrl(): String
+    abstract fun getEntityUri(): String
     abstract fun getClassEntity(): Class<T>
     abstract fun getClassEntityArray(): Class<Array<T>>
 
-    private class Insert<T>(val baseUrl: String) : AsyncTask<T, Void, Boolean>() where T : BasicEntityModel {
+    private class Insert<T>(val baseUrl: String) : AsyncTask<T, Void, Boolean>() where T : BasicEntityModel<T> {
         override fun doInBackground(vararg arr: T): Boolean {
             try {
                 if (arr.isNotEmpty()) {
@@ -29,7 +30,7 @@ abstract class BasicEntityService<T, U> where T : BasicEntityModel {
         }
     }
 
-    private class Update<T>(val baseUrl: String) : AsyncTask<T, Void, Boolean>() where T : BasicEntityModel {
+    private class Update<T>(val baseUrl: String) : AsyncTask<T, Void, Boolean>() where T : BasicEntityModel<T> {
         override fun doInBackground(vararg arr: T): Boolean {
             try {
                 if (arr.isNotEmpty()) {
@@ -45,7 +46,7 @@ abstract class BasicEntityService<T, U> where T : BasicEntityModel {
         }
     }
 
-    private class Delete<T>(val baseUrl: String) : AsyncTask<T, Void, Boolean>() where T : BasicEntityModel {
+    private class Delete<T>(val baseUrl: String) : AsyncTask<T, Void, Boolean>() where T : BasicEntityModel<T> {
         override fun doInBackground(vararg arr: T): Boolean {
             try {
                 if (arr.isNotEmpty()) {
@@ -59,30 +60,36 @@ abstract class BasicEntityService<T, U> where T : BasicEntityModel {
         }
     }
 
-    private class GetAll<T>(val baseUrl: String, val resultClass: Class<Array<T>>) : AsyncTask<Void, Void, Array<T>>() where T : BasicEntityModel {
+    private class GetAll<T>(val baseUrl: String, val resultClass: Class<Array<T>>) : AsyncTask<Void, Void, Array<T>>() where T : BasicEntityModel<T> {
         override fun doInBackground(vararg arr: Void): Array<T>? {
             return HttpService.doRequest(
                     baseUrl, resultClass, HttpService.HttpRequestMethod.GET
-            )
+            ).first
         }
     }
 
-    private class SearchByFilter<T, U>(val baseUrl: String, val resultClass: Class<Array<T>>) : AsyncTask<U, Void, Array<T>>() where T : BasicEntityModel {
+    private class SearchByFilter<T, U>(val baseUrl: String, val resultClass: Class<Array<T>>) : AsyncTask<U, Void, Array<T>>() where T : BasicEntityModel<T> {
         override fun doInBackground(vararg arr: U): Array<T>? {
             val gson = Gson()
             val filterMap: Map<String, Any?> = gson.fromJson(gson.toJson(arr[0]), object : TypeToken<Map<String, Any?>>() {}.type)
             return HttpService.doRequest(
                     "$baseUrl/search", resultClass, HttpService.HttpRequestMethod.POST, gson.toJson(filterMap.filterValues { x -> x != null })
-            )
+            ).first
         }
     }
 
-    private class FindById<T>(val baseUrl: String, val resultClass: Class<T>) : AsyncTask<Int, Void, T>() where T : BasicEntityModel {
+    private class GetPkOptions<T>(val entityUri: String, val entityField: String, val resultClass: Class<Array<T>>, val targetEntityUri: String) : AsyncTask<Void, Void, Array<T>>() where T : BasicEntityModel<T> {
+        override fun doInBackground(vararg arr: Void): Array<T>? {
+            return HttpService.doRequest("/api/pk/$entityUri/$entityField/$targetEntityUri", resultClass, HttpService.HttpRequestMethod.GET).first
+        }
+    }
+
+    private class FindById<T>(val baseUrl: String, val resultClass: Class<T>) : AsyncTask<Int, Void, T>() where T : BasicEntityModel<T> {
         override fun doInBackground(vararg params: Int?): T? {
             if (params.isNotEmpty() && params[0] != null) {
                 return HttpService.doRequest(
                         baseUrl + "/" + params[0]!!, resultClass, HttpService.HttpRequestMethod.GET
-                )
+                ).first
             }
             return null
         }
@@ -121,5 +128,14 @@ abstract class BasicEntityService<T, U> where T : BasicEntityModel {
 
     fun findById(id: Int): T? {
         return FindById(getBaseUrl(), getClassEntity()).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, id).get()
+    }
+
+    fun getPkForEntity(toEntity: String, toField: String): List<T> {
+        val list = ArrayList<T>()
+        val result = GetPkOptions(toEntity, toField, getClassEntityArray(), getEntityUri()).executeOnExecutor(AsyncTask.SERIAL_EXECUTOR).get()
+        if (result != null) {
+            list.addAll(result)
+        }
+        return list
     }
 }

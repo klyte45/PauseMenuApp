@@ -70,7 +70,8 @@
                     android:maxLines="1"
                     tools:layout_editor_absoluteY="324dp"
                     tools:layout_editor_absoluteX="8dp"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    android:onClick="openMovementSourcesScreen"/>
 
 
         </LinearLayout>

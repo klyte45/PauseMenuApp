@@ -28,6 +28,7 @@ import com.halkyproject.lifehack.model.Company
 import com.halkyproject.pausemenu.enum.Country
 import com.halkyproject.pausemenu.singletons.CompanyService
 import com.halkyproject.pausemenu.singletons.FormatSingleton
+import com.halkyproject.pausemenu.superclasses.BasicFragment.Companion.KEY_EDIT_ID
 import kotlinx.android.synthetic.main.activity_company_edit.*
 import java.util.*
 
@@ -36,9 +37,6 @@ class CompanyEdit : AppCompatActivity() {
     private var addressValue: Address? = null
     private var editingCompany: Company? = null
 
-    companion object {
-        val KEY_EDIT_ID = "EditItemId";
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

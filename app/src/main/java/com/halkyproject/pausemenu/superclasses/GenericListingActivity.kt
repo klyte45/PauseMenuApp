@@ -13,7 +13,7 @@ import com.halkyproject.pausemenu.adapter.SpinnerTypeAdapter
 import kotlinx.android.synthetic.main.activity__basic_listing_2filters.*
 
 
-abstract class GenericListingActivity<Entity, Activity, Fragment> : BasicListingActivity<Entity, GenericListingActivity<Entity, Activity, Fragment>, Fragment>() where Entity : BasicEntityModel, Activity : GenericListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
+abstract class GenericListingActivity<Entity, Activity, Fragment> : BasicListingActivity<Entity, GenericListingActivity<Entity, Activity, Fragment>, Fragment>() where Entity : BasicEntityModel<Entity>, Activity : GenericListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
 
     abstract fun getEditActivityClass(): Class<*>
     abstract fun getListTitle(): Int

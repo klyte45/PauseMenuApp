@@ -48,6 +48,9 @@
         </activity>
         <activity android:name=".activities.finance.FinancesAccountEdit">
         </activity>
+        <activity android:name=".activities.finance.MovementSourceList"/>
+        <activity android:name=".activities.finance.MovementSourceEdit">
+        </activity>
     </application>
 
 </manifest>

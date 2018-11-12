@@ -10,25 +10,23 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
+import com.halkyproject.lifehack.interfaces.Colourizable
 import com.halkyproject.lifehack.model.enums.Currency
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_BANK
 import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_NO_BALANCE
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.adapter.SpinnerTypeAdapter
-import com.halkyproject.pausemenu.singletons.AccountService
 import com.halkyproject.pausemenu.singletons.FormatSingleton
 import com.halkyproject.pausemenu.singletons.FormatSingleton.toBigDecimal
+import com.halkyproject.pausemenu.singletons.finances.AccountService
+import com.halkyproject.pausemenu.superclasses.BasicFragment.Companion.KEY_EDIT_ID
 import kotlinx.android.synthetic.main.activity_finances_account_edit.*
 import java.math.BigDecimal
 
 
 class FinancesAccountEdit : AppCompatActivity() {
     private var editingObject: FinancialAccount? = null
-
-    companion object {
-        const val KEY_EDIT_ID = "EditItemId"
-    }
 
     private val defaultListenerSpinners = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
@@ -48,16 +46,16 @@ class FinancesAccountEdit : AppCompatActivity() {
         m_accountLimit.addTextChangedListener(FormatSingleton.maskNumberInput(m_accountLimit, resources.configuration.locale))
         m_accountNumber.addTextChangedListener(FormatSingleton.mask(m_accountNumber, FormatSingleton.FORMAT_FINANCIAL_ACCOUNT))
 
-        val currencyOptions = ArrayList<String>()
+        val currencyOptions = ArrayList<CurrencyWrapper>()
         for (cur in Currency.values()) {
-            currencyOptions.add(getString(resources.getIdentifier("finances.currency.${cur.name}", "string", "com.halkyproject.pausemenu")))
+            currencyOptions.add(CurrencyWrapper(cur))
         }
         m_spinnerCurrency.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, currencyOptions, 14f)
         m_spinnerCurrency.onItemSelectedListener = defaultListenerSpinners
 
-        val accountTypeOptions = ArrayList<String>()
+        val accountTypeOptions = ArrayList<AccountTypeWrapper>()
         for (typ in FinancialAccount.AccountType.values()) {
-            accountTypeOptions.add(getString(resources.getIdentifier(typ.localeEntry, "string", "com.halkyproject.pausemenu")))
+            accountTypeOptions.add(AccountTypeWrapper(typ))
         }
         m_spinnerType.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, accountTypeOptions, 14f)
         m_spinnerType.onItemSelectedListener = defaultListenerSpinners
@@ -99,6 +97,7 @@ class FinancesAccountEdit : AppCompatActivity() {
             m_active.visibility = View.GONE
         }
         m_loadingFrame.visibility = View.GONE
+
     }
 
     private fun redrawForm(currencySelected: Currency, accountTypeSelected: FinancialAccount.AccountType) {
@@ -234,4 +233,20 @@ class FinancesAccountEdit : AppCompatActivity() {
         }
     }
 
+
+    private inner class AccountTypeWrapper(val type: FinancialAccount.AccountType) : Colourizable {
+        override fun getColor(): Colourizable.BasicColor {
+            return type.getColor()
+        }
+
+        override fun toString(): String {
+            return getString(resources.getIdentifier(type.localeEntry, "string", "com.halkyproject.pausemenu"))
+        }
+    }
+
+    private inner class CurrencyWrapper(val currency: Currency) {
+        override fun toString(): String {
+            return getString(resources.getIdentifier("finances.currency.${currency.name}", "string", "com.halkyproject.pausemenu"))
+        }
+    }
 }

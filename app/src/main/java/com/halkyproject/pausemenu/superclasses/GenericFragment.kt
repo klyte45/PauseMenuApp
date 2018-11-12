@@ -22,14 +22,17 @@ import com.halkyproject.pausemenu.components.CustomTextView
  * create an instance of this fragment.
  *
  */
-abstract class GenericFragment<Entity> : BasicFragment<Entity>() where Entity : BasicEntityModel {
+abstract class GenericFragment<Entity> : BasicFragment<Entity>() where Entity : BasicEntityModel<Entity> {
     abstract fun getMainTitle(): String
     abstract fun getSubTitle(): String
     abstract fun getBottomTextLeft(): String
     abstract fun getBottomTextRight(): String
     abstract fun getBgState(): BgState
     abstract fun getIdForAction(): Int?
-    abstract fun getBundleKey(): String
+    open fun getBundleKey(): String {
+        return KEY_EDIT_ID
+    }
+
     abstract fun getEditClass(): Class<*>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

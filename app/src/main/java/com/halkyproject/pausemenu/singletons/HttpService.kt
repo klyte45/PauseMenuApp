@@ -1,6 +1,7 @@
 package com.halkyproject.pausemenu.singletons
 
 import com.google.gson.Gson
+import com.halkyproject.lifehack.model.entities.ErrorModel
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -13,18 +14,18 @@ object HttpService {
     private val CONNECTION_TIMEOUT = 15000
 
 
-    fun <T> doRequest(stringUrl: String, resultClass: Class<T>, requestMethod: HttpRequestMethod, body: String? = null, contentType: String = "application/json"): T? {
+    fun <T> doRequest(stringUrl: String, resultClass: Class<T>, requestMethod: HttpRequestMethod, body: String? = null, contentType: String = "application/json"): Pair<T?, Int> {
 
         val reader: BufferedReader? = null
         var streamReader: InputStreamReader? = null
         var connection: HttpURLConnection? = null
 
         try {
-            val pair = doConnection(stringUrl, connection, requestMethod, body, contentType, streamReader)
+            val pair = doConnection(stringUrl, requestMethod, body, contentType)
             connection = pair.first
             streamReader = pair.second
 
-            return if (resultClass == Void::class.java || connection!!.responseCode == 204) null else Gson().fromJson<T>(streamReader, resultClass)
+            return Pair(if (resultClass == Void::class.java || connection!!.responseCode == 204) null else Gson().fromJson<T>(streamReader, resultClass), connection!!.responseCode)
         } catch (e: Exception) {
             e.printStackTrace()
             throw e
@@ -44,10 +45,10 @@ object HttpService {
     }
 
 
-    private fun doConnection(stringUrl: String, connection: HttpURLConnection?, requestMethod: HttpRequestMethod, body: String?, contentType: String, streamReader: InputStreamReader?): Pair<HttpURLConnection?, InputStreamReader?> {
+    private fun doConnection(stringUrl: String, requestMethod: HttpRequestMethod, body: String?, contentType: String): Pair<HttpURLConnection?, InputStreamReader?> {
         //Create a URL object holding our url
-        var connection1 = connection
-        var streamReader1 = streamReader
+        val connection1: HttpURLConnection
+        val streamReader1: InputStreamReader
         val myUrl = URL(ConfigSingleton.getServerUrlSync() + stringUrl)
 
         //Create a connection
@@ -68,11 +69,16 @@ object HttpService {
             op.close()
         }
 
-        //Connect to our url
-        connection1.connect()
+        if (connection1.responseCode < HttpURLConnection.HTTP_BAD_REQUEST) {
+            streamReader1 = InputStreamReader(connection1.inputStream)
+        } else {
+            /* error from server */
+            streamReader1 = InputStreamReader(connection1.errorStream)
+            val model: ErrorModel = Gson().fromJson(streamReader1, ErrorModel::class.java)
+            throw Exception("Status code ${connection1.responseCode}: ${model.message}\nBODY: $body")
+        }
 
-        //Create a new InputStreamReader
-        streamReader1 = InputStreamReader(connection1.inputStream)
+
         return Pair(connection1, streamReader1)
     }
 

@@ -70,4 +70,7 @@
     <string name="all.removeCantUndo">O item não pode ser reativado.\nContinuar?</string>
     <string name="all.allTypes">Todos os tipos</string>
     <string name="all.all">Todos</string>
+    <string name="finances.editMovementSource">Editar Fonte de Movimentação</string>
+    <string name="finances.outAccount">Conta de Saída</string>
+    <string name="finances.inAccount">Conta de Entrada</string>
 </resources>

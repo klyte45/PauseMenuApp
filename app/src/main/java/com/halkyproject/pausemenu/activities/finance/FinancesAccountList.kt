@@ -1,12 +1,11 @@
 package com.halkyproject.pausemenu.activities.finance
 
-import android.net.Uri
 import android.support.constraint.ConstraintLayout
 import android.widget.LinearLayout
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.fragments.AccountCrudCardFragment
-import com.halkyproject.pausemenu.singletons.AccountService
+import com.halkyproject.pausemenu.singletons.finances.AccountService
 import com.halkyproject.pausemenu.superclasses.GenericListingActivity
 import kotlinx.android.synthetic.main.activity__basic_listing_2filters.*
 

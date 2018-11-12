@@ -11,9 +11,9 @@ import com.halkyproject.lifehack.interfaces.BasicEntityModel
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.interfaces.OnFragmentInteractionListener
 
-abstract class BasicListingActivity<Entity, Activity, Fragment> : AppCompatActivity(), OnFragmentInteractionListener where Entity : BasicEntityModel, Activity : BasicListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
+abstract class BasicListingActivity<Entity, Activity, Fragment> : AppCompatActivity(), OnFragmentInteractionListener where Entity : BasicEntityModel<Entity>, Activity : BasicListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
 
-    private class ReloadAsync<Entity, Activity, Fragment>(private val fragmentClass: Class<Fragment>) : AsyncTask<Activity, Void, Pair<Activity, List<Entity>>>() where Entity : BasicEntityModel, Activity : BasicListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
+    private class ReloadAsync<Entity, Activity, Fragment>(private val fragmentClass: Class<Fragment>) : AsyncTask<Activity, Void, Pair<Activity, List<Entity>>>() where Entity : BasicEntityModel<Entity>, Activity : BasicListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
 
         override fun doInBackground(vararg params: Activity?): Pair<Activity, List<Entity>> {
             val list = params[0]!!
@@ -55,11 +55,11 @@ abstract class BasicListingActivity<Entity, Activity, Fragment> : AppCompatActiv
 
     private var optionsAccountType: List<FinancialAccount.AccountType?> = ArrayList()
     protected val defaultSpinnerListener = object : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parentView: AdapterView<*>, selectedItemView: View, position: Int, id: Long) {
+        override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
             reload()
         }
 
-        override fun onNothingSelected(parentView: AdapterView<*>) {
+        override fun onNothingSelected(parentView: AdapterView<*>?) {
             reload()
         }
     }

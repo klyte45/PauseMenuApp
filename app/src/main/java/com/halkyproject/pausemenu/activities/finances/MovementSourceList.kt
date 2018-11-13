@@ -1,4 +1,4 @@
-package com.halkyproject.pausemenu.activities.finance
+package com.halkyproject.pausemenu.activities.finances
 
 import android.support.constraint.ConstraintLayout
 import android.widget.LinearLayout

@@ -56,11 +56,12 @@
     <string name="finances.accountType.savings">Poupança</string>
     <string name="finances.accountType.current">Corrente</string>
     <string name="finances.accountType.local">Local</string>
+    <string name="finances.accountType.debt">Dívida</string>
     <string name="finances.accountType.virtual">Virtual</string>
     <string name="finances.accountType.infiniteEarning">Fonte de ganhos</string>
     <string name="finances.accountType.infiniteExpense">Fonte de despesas</string>
-    <string name="finances.currency.BRL">Real</string>
     <string name="finances.accountCurrency">Moeda da conta</string>
+    <string name="finances.currency.BRL">Real</string>
     <string name="finances.currency.USD">Dólar</string>
     <string name="finances.currency.EUR">Euro</string>
     <string name="finances.additionalAccountInfo">Informações Adicionais</string>
@@ -70,6 +71,8 @@
     <string name="all.removeCantUndo">O item não pode ser reativado.\nContinuar?</string>
     <string name="all.allTypes">Todos os tipos</string>
     <string name="all.all">Todos</string>
+    <string name="finances.debtShort">Déb:</string>
+    <string name="finances.creditShort">Cré:</string>
     <string name="finances.editMovementSource">Editar Fonte de Movimentação</string>
     <string name="finances.outAccount">Conta de Saída</string>
     <string name="finances.inAccount">Conta de Entrada</string>

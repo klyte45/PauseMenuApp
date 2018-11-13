@@ -1,4 +1,4 @@
-package com.halkyproject.pausemenu.activities.finance
+package com.halkyproject.pausemenu.activities.finances
 
 import android.content.Intent
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.halkyproject.pausemenu.activities.finance
+package com.halkyproject.pausemenu.activities.finances
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 
-import com.halkyproject.lifehack.interfaces.Colourizable
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.lifehack.model.finances.MovementSource
 import com.halkyproject.pausemenu.R

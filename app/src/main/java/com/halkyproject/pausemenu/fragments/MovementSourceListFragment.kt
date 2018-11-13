@@ -2,7 +2,9 @@ package com.halkyproject.pausemenu.fragments
 
 import android.support.v4.app.Fragment
 import com.halkyproject.lifehack.model.finances.MovementSource
-import com.halkyproject.pausemenu.activities.finance.MovementSourceEdit
+import com.halkyproject.pausemenu.R
+import com.halkyproject.pausemenu.activities.finances.MovementSourceEdit
+import com.halkyproject.pausemenu.interfaces.getResourceId
 import com.halkyproject.pausemenu.superclasses.GenericFragment
 
 /**
@@ -19,16 +21,16 @@ class MovementSourceListFragment : GenericFragment<MovementSource>() {
         return obj.name
     }
 
-    override fun getSubTitle(): String {
+    override fun getBottomTextRight(): String {
         return ""
     }
 
-    override fun getBottomTextLeft(): String {
-        return "<font color='#FF0000'>${obj.outAccount!!.name}</font>"
+    override fun getSubTitle(): String {
+        return "<font color='#FF0000'>${getString(R.string.finances_debtShort)}</font> <font color='${resources.getColor(obj.outAccount!!.type.getColor().getResourceId(), null)}'>${obj.outAccount!!.name}</font>"
     }
 
-    override fun getBottomTextRight(): String {
-        return "<font color='#00FF00'>${obj.inAccount!!.name}</font>"
+    override fun getBottomTextLeft(): String {
+        return "<font color='#00FF00'>${getString(R.string.finances_creditShort)}</font> <font color='${resources.getColor(obj.inAccount!!.type.getColor().getResourceId(), null)}'>${obj.inAccount!!.name}</font>"
     }
 
     override fun getBgState(): BgState {
@@ -45,6 +47,10 @@ class MovementSourceListFragment : GenericFragment<MovementSource>() {
 
     override fun getEditClass(): Class<*> {
         return MovementSourceEdit::class.java
+    }
+
+    override fun getBottomFontHeightSp(): Float {
+        return super.getMiddleFontHeightSp()
     }
 
 }

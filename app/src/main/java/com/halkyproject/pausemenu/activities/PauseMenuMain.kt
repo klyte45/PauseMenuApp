@@ -16,7 +16,7 @@ import android.text.style.RelativeSizeSpan
 import android.view.View
 import android.widget.TextView
 import com.halkyproject.pausemenu.R
-import com.halkyproject.pausemenu.activities.finance.FinancesMain
+import com.halkyproject.pausemenu.activities.finances.FinancesMain
 import com.halkyproject.pausemenu.components.CustomTextView
 import com.halkyproject.pausemenu.singletons.ConfigSingleton
 import org.apache.commons.lang3.StringUtils

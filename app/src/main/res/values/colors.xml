@@ -9,15 +9,23 @@
     <color name="colorSubtitle">#00ffff</color>
     <color name="defaultBg">#000000</color>
     <color name="colorProblem">#ff0000</color>
-    <color name="colorSaturation1">#000080</color>
+    <color name="colorSaturation1">#2E2E56</color>
     <color name="colorEarning">#00ff00</color>
     <color name="colorExpense">#ff0000</color>
+
     <color name="colourizableRed">#ff0000</color>
+    <color name="colourizableOrange">#ff8800</color>
     <color name="colourizableYellow">#ffff00</color>
+    <color name="colourizableLime">#88ff00</color>
     <color name="colourizableGreen">#00ff00</color>
+    <color name="colourizableEmerald">#00ff88</color>
     <color name="colourizableCyan">#00ffff</color>
+    <color name="colourizableLightBlue">#0088ff</color>
     <color name="colourizableBlue">#0000ff</color>
+    <color name="colourizablePurple">#8800ff</color>
     <color name="colourizableMagenta">#ff00ff</color>
+    <color name="colourizablePink">#ff0088</color>
     <color name="colourizableWhite">#ffffff</color>
+    <color name="colourizableGray">#888888</color>
     <color name="colourizableBlack">#000000</color>
 </resources>

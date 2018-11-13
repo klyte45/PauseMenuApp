@@ -42,14 +42,14 @@
 
         <activity android:name=".activities.PinInput">
         </activity>
-        <activity android:name=".activities.finance.FinancesMain">
+        <activity android:name=".activities.finances.FinancesMain">
         </activity>
-        <activity android:name=".activities.finance.FinancesAccountList">
+        <activity android:name=".activities.finances.FinancesAccountList">
         </activity>
-        <activity android:name=".activities.finance.FinancesAccountEdit">
+        <activity android:name=".activities.finances.FinancesAccountEdit">
         </activity>
-        <activity android:name=".activities.finance.MovementSourceList"/>
-        <activity android:name=".activities.finance.MovementSourceEdit">
+        <activity android:name=".activities.finances.MovementSourceList"/>
+        <activity android:name=".activities.finances.MovementSourceEdit">
         </activity>
     </application>
 

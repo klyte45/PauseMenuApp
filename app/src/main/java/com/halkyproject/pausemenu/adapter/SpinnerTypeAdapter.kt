@@ -14,7 +14,7 @@ import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.interfaces.getResourceId
 
 
-class SpinnerTypeAdapter(context: Context, resource: Int, items: List<Any>, private val fontSize: Float = 10f, private val normalColorResId: Int = R.color.colorPrimary) : ArrayAdapter<Any>(context, resource, items) {
+class SpinnerTypeAdapter(context: Context, resource: Int, items: List<Any>, private val fontSize: Float = 10f, private val normalColorResId: Int = R.color.defaultMenuItemColor) : ArrayAdapter<Any>(context, resource, items) {
 
     // Affects default (closed) state of the spinner
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {

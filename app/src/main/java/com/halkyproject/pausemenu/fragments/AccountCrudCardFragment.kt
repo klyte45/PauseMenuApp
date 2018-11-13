@@ -2,11 +2,11 @@ package com.halkyproject.pausemenu.fragments
 
 import android.icu.text.NumberFormat
 import android.support.v4.app.Fragment
-import android.util.Log
 import com.halkyproject.lifehack.model.enums.Currency
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_BANK
-import com.halkyproject.pausemenu.activities.finance.FinancesAccountEdit
+import com.halkyproject.pausemenu.activities.finances.FinancesAccountEdit
+import com.halkyproject.pausemenu.interfaces.getResourceId
 import com.halkyproject.pausemenu.singletons.FormatSingleton
 import com.halkyproject.pausemenu.superclasses.GenericFragment
 
@@ -34,7 +34,7 @@ class AccountCrudCardFragment : GenericFragment<FinancialAccount>() {
     }
 
     override fun getBottomTextLeft(): String {
-        return getString(resources.getIdentifier(obj.type.localeEntry, "string", "com.halkyproject.pausemenu"))
+        return "<font color='${resources.getColor(obj.type.getColor().getResourceId(), null)}'>${getString(resources.getIdentifier(obj.type.getLocaleId(), "string", "com.halkyproject.pausemenu"))}</font>"
     }
 
     override fun getBottomTextRight(): String {

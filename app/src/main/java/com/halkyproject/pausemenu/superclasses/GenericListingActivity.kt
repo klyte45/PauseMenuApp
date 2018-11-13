@@ -18,11 +18,11 @@ abstract class GenericListingActivity<Entity, Activity, Fragment> : BasicListing
     abstract fun getEditActivityClass(): Class<*>
     abstract fun getListTitle(): Int
 
-    open fun getOptionsFilter1(): List<String>? {
+    open fun getOptionsFilter1(): List<Any>? {
         return null
     }
 
-    open fun getOptionsFilter2(): List<String>? {
+    open fun getOptionsFilter2(): List<Any>? {
         return null
     }
 
@@ -41,14 +41,6 @@ abstract class GenericListingActivity<Entity, Activity, Fragment> : BasicListing
         setContentView(R.layout.activity__basic_listing_2filters)
 
         m_title.setText(getListTitle())
-
-        val accountTypeList = arrayListOf(getString(resources.getIdentifier("all.allTypes", "string", "com.halkyproject.pausemenu")))
-        optionsAccountType = ArrayList()
-        (optionsAccountType as ArrayList<FinancialAccount.AccountType?>).add(null)
-        for (type in FinancialAccount.AccountType.values()) {
-            accountTypeList.add(getString(resources.getIdentifier(type.localeEntry, "string", "com.halkyproject.pausemenu")))
-            (optionsAccountType as ArrayList<FinancialAccount.AccountType?>).add(type)
-        }
         val options1 = getOptionsFilter1()
         val options2 = getOptionsFilter2()
         if (options1 != null) {

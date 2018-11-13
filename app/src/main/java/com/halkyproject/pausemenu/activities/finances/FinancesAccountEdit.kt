@@ -1,4 +1,4 @@
-package com.halkyproject.pausemenu.activities.finance
+package com.halkyproject.pausemenu.activities.finances
 
 import android.icu.text.DecimalFormat
 import android.icu.text.NumberFormat
@@ -10,7 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.TextView
 import android.widget.Toast
-import com.halkyproject.lifehack.interfaces.Colourizable
+import com.halkyproject.lifehack.interfaces.Localizable
 import com.halkyproject.lifehack.model.enums.Currency
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_BANK
@@ -21,6 +21,8 @@ import com.halkyproject.pausemenu.singletons.FormatSingleton
 import com.halkyproject.pausemenu.singletons.FormatSingleton.toBigDecimal
 import com.halkyproject.pausemenu.singletons.finances.AccountService
 import com.halkyproject.pausemenu.superclasses.BasicFragment.Companion.KEY_EDIT_ID
+import com.halkyproject.pausemenu.wrappers.DefaultColorI18nWrapper
+import com.halkyproject.pausemenu.wrappers.DefaultI18nWrapper
 import kotlinx.android.synthetic.main.activity_finances_account_edit.*
 import java.math.BigDecimal
 
@@ -46,16 +48,17 @@ class FinancesAccountEdit : AppCompatActivity() {
         m_accountLimit.addTextChangedListener(FormatSingleton.maskNumberInput(m_accountLimit, resources.configuration.locale))
         m_accountNumber.addTextChangedListener(FormatSingleton.mask(m_accountNumber, FormatSingleton.FORMAT_FINANCIAL_ACCOUNT))
 
-        val currencyOptions = ArrayList<CurrencyWrapper>()
+        val currencyOptions = ArrayList<DefaultI18nWrapper<Localizable.Adapter>>()
         for (cur in Currency.values()) {
-            currencyOptions.add(CurrencyWrapper(cur))
+            currencyOptions += DefaultI18nWrapper(this, Localizable.Adapter { "finances.currency.${cur.name}" })
+
         }
-        m_spinnerCurrency.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, currencyOptions, 14f)
+        m_spinnerCurrency.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, currencyOptions, 14f, R.color.defaultMenuItemColor)
         m_spinnerCurrency.onItemSelectedListener = defaultListenerSpinners
 
-        val accountTypeOptions = ArrayList<AccountTypeWrapper>()
+        val accountTypeOptions = ArrayList<DefaultColorI18nWrapper<FinancialAccount.AccountType>>()
         for (typ in FinancialAccount.AccountType.values()) {
-            accountTypeOptions.add(AccountTypeWrapper(typ))
+            accountTypeOptions.add(DefaultColorI18nWrapper(this, typ))
         }
         m_spinnerType.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, accountTypeOptions, 14f)
         m_spinnerType.onItemSelectedListener = defaultListenerSpinners
@@ -234,19 +237,4 @@ class FinancesAccountEdit : AppCompatActivity() {
     }
 
 
-    private inner class AccountTypeWrapper(val type: FinancialAccount.AccountType) : Colourizable {
-        override fun getColor(): Colourizable.BasicColor {
-            return type.getColor()
-        }
-
-        override fun toString(): String {
-            return getString(resources.getIdentifier(type.localeEntry, "string", "com.halkyproject.pausemenu"))
-        }
-    }
-
-    private inner class CurrencyWrapper(val currency: Currency) {
-        override fun toString(): String {
-            return getString(resources.getIdentifier("finances.currency.${currency.name}", "string", "com.halkyproject.pausemenu"))
-        }
-    }
 }

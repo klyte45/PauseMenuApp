@@ -3,8 +3,6 @@ package com.halkyproject.pausemenu.activities.finances
 import android.icu.text.DecimalFormat
 import android.icu.text.NumberFormat
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.AdapterView
@@ -20,6 +18,7 @@ import com.halkyproject.pausemenu.adapter.SpinnerTypeAdapter
 import com.halkyproject.pausemenu.singletons.FormatSingleton
 import com.halkyproject.pausemenu.singletons.FormatSingleton.toBigDecimal
 import com.halkyproject.pausemenu.singletons.finances.AccountService
+import com.halkyproject.pausemenu.superclasses.BasicActivity
 import com.halkyproject.pausemenu.superclasses.BasicFragment.Companion.KEY_EDIT_ID
 import com.halkyproject.pausemenu.wrappers.DefaultColorI18nWrapper
 import com.halkyproject.pausemenu.wrappers.DefaultI18nWrapper
@@ -27,40 +26,31 @@ import kotlinx.android.synthetic.main.activity_finances_account_edit.*
 import java.math.BigDecimal
 
 
-class FinancesAccountEdit : AppCompatActivity() {
+class FinancesAccountEdit : BasicActivity() {
     private var editingObject: FinancialAccount? = null
 
     private val defaultListenerSpinners = object : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
+        override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) = safeExecute({}()) {
             redrawForm(Currency.values()[m_spinnerCurrency.selectedItemPosition], FinancialAccount.AccountType.values()[m_spinnerType.selectedItemPosition])
         }
 
-        override fun onNothingSelected(parentView: AdapterView<*>?) {
+        override fun onNothingSelected(parentView: AdapterView<*>?) = safeExecute({}()) {
             m_additionalAccountInfoGroup.visibility = View.GONE
             m_accountBalanceInfoGroup.visibility = View.GONE
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) = safeExecute({}(), true) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_finances_account_edit)
         m_accountBalance.addTextChangedListener(FormatSingleton.maskNumberInput(m_accountBalance, resources.configuration.locale))
         m_accountLimit.addTextChangedListener(FormatSingleton.maskNumberInput(m_accountLimit, resources.configuration.locale))
         m_accountNumber.addTextChangedListener(FormatSingleton.mask(m_accountNumber, FormatSingleton.FORMAT_FINANCIAL_ACCOUNT))
 
-        val currencyOptions = ArrayList<DefaultI18nWrapper<Localizable.Adapter>>()
-        for (cur in Currency.values()) {
-            currencyOptions += DefaultI18nWrapper(this, Localizable.Adapter { "finances.currency.${cur.name}" })
-
-        }
-        m_spinnerCurrency.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, currencyOptions, 14f, R.color.defaultMenuItemColor)
+        m_spinnerCurrency.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, Currency.values().map { DefaultI18nWrapper(this, Localizable.Adapter { "finances.currency.${it.name}" }) }, 14f, R.color.defaultMenuItemColor)
         m_spinnerCurrency.onItemSelectedListener = defaultListenerSpinners
 
-        val accountTypeOptions = ArrayList<DefaultColorI18nWrapper<FinancialAccount.AccountType>>()
-        for (typ in FinancialAccount.AccountType.values()) {
-            accountTypeOptions.add(DefaultColorI18nWrapper(this, typ))
-        }
-        m_spinnerType.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, accountTypeOptions, 14f)
+        m_spinnerType.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, FinancialAccount.AccountType.values().map { DefaultColorI18nWrapper(this, it) }, 14f)
         m_spinnerType.onItemSelectedListener = defaultListenerSpinners
 
         val editId: Int = intent?.extras?.getInt(KEY_EDIT_ID) ?: -1
@@ -91,7 +81,7 @@ class FinancesAccountEdit : AppCompatActivity() {
                     for (x in arrayOf(m_active, m_accountLimit, m_accountBalance, m_accountName)) {
                         x.isEnabled = false
                     }
-                    saveButton.visibility = View.GONE
+                    m_saveButton.visibility = View.GONE
                 }
             }
         }
@@ -99,11 +89,11 @@ class FinancesAccountEdit : AppCompatActivity() {
             m_spinnerType.setSelection(-1)
             m_active.visibility = View.GONE
         }
-        m_loadingFrame.visibility = View.GONE
+        closeLoadingScreen()
 
     }
 
-    private fun redrawForm(currencySelected: Currency, accountTypeSelected: FinancialAccount.AccountType) {
+    private fun redrawForm(currencySelected: Currency, accountTypeSelected: FinancialAccount.AccountType) = safeExecute({}()) {
         if (currencySelected == Currency.BRL && accountTypeSelected in ACCOUNT_VALUES_TYPE_BANK) {
             m_additionalAccountInfoGroup.visibility = View.VISIBLE
         } else {
@@ -117,7 +107,7 @@ class FinancesAccountEdit : AppCompatActivity() {
     }
 
 
-    fun save(v: View) {
+    fun save(v: View) = safeExecute({}()) {
 
         if (editingObject != null && !m_active.isChecked) {
             confirmDelete(v)
@@ -127,7 +117,7 @@ class FinancesAccountEdit : AppCompatActivity() {
 
     }
 
-    fun confirmDelete(v: View) {
+    fun confirmDelete(v: View) = safeExecute({}()) {
         linearLayout4.visibility = View.VISIBLE;
         with(titleLbl) {
             text = getString(R.string.all_removeCantUndo)
@@ -138,7 +128,7 @@ class FinancesAccountEdit : AppCompatActivity() {
         }
     }
 
-    fun cancelDelete(v: View) {
+    fun cancelDelete(v: View) = safeExecute({}()) {
         linearLayout4.visibility = View.GONE;
         with(titleLbl) {
             text = getString(R.string.finances_editAccount)
@@ -148,7 +138,7 @@ class FinancesAccountEdit : AppCompatActivity() {
         }
     }
 
-    fun execSave(v: View) {
+    fun execSave(v: View) = safeExecute({}()) {
 
         val nf = NumberFormat.getInstance() as DecimalFormat
         val decSep = nf.decimalFormatSymbols.decimalSeparator
@@ -193,47 +183,37 @@ class FinancesAccountEdit : AppCompatActivity() {
             bankNum = null
         }
 
-        m_loadingFrame.visibility = View.VISIBLE
-        try {
-            val obj: FinancialAccount = editingObject ?: FinancialAccount()
-            with(obj) {
-                if (editingObject == null) {
-                    branch = branchVal
-                    bankNumber = bankNum
-                    number = accountNum
-                    currency = selectedCurrency
-                    type = selectedAccountType
-                    active = true
-                } else {
-                    active = m_active.isChecked
-                }
-                name = accountName
-                if (type in ACCOUNT_VALUES_TYPE_NO_BALANCE) {
-                    balance = null
-                    creditLimit = null
-                } else {
-                    balance = accountBalance
-                    creditLimit = credLimit
-                }
-
-                if (id == null) {
-                    if (!AccountService.insert(this).get()) {
-                        throw java.lang.Exception("Erro na persistência!")
-                    }
-                } else {
-                    if (!AccountService.update(this).get()) {
-                        throw java.lang.Exception("Erro na persistência!")
-                    }
-                }
+        showLoadingScreen()
+        val obj: FinancialAccount = editingObject ?: FinancialAccount()
+        with(obj) {
+            if (editingObject == null) {
+                branch = branchVal
+                bankNumber = bankNum
+                number = accountNum
+                currency = selectedCurrency
+                type = selectedAccountType
+                active = true
+            } else {
+                active = m_active.isChecked
             }
-            Toast.makeText(applicationContext, "Salvo com sucesso!", Toast.LENGTH_SHORT).show()
-            setResult(RESULT_OK)
-            finish()
-        } catch (e: Exception) {
-            Toast.makeText(applicationContext, "Erro ao salvar: " + e.message, Toast.LENGTH_SHORT).show()
-            Log.e("ERROR", "Erro salvando conta financeira", e)
-            m_loadingFrame.visibility = View.GONE
+            name = accountName
+            if (type in ACCOUNT_VALUES_TYPE_NO_BALANCE) {
+                balance = null
+                creditLimit = null
+            } else {
+                balance = accountBalance
+                creditLimit = credLimit
+            }
+
+            if (id == null) {
+                AccountService.insert(this)
+            } else {
+                AccountService.update(this)
+            }
         }
+        Toast.makeText(applicationContext, "Salvo com sucesso!", Toast.LENGTH_SHORT).show()
+        setResult(RESULT_OK)
+        finish()
     }
 
 

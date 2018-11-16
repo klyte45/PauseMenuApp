@@ -76,4 +76,27 @@
     <string name="finances.editMovementSource">Editar Fonte de Movimentação</string>
     <string name="finances.outAccount">Conta de Saída</string>
     <string name="finances.inAccount">Conta de Entrada</string>
+    <string name="finances.frequency.monthly">Mensal</string>
+    <string name="finances.frequency.weekly">Semanal</string>
+    <string name="finances.frequency.fifthly">Quinzenal</string>
+    <string name="finances.frequency.daily">Diário</string>
+    <string name="finances.frequency.yearly">Anual</string>
+    <string name="finances.frequency.oneshot">Único</string>
+    <string name="finances.frequency.dayFormat">Diário</string>
+    <string name="finances.frequency.weekFormat">Todo(a) %s</string>
+    <string name="finances.frequency.monthFormat">Dia %s de cada mês</string>
+    <string name="finances.frequency.fifthlyFormat">Dias %s e %s de cada mês</string>
+    <string name="finances.frequency.anualFormat">Dia %s de %s de cada ano</string>
+    <string name="finances.frequency.oneshotFormat">Apenas em %s</string>
+    <string name="finances.viewValuesPrevisions">Ver valores previstos</string>
+    <string name="all.date">Data</string>
+    <string name="all.startDate">Data inicial</string>
+    <string name="all.frequency">Frequência</string>
+    <string name="all.referenceDay">Dia de referência</string>
+    <string name="all.referenceMonth">Mês de referência</string>
+    <string name="all.value">Valor</string>
+    <string name="all.absoluteValue">Valor absoluto</string>
+    <string name="all.percentage">Porcentagem</string>
+    <string name="finances.previsionOf">Previsão para:\n%s</string>
+    <string name="all.utilDays">Dias úteis</string>
 </resources>

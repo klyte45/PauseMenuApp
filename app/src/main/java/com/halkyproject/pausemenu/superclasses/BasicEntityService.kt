@@ -2,9 +2,12 @@ package com.halkyproject.pausemenu.superclasses
 
 import android.os.AsyncTask
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import com.halkyproject.lifehack.interfaces.BasicEntityModel
 import com.halkyproject.pausemenu.singletons.HttpService
+import java.util.*
+
 
 abstract class BasicEntityService<T, U> where T : BasicEntityModel<T> {
 
@@ -13,34 +16,41 @@ abstract class BasicEntityService<T, U> where T : BasicEntityModel<T> {
     abstract fun getClassEntity(): Class<T>
     abstract fun getClassEntityArray(): Class<Array<T>>
 
+    companion object {
+        protected var gson: Gson? = null
+            get() {
+                if (field == null) {
+                    val gsonBuilder = GsonBuilder()
+                    gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+                    return gsonBuilder.create()
+                }
+                return field
+            }
+            set(x) {}
+    }
+
     private class Insert<T>(val baseUrl: String) : AsyncTask<T, Void, Boolean>() where T : BasicEntityModel<T> {
         override fun doInBackground(vararg arr: T): Boolean {
-            try {
-                if (arr.isNotEmpty()) {
-                    val type = object : TypeToken<T>() {}.type
-                    HttpService.doRequest(
-                            baseUrl, Void::class.java, HttpService.HttpRequestMethod.POST, Gson().toJson(arr[0], type)
-                    )
-                    return true
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
+
+            if (arr.isNotEmpty()) {
+                val type = object : TypeToken<T>() {}.type
+                HttpService.doRequest(
+                        baseUrl, Void::class.java, HttpService.HttpRequestMethod.POST, BasicEntityService.gson!!.toJson(arr[0], type)
+                )
+                return true
             }
+
             return false
         }
     }
 
     private class Update<T>(val baseUrl: String) : AsyncTask<T, Void, Boolean>() where T : BasicEntityModel<T> {
         override fun doInBackground(vararg arr: T): Boolean {
-            try {
-                if (arr.isNotEmpty()) {
-                    HttpService.doRequest(
-                            baseUrl + "/" + arr[0].getIdentifier(), Void::class.java, HttpService.HttpRequestMethod.PUT, Gson().toJson(arr[0], object : TypeToken<T>() {}.type)
-                    )
-                    return true
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            if (arr.isNotEmpty()) {
+                HttpService.doRequest(
+                        baseUrl + "/" + arr[0].getIdentifier(), Void::class.java, HttpService.HttpRequestMethod.PUT, BasicEntityService.gson!!.toJson(arr[0], object : TypeToken<T>() {}.type)
+                )
+                return true
             }
             return false
         }
@@ -48,13 +58,9 @@ abstract class BasicEntityService<T, U> where T : BasicEntityModel<T> {
 
     private class Delete<T>(val baseUrl: String) : AsyncTask<T, Void, Boolean>() where T : BasicEntityModel<T> {
         override fun doInBackground(vararg arr: T): Boolean {
-            try {
-                if (arr.isNotEmpty()) {
-                    HttpService.doRequest(baseUrl + "/" + arr[0].getIdentifier(), Void::class.java, HttpService.HttpRequestMethod.DELETE)
-                    return true
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
+            if (arr.isNotEmpty()) {
+                HttpService.doRequest(baseUrl + "/" + arr[0].getIdentifier(), Void::class.java, HttpService.HttpRequestMethod.DELETE)
+                return true
             }
             return false
         }

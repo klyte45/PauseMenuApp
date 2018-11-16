@@ -2,11 +2,11 @@ package com.halkyproject.pausemenu.activities.finances
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.halkyproject.pausemenu.R
+import com.halkyproject.pausemenu.superclasses.BasicActivity
 
-class FinancesMain : AppCompatActivity() {
+class FinancesMain : BasicActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,6 +16,7 @@ class FinancesMain : AppCompatActivity() {
     fun openAccountScreen(v: View) {
         startActivity(Intent(this, FinancesAccountList::class.java))
     }
+
     fun openMovementSourcesScreen(v: View) {
         startActivity(Intent(this, MovementSourceList::class.java))
     }

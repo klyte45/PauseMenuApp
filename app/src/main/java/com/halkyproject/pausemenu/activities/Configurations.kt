@@ -3,7 +3,6 @@ package com.halkyproject.pausemenu.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -14,13 +13,14 @@ import com.halkyproject.pausemenu.components.CustomTextView
 import com.halkyproject.pausemenu.fragments.DatePickerFragment
 import com.halkyproject.pausemenu.fragments.TimePickerFragment
 import com.halkyproject.pausemenu.singletons.ConfigSingleton
+import com.halkyproject.pausemenu.superclasses.BasicActivity
 import kotlinx.android.synthetic.main.activity_configurations.*
 import java.util.*
 
 
-class Configurations : AppCompatActivity() {
+class Configurations : BasicActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) = safeExecute({}()) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_configurations)
         ConfigSingleton.getBirthDate().observe(this, android.arch.lifecycle.Observer {
@@ -32,10 +32,10 @@ class Configurations : AppCompatActivity() {
             val input = findViewById<CustomEditText>(R.id.val_serverUrl)
             input.setText(it, TextView.BufferType.EDITABLE)
         })
-        m_loadingFrame.visibility = View.GONE
+        closeLoadingScreen()
     }
 
-    fun showPickerDtNasc(v: View) {
+    fun showPickerDtNasc(v: View) = safeExecute({}()) {
 
         val ll: LinearLayout = v as LinearLayout
         val ctv: CustomTextView = ll.findViewWithTag("value")
@@ -48,7 +48,7 @@ class Configurations : AppCompatActivity() {
         newFragment.show(supportFragmentManager, "nascDatePicker")
     }
 
-    fun showPickerHrNasc(v: View) {
+    fun showPickerHrNasc(v: View) = safeExecute({}()) {
         val ll: LinearLayout = v as LinearLayout
         val ctv: CustomTextView = ll.findViewWithTag("value")
         val newFragment = TimePickerFragment()
@@ -61,7 +61,7 @@ class Configurations : AppCompatActivity() {
     }
 
 
-    fun showPickerTzNasc(v: View) {
+    fun showPickerTzNasc(v: View) = safeExecute({}()) {
         val ll: LinearLayout = v as LinearLayout
         val ctv: CustomTextView = ll.findViewWithTag("value")
 
@@ -78,8 +78,8 @@ class Configurations : AppCompatActivity() {
         tzSpinner.show()
     }
 
-    fun savePin(v: View) {
-        m_loadingFrame.visibility = View.VISIBLE
+    fun savePin(v: View) = safeExecute({}()) {
+        showLoadingScreen()
 
         ConfigSingleton.getPin().observe(this, android.arch.lifecycle.Observer {
             try {
@@ -104,13 +104,13 @@ class Configurations : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Senha atual inválida!", Toast.LENGTH_SHORT).show()
                 }
             } finally {
-                m_loadingFrame.visibility = View.GONE
+                closeLoadingScreen()
             }
         })
     }
 
-    fun saveServerUrl(v: View) {
-        m_loadingFrame.visibility = View.VISIBLE
+    fun saveServerUrl(v: View) = safeExecute({}()) {
+        showLoadingScreen()
         try {
             if (ConfigSingleton.setServerUrl(val_serverUrl.text.toString()).get()) {
                 Toast.makeText(applicationContext, "Servidor salvo!", Toast.LENGTH_SHORT).show()
@@ -118,11 +118,11 @@ class Configurations : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Erro ao salvar servidor!", Toast.LENGTH_SHORT).show()
             }
         } finally {
-            m_loadingFrame.visibility = View.GONE
+            closeLoadingScreen()
         }
     }
 
-    fun goToCompanyCrud(v: View) {
+    fun goToCompanyCrud(v: View) = safeExecute({}()) {
         startActivity(Intent(this, CompanyCrud::class.java))
     }
 }

@@ -35,10 +35,6 @@ class MovementSourceList : GenericListingActivity<MovementSource, MovementSource
         return scrollLayout
     }
 
-    override fun getLoadingFrame(): ConstraintLayout {
-        return m_loadingFrame
-    }
-
     override fun getFragmentClass(): Class<MovementSourceListFragment> {
         return MovementSourceListFragment::class.java
     }

@@ -9,7 +9,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
-import android.support.v7.app.AppCompatActivity
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
@@ -19,17 +18,18 @@ import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.activities.finances.FinancesMain
 import com.halkyproject.pausemenu.components.CustomTextView
 import com.halkyproject.pausemenu.singletons.ConfigSingleton
+import com.halkyproject.pausemenu.superclasses.BasicActivity
 import org.apache.commons.lang3.StringUtils
 import java.util.*
 
 
-class PauseMenuMain : AppCompatActivity() {
+class PauseMenuMain : BasicActivity() {
 
     companion object {
         private const val FINANCES_PIN_REQUEST_CODE = 1
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) = safeExecute({}()) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pause_menu_main)
         ActivityCompat.requestPermissions(this,
@@ -107,16 +107,16 @@ class PauseMenuMain : AppCompatActivity() {
     }
 
     //ações
-    fun goToConfig(v: View) {
+    fun goToConfig(v: View) = safeExecute({}()) {
         startActivity(Intent(this, Configurations::class.java))
     }
 
 
-    fun goToFinances(v: View) {
+    fun goToFinances(v: View) = safeExecute({}()) {
         startActivityForResult(Intent(this, PinInput::class.java), FINANCES_PIN_REQUEST_CODE)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) = safeExecute({}()) {
         if (requestCode == FINANCES_PIN_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 startActivity(Intent(this, FinancesMain::class.java))

@@ -1,26 +1,25 @@
 package com.halkyproject.pausemenu.activities.finances
 
+import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.lifehack.model.finances.MovementSource
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.adapter.SpinnerTypeAdapter
 import com.halkyproject.pausemenu.singletons.finances.AccountService
 import com.halkyproject.pausemenu.singletons.finances.MovementSourceService
+import com.halkyproject.pausemenu.superclasses.BasicActivity
 import com.halkyproject.pausemenu.superclasses.BasicFragment
 import kotlinx.android.synthetic.main.activity_finances_movement_source_edit.*
 
-class MovementSourceEdit : AppCompatActivity() {
+class MovementSourceEdit : BasicActivity() {
 
     private var editingObject: MovementSource? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) = safeExecute({}(), true) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_finances_movement_source_edit)
 
@@ -46,11 +45,12 @@ class MovementSourceEdit : AppCompatActivity() {
         if (editingObject == null) {
             m_spinnerOut.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, pkOut.filter { it.active }, 14f)
             m_spinnerIn.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, pkIn.filter { it.active }, 14f)
+            m_viewValuesPrev.visibility = View.GONE
         }
-        m_loadingFrame.visibility = View.GONE
+        closeLoadingScreen()
     }
 
-    fun save(v: View) {
+    fun save(v: View) = safeExecute({}()) {
         val name = m_name.text.toString()
         if (m_spinnerIn.selectedItemPosition == -1) {
             Toast.makeText(applicationContext, "Selecione a conta de entrada!", Toast.LENGTH_SHORT).show()
@@ -67,33 +67,31 @@ class MovementSourceEdit : AppCompatActivity() {
             Toast.makeText(applicationContext, "Nome muito curto!", Toast.LENGTH_SHORT).show()
             return
         }
-        m_loadingFrame.visibility = View.VISIBLE
-        try {
-            val obj: MovementSource = editingObject ?: MovementSource()
-            with(obj) {
-                if (editingObject == null) {
-                    inAccountId = inAccount
-                    outAccountId = outAccount
-                }
-                this.name = name
-
-                if (id == null) {
-                    if (!MovementSourceService.insert(this).get()) {
-                        throw java.lang.Exception("Erro na persistência!")
-                    }
-                } else {
-                    if (!MovementSourceService.update(this).get()) {
-                        throw java.lang.Exception("Erro na persistência!")
-                    }
-                }
+        showLoadingScreen()
+        val obj: MovementSource = editingObject ?: MovementSource()
+        with(obj) {
+            if (editingObject == null) {
+                inAccountId = inAccount
+                outAccountId = outAccount
             }
-            Toast.makeText(applicationContext, "Salvo com sucesso!", Toast.LENGTH_SHORT).show()
-            setResult(RESULT_OK)
-            finish()
-        } catch (e: Exception) {
-            Toast.makeText(applicationContext, "Erro ao salvar: " + e.message, Toast.LENGTH_SHORT).show()
-            Log.e("ERROR", "Erro salvando fonte de movimentação", e)
-            m_loadingFrame.visibility = View.GONE
+            this.name = name
+            if (id == null) {
+                MovementSourceService.insert(this)
+            } else {
+                MovementSourceService.update(this)
+            }
         }
+        Toast.makeText(applicationContext, "Salvo com sucesso!", Toast.LENGTH_SHORT).show()
+        setResult(RESULT_OK)
+        finish()
+    }
+
+    fun openPrevisions(v: View) = safeExecute({}()) {
+        val intent = Intent(this, MovementSourcePrevisionList::class.java)
+        val b = Bundle()
+        b.putInt(MovementSourcePrevisionList.KEY_PARENT_ID, editingObject!!.id!!)
+        b.putString(MovementSourcePrevisionList.KEY_PARENT_NAME, editingObject!!.name)
+        intent.putExtras(b)
+        startActivityForResult(intent, 0)
     }
 }

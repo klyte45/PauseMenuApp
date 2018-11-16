@@ -11,8 +11,6 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -23,22 +21,23 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.common.base.Enums
-import com.halkyproject.pausemenu.R
 import com.halkyproject.lifehack.model.Company
+import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.enum.Country
 import com.halkyproject.pausemenu.singletons.CompanyService
 import com.halkyproject.pausemenu.singletons.FormatSingleton
+import com.halkyproject.pausemenu.superclasses.BasicActivity
 import com.halkyproject.pausemenu.superclasses.BasicFragment.Companion.KEY_EDIT_ID
 import kotlinx.android.synthetic.main.activity_company_edit.*
 import java.util.*
 
-class CompanyEdit : AppCompatActivity() {
+class CompanyEdit : BasicActivity() {
     private var locationValue: Marker? = null
     private var addressValue: Address? = null
     private var editingCompany: Company? = null
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) = safeExecute({}(), true) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_company_edit)
 
@@ -47,6 +46,7 @@ class CompanyEdit : AppCompatActivity() {
         val map = (supportFragmentManager.findFragmentById(R.id.company_mapView) as SupportMapFragment)
 
         if (editId != -1) {
+
             editingCompany = CompanyService.findById(editId)
             if (editingCompany != null) {
                 companyCommonName.setText(editingCompany!!.mainName, TextView.BufferType.EDITABLE)
@@ -89,7 +89,7 @@ class CompanyEdit : AppCompatActivity() {
         }
     }
 
-    private fun setMarker(latitude: Double, longitude: Double, googleMap: GoogleMap) {
+    private fun setMarker(latitude: Double, longitude: Double, googleMap: GoogleMap) = safeExecute({}()) {
         val geocoder = Geocoder(this, Locale.getDefault())
         try {
             val addresses = geocoder.getFromLocation(latitude, longitude, 1)
@@ -112,7 +112,7 @@ class CompanyEdit : AppCompatActivity() {
         }
     }
 
-    fun saveCompany(v: View) {
+    fun saveCompany(v: View) = safeExecute({}()) {
         val commonName = companyCommonName.text.toString()
         val realName = companyRealName.text.toString()
         val docNum = FormatSingleton.unmask(companyDocument.text.toString())
@@ -136,55 +136,45 @@ class CompanyEdit : AppCompatActivity() {
         if (!country.isPresent) {
             Toast.makeText(applicationContext, "Local inválido!", Toast.LENGTH_SHORT).show()
         }
-        m_loadingFrame.visibility = View.VISIBLE
+        showLoadingScreen()
 
-        try {
-            val companyObj: Company = editingCompany ?: Company()
-            companyObj.documentNumber = docNum
-            companyObj.mainName = commonName
-            companyObj.realName = realName
-            companyObj.latitude = addressValue!!.latitude
-            companyObj.longitude = addressValue!!.longitude
-            companyObj.cityDisplayName = addressValue!!.locality
-            companyObj.country = country.get().acronym
-            if (companyObj.id == null) {
-                CompanyService.insert(companyObj)
-            } else {
-                CompanyService.update(companyObj)
-            }
-            Toast.makeText(applicationContext, "Salvo com sucesso!", Toast.LENGTH_SHORT).show()
-            setResult(RESULT_OK)
-            finish()
-        } catch (e: Exception) {
-            Toast.makeText(applicationContext, "Erro ao salvar: " + e.message, Toast.LENGTH_SHORT).show()
-            Log.e("ERROR", "Erro salvando companhia", e)
-            m_loadingFrame.visibility = View.GONE
+        val companyObj: Company = editingCompany ?: Company()
+        companyObj.documentNumber = docNum
+        companyObj.mainName = commonName
+        companyObj.realName = realName
+        companyObj.latitude = addressValue!!.latitude
+        companyObj.longitude = addressValue!!.longitude
+        companyObj.cityDisplayName = addressValue!!.locality
+        companyObj.country = country.get().acronym
+        if (companyObj.id == null) {
+            CompanyService.insert(companyObj)
+        } else {
+            CompanyService.update(companyObj)
         }
+        Toast.makeText(applicationContext, "Salvo com sucesso!", Toast.LENGTH_SHORT).show()
+        setResult(RESULT_OK)
+        finish()
     }
 
-    fun confirmDelete(v: View) {
+    fun confirmDelete(v: View) = safeExecute({}()) {
         linearLayout4.visibility = View.VISIBLE;
         titleLbl.text = getString(R.string.all_confirmDelete)
     }
 
-    fun cancelDelete(v: View) {
+    fun cancelDelete(v: View) = safeExecute({}()) {
         linearLayout4.visibility = View.GONE;
         titleLbl.text = getString(R.string.company_editTitle)
     }
 
-    fun doDelete(v: View) {
-        m_loadingFrame.visibility = View.VISIBLE
+    fun doDelete(v: View) = safeExecute({}()) {
+        showLoadingScreen()
         linearLayout4.visibility = View.GONE
         titleLbl.text = getString(R.string.company_editTitle)
-        try {
-            if (editingCompany!!.id != null) {
-                CompanyService.delete(editingCompany!!)
-            }
+        if (editingCompany!!.id != null) {
+            CompanyService.delete(editingCompany!!)
             Toast.makeText(applicationContext, "Apagado com sucesso!", Toast.LENGTH_SHORT).show()
-            setResult(RESULT_OK)
-            finish()
-        } catch (e: Exception) {
-            m_loadingFrame.visibility = View.GONE
         }
+        setResult(RESULT_OK)
+        finish()
     }
 }

@@ -51,6 +51,8 @@
         <activity android:name=".activities.finances.MovementSourceList"/>
         <activity android:name=".activities.finances.MovementSourceEdit">
         </activity>
+        <activity android:name=".activities.finances.MovementSourcePrevisionList"/>
+        <activity android:name=".activities.finances.MovementSourcePrevisionEdit"/>
     </application>
 
 </manifest>

@@ -49,10 +49,10 @@ object HttpService {
         //Create a URL object holding our url
         val connection1: HttpURLConnection
         val streamReader1: InputStreamReader
-        val myUrl = URL(ConfigSingleton.getServerUrlSync() + stringUrl)
+        val effectiveUrl = URL(ConfigSingleton.getServerUrlSync() + stringUrl)
 
         //Create a connection
-        connection1 = myUrl.openConnection() as HttpURLConnection
+        connection1 = effectiveUrl.openConnection() as HttpURLConnection
 
         //Set methods and timeouts
         connection1.requestMethod = requestMethod.value
@@ -74,8 +74,8 @@ object HttpService {
         } else {
             /* error from server */
             streamReader1 = InputStreamReader(connection1.errorStream)
-            val model: ErrorModel = Gson().fromJson(streamReader1, ErrorModel::class.java)
-            throw Exception("Status code ${connection1.responseCode}: ${model.message}\nBODY: $body")
+            val model: ErrorModel? = Gson().fromJson(streamReader1, ErrorModel::class.java)
+            throw Exception("$effectiveUrl => Status code ${connection1.responseCode}: ${model?.message}\nBODY: $body")
         }
 
 

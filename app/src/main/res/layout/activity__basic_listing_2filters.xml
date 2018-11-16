@@ -83,36 +83,4 @@
                 android:id="@+id/scrollLayout">
         </LinearLayout>
     </ScrollView>
-
-    <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:focusable="true"
-            android:clickable="true"
-            android:background="@drawable/default_bg"
-            android:backgroundTint="@color/common_google_signin_btn_text_light_pressed"
-            android:id="@+id/m_loadingFrame"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone">
-
-        <com.halkyproject.pausemenu.components.CustomTextView
-                android:id="@+id/carregandoLabel"
-                android:text="@string/all.loading"
-                app:font_name="VideoGame"
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:maxLines="1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:singleLine="true"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="8dp"
-                app:textAllCaps="true"/>
-    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

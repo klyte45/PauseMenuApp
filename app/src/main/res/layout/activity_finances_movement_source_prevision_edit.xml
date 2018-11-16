@@ -5,17 +5,17 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.finances.MovementSourceEdit">
+        tools:context=".activities.finances.MovementSourcePrevisionEdit">
 
     <com.halkyproject.pausemenu.components.CustomTextView
             android:id="@+id/m_title"
             app:font_name="Sva"
-            android:textSize="60sp"
+            android:textSize="30sp"
             android:layout_height="0dp"
             android:textColor="@color/colorPrimary"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent"
-            android:singleLine="true"
+            android:singleLine="false"
             android:gravity="center"
             android:ellipsize="end"
             android:width="375sp"
@@ -24,9 +24,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            android:text="@string/finances.editMovementSource"
-            android:textAlignment="center"/>
-    
+            android:text="@string/finances.previsionOf"
+            android:textAlignment="center"
+            android:lines="2"/>
+
 
     <ScrollView
             android:layout_width="match_parent"
@@ -38,7 +39,7 @@
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            >
+            android:layout_marginTop="8dp">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -46,32 +47,49 @@
                 android:orientation="vertical"
                 android:id="@+id/scrollLayout">
 
-            <com.halkyproject.pausemenu.components.CustomTextView
-                    android:text="@string/all.name"
-                    app:font_name="VideoGame"
-                    android:textSize="@dimen/mainMenu.listItem.fontSize"
+            <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorSubtitle"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1"
-                    app:textAllCaps="true"/>
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:onClick="showPickerDtInicio"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/m_layoutDate">
 
-            <com.halkyproject.pausemenu.components.CustomEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:textAllCaps="true"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1"
-                    style="@style/default_input"
-                    android:id="@+id/m_name"
-                    android:singleLine="true"/>
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:text="@string/all.startDate"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorSubtitle"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        app:textAllCaps="true"
+                        android:id="@+id/customTextView13"/>
 
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:id="@+id/m_dtInit"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:textColor="@color/colourizableWhite"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        android:textAlignment="textEnd"
+                        android:tag="value"
+                        android:layout_weight="1"/>
+
+            </LinearLayout>
 
             <com.halkyproject.pausemenu.components.CustomTextView
-                    android:text="@string/finances.outAccount"
+                    android:text="@string/all.frequency"
                     app:font_name="VideoGame"
                     android:textSize="@dimen/mainMenu.listItem.fontSize"
                     android:layout_width="match_parent"
@@ -86,11 +104,76 @@
             <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/m_spinnerOut"
+                    android:id="@+id/m_spinnerFreq"
                     android:layout_weight="1"/>
 
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/m_layoutDayFreq"
+                    android:visibility="gone">
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:text="@string/all.referenceDay"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/colorSubtitle"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        app:textAllCaps="true"
+                        android:id="@+id/customTextView9"/>
+
+                <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/m_spinnerFrequencyDay"
+                        />
+
+                <com.halkyproject.pausemenu.components.CustomCheckBox
+                        android:text="@string/all.utilDays"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/m_utilDays"
+                        />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:id="@+id/m_layoutMonthFreq"
+                    android:visibility="gone">
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:text="@string/all.referenceMonth"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/colorSubtitle"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        app:textAllCaps="true"
+                        android:id="@+id/customTextView91"/>
+
+                <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/m_spinnerFrequencyMonth"
+                        />
+            </LinearLayout>
+
             <com.halkyproject.pausemenu.components.CustomTextView
-                    android:text="@string/finances.inAccount"
+                    android:text="@string/all.value"
                     app:font_name="VideoGame"
                     android:textSize="@dimen/mainMenu.listItem.fontSize"
                     android:layout_width="match_parent"
@@ -100,41 +183,48 @@
                     android:textColor="@color/colorSubtitle"
                     android:layout_marginBottom="2dp"
                     android:layout_marginTop="2dp"
-                    android:layout_weight="1"
                     app:textAllCaps="true"
-                    android:id="@+id/customTextView9"/>
+                    android:id="@+id/customTextView8"/>
 
-            <Spinner
+            <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/m_spinnerIn"
-                    android:layout_weight="1"/>
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:id="@+id/m_valueConfig">
 
-            <com.halkyproject.pausemenu.components.CustomTextView
-                    android:text="@string/finances.viewValuesPrevisions"
-                    app:font_name="VideoGame"
-                    android:textSize="18sp"
+                <com.halkyproject.pausemenu.components.CustomRadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/op_valueAbsolute"
+                        android:text="@string/all.absoluteValue"
+                        android:checked="true"
+                        android:textAllCaps="true"/>
+
+                <com.halkyproject.pausemenu.components.CustomRadioButton
+                        android:text="@string/all.percentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/op_percentage"
+                        android:textAllCaps="true"/>
+
+            </RadioGroup>
+
+            <com.halkyproject.pausemenu.components.CustomEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:textColor="@color/defaultBg"
-                    android:layout_weight="1"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:textAllCaps="true"
-                    android:id="@+id/m_viewValuesPrev"
-                    android:textAlignment="center"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="5dp"
-                    android:background="@drawable/default_bg"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:layout_constraintVertical_weight="1"
-                    app:layout_constraintWidth_percent="50"
-                    app:layout_constraintEnd_toStartOf="@+id/deleteButton"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    android:onClick="openPrevisions"
-                    android:backgroundTint="@color/colorPrimary"/>
-
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    style="@style/default_input"
+                    android:id="@+id/m_value"
+                    android:inputType="numberDecimal"
+                    android:textAlignment="textEnd"
+                    android:textDirection="ltr"
+                    android:digits="1234567890"/>
         </LinearLayout>
     </ScrollView>
 

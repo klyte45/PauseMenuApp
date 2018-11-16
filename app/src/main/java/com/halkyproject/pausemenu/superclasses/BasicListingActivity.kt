@@ -2,8 +2,7 @@ package com.halkyproject.pausemenu.superclasses
 
 import android.net.Uri
 import android.os.AsyncTask
-import android.support.constraint.ConstraintLayout
-import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.LinearLayout
@@ -11,7 +10,7 @@ import com.halkyproject.lifehack.interfaces.BasicEntityModel
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.interfaces.OnFragmentInteractionListener
 
-abstract class BasicListingActivity<Entity, Activity, Fragment> : AppCompatActivity(), OnFragmentInteractionListener where Entity : BasicEntityModel<Entity>, Activity : BasicListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
+abstract class BasicListingActivity<Entity, Activity, Fragment> : BasicActivity(), OnFragmentInteractionListener where Entity : BasicEntityModel<Entity>, Activity : BasicListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
 
     private class ReloadAsync<Entity, Activity, Fragment>(private val fragmentClass: Class<Fragment>) : AsyncTask<Activity, Void, Pair<Activity, List<Entity>>>() where Entity : BasicEntityModel<Entity>, Activity : BasicListingActivity<Entity, Activity, Fragment>, Fragment : BasicFragment<Entity> {
 
@@ -26,20 +25,25 @@ abstract class BasicListingActivity<Entity, Activity, Fragment> : AppCompatActiv
             try {
                 val items = result.second
                 with(result.first) {
-                    val trRemove = supportFragmentManager.beginTransaction()
-                    for (fragment in supportFragmentManager.fragments) {
-                        trRemove.remove(fragment)
+                    if (supportFragmentManager.fragments.isNotEmpty()) {
+                        val trRemove = supportFragmentManager.beginTransaction()
+                        for (fragment in supportFragmentManager.fragments) {
+                            trRemove.remove(fragment)
+                        }
+                        trRemove.commit()
                     }
-                    trRemove.commit()
-
-                    val trAdd = supportFragmentManager.beginTransaction()
-                    for (comp in items) {
-                        val frag = BasicFragment.newInstance(comp, fragmentClass)
-                        trAdd.add(getScrollLayout().id, frag, "item" + comp.getIdentifier())
+                    if (items.isNotEmpty()) {
+                        val trAdd = supportFragmentManager.beginTransaction()
+                        for (comp in items) {
+                            val frag = BasicFragment.newInstance(comp, fragmentClass)
+                            trAdd.add(getScrollLayout().id, frag, "item" + comp.getIdentifier())
+                        }
+                        trAdd.commit()
                     }
-                    trAdd.commit()
-                    getLoadingFrame().visibility = View.GONE
+                    closeLoadingScreen()
                 }
+            } catch (e: Exception) {
+                Log.e("ERR!", "Erro post Execute: ${fragmentClass.name}", e)
             } finally {
                 result.first.currentRunningAsyncTask = null
             }
@@ -48,26 +52,25 @@ abstract class BasicListingActivity<Entity, Activity, Fragment> : AppCompatActiv
 
     abstract fun runOnBackground(): List<Entity>
     abstract fun getScrollLayout(): LinearLayout
-    abstract fun getLoadingFrame(): ConstraintLayout
     abstract fun getFragmentClass(): Class<Fragment>
 
     private var currentRunningAsyncTask: ReloadAsync<Entity, Activity, Fragment>? = null
 
     private var optionsAccountType: List<FinancialAccount.AccountType?> = ArrayList()
     protected val defaultSpinnerListener = object : AdapterView.OnItemSelectedListener {
-        override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) {
+        override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) = safeExecute({}()) {
             reload()
         }
 
-        override fun onNothingSelected(parentView: AdapterView<*>?) {
+        override fun onNothingSelected(parentView: AdapterView<*>?) = safeExecute({}()) {
             reload()
         }
     }
 
 
     @Suppress("UNCHECKED_CAST")
-    protected fun reload() {
-        getLoadingFrame().visibility = View.VISIBLE
+    protected fun reload() = safeExecute({}()) {
+        showLoadingScreen()
         synchronized(this) {
             if (currentRunningAsyncTask == null) {
                 currentRunningAsyncTask = ReloadAsync(getFragmentClass())
@@ -76,12 +79,12 @@ abstract class BasicListingActivity<Entity, Activity, Fragment> : AppCompatActiv
         }
     }
 
-    override fun onResume() {
+    override fun onResume() = safeExecute({}()) {
         super.onResume()
         reload()
     }
 
-    override fun onFragmentInteraction(uri: Uri) {
+    override fun onFragmentInteraction(uri: Uri) = safeExecute({}()) {
 
     }
 }

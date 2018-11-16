@@ -52,10 +52,6 @@ class FinancesAccountList : GenericListingActivity<FinancialAccount, FinancesAcc
         return scrollLayout
     }
 
-    override fun getLoadingFrame(): ConstraintLayout {
-        return m_loadingFrame
-    }
-
     override fun getFragmentClass(): Class<AccountCrudCardFragment> {
         return AccountCrudCardFragment::class.java
     }

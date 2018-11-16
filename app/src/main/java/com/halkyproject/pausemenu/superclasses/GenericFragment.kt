@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Html
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,8 @@ import com.halkyproject.pausemenu.components.CustomTextView
  *
  */
 abstract class GenericFragment<Entity> : BasicFragment<Entity>() where Entity : BasicEntityModel<Entity> {
+
+
     abstract fun getMainTitle(): String
     abstract fun getSubTitle(): String
     abstract fun getBottomTextLeft(): String
@@ -37,9 +40,8 @@ abstract class GenericFragment<Entity> : BasicFragment<Entity>() where Entity : 
     open fun getMiddleFontHeightSp(): Float {
         return 10f
     }
-
-    open fun getBundleKey(): String {
-        return KEY_EDIT_ID
+    open fun addToBundle(): Bundle {
+        return Bundle()
     }
 
     abstract fun getEditClass(): Class<*>
@@ -76,9 +78,10 @@ abstract class GenericFragment<Entity> : BasicFragment<Entity>() where Entity : 
         v.setOnClickListener {
             val intent = Intent(context, getEditClass())
             val b = Bundle()
-            b.putInt(getBundleKey(), getIdForAction() ?: -1)
+            b.putAll(addToBundle())
+            b.putInt(KEY_EDIT_ID, getIdForAction() ?: -1)
             intent.putExtras(b)
-            startActivityForResult(intent, 0)
+            startActivity(intent)
         }
         return v
     }

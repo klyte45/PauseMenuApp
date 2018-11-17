@@ -16,7 +16,6 @@ class CompanyCrud : GenericListingActivity<Company, CompanyCrud, CompanyCrudCard
     }
 
     override fun runOnBackground(): List<Company> {
-//        val searchFilter = AccountService.FinancialAccountFilter(optionsAccountType[m_spinnerFilter1.selectedItemPosition], if (m_spinnerFilter2.selectedItemPosition == 2) null else m_spinnerFilter2.selectedItemPosition == 0)
         return CompanyService.findAll()
     }
 

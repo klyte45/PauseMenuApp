@@ -99,4 +99,5 @@
     <string name="all.percentage">Porcentagem</string>
     <string name="finances.previsionOf">Previsão para:\n%s</string>
     <string name="all.utilDays">Dias úteis</string>
+    <string name="config.serverKey">Chave do Servidor</string>
 </resources>

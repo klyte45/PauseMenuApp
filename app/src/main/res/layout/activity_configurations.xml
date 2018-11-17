@@ -244,6 +244,36 @@
                         android:lines="1"
                         android:singleLine="true"/>
 
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:id="@+id/item_serverKey"
+                        android:text="@string/config.serverKey"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:textColor="@color/defaultMenuItemColor"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        />
+
+                <com.halkyproject.pausemenu.components.CustomEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        style="@style/default_input"
+                        android:id="@+id/val_serverKey"
+                        android:maxLines="1"
+                        android:lines="1"
+                        android:singleLine="true"
+                        android:inputType="textPassword"/>
+
             </LinearLayout>
 
 

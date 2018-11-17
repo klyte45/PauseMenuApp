@@ -112,11 +112,8 @@ class Configurations : BasicActivity() {
     fun saveServerUrl(v: View) = safeExecute({}()) {
         showLoadingScreen()
         try {
-            if (ConfigSingleton.setServerUrl(val_serverUrl.text.toString()).get()) {
-                Toast.makeText(applicationContext, "Servidor salvo!", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(applicationContext, "Erro ao salvar servidor!", Toast.LENGTH_SHORT).show()
-            }
+            ConfigSingleton.setServerUrlAndKey(val_serverUrl.text.toString(), val_serverKey.text.toString())
+            Toast.makeText(applicationContext, "Servidor salvo!", Toast.LENGTH_SHORT).show()
         } finally {
             closeLoadingScreen()
         }

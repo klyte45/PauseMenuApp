@@ -44,7 +44,7 @@ abstract class GenericListingActivity<Entity, Activity, Fragment> : BasicListing
 
     private var optionsAccountType: List<FinancialAccount.AccountType?> = ArrayList()
 
-    override fun onCreate(savedInstanceState: Bundle?) = safeExecute({}()) {
+    override fun onCreate(savedInstanceState: Bundle?) = safeExecute({}(), true) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity__basic_listing_2filters)
 

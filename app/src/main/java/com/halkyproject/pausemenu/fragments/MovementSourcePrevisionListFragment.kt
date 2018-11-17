@@ -26,7 +26,7 @@ class MovementSourcePrevisionListFragment : GenericFragment<MovementSourcePrevis
 
     override fun getBottomTextRight(): String {
         return if (obj.value != null) {
-            NumberFormat.getCurrencyInstance(obj.movSource!!.outAccount!!.currency.locale).format(obj.value)
+            NumberFormat.getCurrencyInstance(obj.currency.locale).format(obj.value)
         } else {
             NumberFormat.getInstance().format(obj.percValue!!.setScale(2)) + "%"
         }

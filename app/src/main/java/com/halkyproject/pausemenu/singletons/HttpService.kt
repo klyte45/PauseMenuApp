@@ -61,6 +61,7 @@ object HttpService {
         val reqDate = Date()
         connection1.setRequestProperty("X-Welber2", reqDate.time.toString())
         connection1.setRequestProperty("X-Welber", SecuritySingleton.getHash(reqDate.time.toString()))
+        connection1.setRequestProperty("X-Welber3", ConfigSingleton.getServerKeySync())
 
         if (body != null && requestMethod != HttpRequestMethod.GET) {
             connection1.setRequestProperty("Content-Type", contentType)

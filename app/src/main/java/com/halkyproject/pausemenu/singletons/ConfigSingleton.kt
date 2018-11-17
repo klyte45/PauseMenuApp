@@ -15,6 +15,7 @@ object ConfigSingleton {
     private const val KEY_HR_NASC = "hrNasc"
     private const val KEY_TZ_NASC = "TZNasc"
     private const val KEY_URL_SERVER = "urlServer"
+    private const val KEY_URL_KEY = "keyServer"
     private const val KEY_PIN = "pin"
 
     private class RunUpdatePIN : AsyncTask<String, Void, Boolean>() {
@@ -30,16 +31,19 @@ object ConfigSingleton {
         }
     }
 
-    private class RunUpdateUrlServer : AsyncTask<String, Void, Boolean>() {
-        override fun doInBackground(vararg value: String): Boolean {
-            if (value.isNotEmpty()) {
-                val db = MainDatabase.getInstance().generalConfigDao()
+    private class RunUpdateUrlServer(val url: String, val key: String) : AsyncTask<String, Void, Unit>() {
+        override fun doInBackground(vararg value: String) {
+            val db = MainDatabase.getInstance().generalConfigDao()
+            if (key.isEmpty()) {
                 db.insertAll(
-                        GeneralConfig(KEY_URL_SERVER, value[0])
+                        GeneralConfig(KEY_URL_SERVER, url)
                 )
-                return true
+            } else {
+                db.insertAll(
+                        GeneralConfig(KEY_URL_SERVER, url),
+                        GeneralConfig(KEY_URL_KEY, key)
+                )
             }
-            return false
         }
     }
 
@@ -94,6 +98,7 @@ object ConfigSingleton {
 
     private var cachedBirthDate: Calendar? = null
     private var cachedServerUrl: String? = null
+    private var cachedServerKey: String? = null
 
     fun getServerUrlCache(): String? {
         return cachedServerUrl
@@ -101,7 +106,7 @@ object ConfigSingleton {
 
     fun getServerUrl(): MediatorLiveData<String> {
         val mMediatorLiveData = MediatorLiveData<String>()
-        if (cachedServerUrl == null) {
+        return if (cachedServerUrl == null) {
             val db = MainDatabase.getInstance().generalConfigDao()
             val urlServer = db.getByKey(KEY_URL_SERVER)
 
@@ -110,10 +115,10 @@ object ConfigSingleton {
                 cachedServerUrl = dt?.value
                 mMediatorLiveData.setValue(cachedServerUrl)
             }
-            return mMediatorLiveData
+            mMediatorLiveData
         } else {
             mMediatorLiveData.value = cachedServerUrl
-            return mMediatorLiveData
+            mMediatorLiveData
         }
     }
 
@@ -125,8 +130,20 @@ object ConfigSingleton {
         return cachedServerUrl
     }
 
-    fun setServerUrl(value: String): AsyncTask<String, Void, Boolean> {
-        return RunUpdateUrlServer().execute(value)
+    fun getServerKeySync(): String? {
+        if (cachedServerKey == null) {
+            val db = MainDatabase.getInstance().generalConfigDao()
+            cachedServerKey = db.getByKeySync(KEY_URL_KEY)?.value
+        }
+        return cachedServerKey
+    }
+
+    fun setServerUrlAndKey(url: String, key: String) {
+        RunUpdateUrlServer(url, key).execute()
+        if (!key.isEmpty()) {
+            cachedServerKey = key
+        }
+        cachedServerUrl = url
     }
 
 

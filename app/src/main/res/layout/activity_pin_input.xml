@@ -34,7 +34,7 @@
             android:text="@string/all.insertPin"
             app:font_name="Sva"
             android:textSize="60sp"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
             android:maxLines="1"
@@ -44,7 +44,8 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textAlignment="center"/>
 
     <com.halkyproject.pausemenu.components.CustomEditText
             android:layout_width="match_parent"

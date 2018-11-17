@@ -172,59 +172,49 @@
                         />
             </LinearLayout>
 
-            <com.halkyproject.pausemenu.components.CustomTextView
-                    android:text="@string/all.value"
-                    app:font_name="VideoGame"
-                    android:textSize="@dimen/mainMenu.listItem.fontSize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:textColor="@color/colorSubtitle"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    app:textAllCaps="true"
-                    android:id="@+id/customTextView8"/>
-
-            <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+            <LinearLayout
                     android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:id="@+id/m_valueConfig">
-
-                <com.halkyproject.pausemenu.components.CustomRadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/op_valueAbsolute"
-                        android:text="@string/all.absoluteValue"
-                        android:checked="true"
-                        android:textAllCaps="true"/>
-
-                <com.halkyproject.pausemenu.components.CustomRadioButton
-                        android:text="@string/all.percentage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/op_percentage"
-                        android:textAllCaps="true"/>
-
-            </RadioGroup>
-
-            <com.halkyproject.pausemenu.components.CustomEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:textAllCaps="true"
-                    android:layout_marginBottom="2dp"
-                    android:layout_marginTop="2dp"
-                    style="@style/default_input"
-                    android:id="@+id/m_value"
-                    android:inputType="numberDecimal"
-                    android:textAlignment="textEnd"
-                    android:textDirection="ltr"
-                    android:digits="1234567890"/>
+                    android:layout_height="match_parent"
+                    android:id="@+id/m_valueLayout">
+
+                <com.halkyproject.pausemenu.components.CustomTextView
+                        android:text="@string/all.value"
+                        app:font_name="VideoGame"
+                        android:textSize="@dimen/mainMenu.listItem.fontSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/colorSubtitle"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        app:textAllCaps="true"
+                        android:id="@+id/customTextView8"/>
+
+                <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/m_spinnerValueType"
+                        />
+
+                <com.halkyproject.pausemenu.components.CustomEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:textAllCaps="true"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="2dp"
+                        style="@style/default_input"
+                        android:id="@+id/m_value"
+                        android:inputType="numberDecimal"
+                        android:textAlignment="textEnd"
+                        android:textDirection="ltr"
+                        android:digits="1234567890"/>
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

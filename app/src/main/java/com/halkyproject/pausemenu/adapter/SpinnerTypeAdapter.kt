@@ -9,12 +9,24 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.halkyproject.lifehack.interfaces.Colourizable
+import com.halkyproject.lifehack.interfaces.Disablable
 import com.halkyproject.pausemenu.PauseApp
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.interfaces.getResourceId
 
+open class SpinnerTypeAdapter<T, U>(context: Context, resource: Int, items: List<Any>, private val fontSize: Float = 10f, private val normalColorResId: Int = R.color.defaultMenuItemColor, private val refObjFun: () -> T? = { null }, private val refClassDisablable: Class<U>? = null) : ArrayAdapter<Any>(context, resource, items)
+        where U : Disablable<T> {
 
-class SpinnerTypeAdapter(context: Context, resource: Int, items: List<Any>, private val fontSize: Float = 10f, private val normalColorResId: Int = R.color.defaultMenuItemColor) : ArrayAdapter<Any>(context, resource, items) {
+    override fun isEnabled(position: Int): Boolean {
+        val refObj = refObjFun()
+        if (refClassDisablable != null && refObj != null) {
+            val selectedItem = getItem(position)
+            if (refClassDisablable.isAssignableFrom(selectedItem::class.java)) {
+                return (selectedItem as Disablable<T>).isEnabled(refObj)
+            }
+        }
+        return true
+    }
 
     // Affects default (closed) state of the spinner
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
@@ -53,6 +65,7 @@ class SpinnerTypeAdapter(context: Context, resource: Int, items: List<Any>, priv
                     R.color.colourizableWhite
                 }
 
+        view?.text = view?.text?.replace(Regex("[\n\r]"), " ")
         view?.typeface = PauseApp.getApp().getTypeFace(PauseApp.FontsEnum.P2P)
         view?.isAllCaps = true
         view?.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)

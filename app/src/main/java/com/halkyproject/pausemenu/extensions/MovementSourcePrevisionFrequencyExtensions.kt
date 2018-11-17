@@ -7,18 +7,25 @@ import com.halkyproject.pausemenu.R
 
 fun MovementSourcePrevision.Frequency.formatDateValue(ctx: Context, obj: MovementSourcePrevision): String {
     return when (this) {
-        MovementSourcePrevision.Frequency.MONTHLY -> String.format(ctx.getString(R.string.finances_frequency_monthFormat), obj.refDay)
+        MovementSourcePrevision.Frequency.MONTHLY -> {
+            if (obj.refDayUtil) {
+                String.format(ctx.getString(R.string.finances_frequency_monthFormatUtil), obj.refDay)
+            } else {
+                String.format(ctx.getString(R.string.finances_frequency_monthFormat), obj.refDay)
+            }
+        }
         MovementSourcePrevision.Frequency.WEEKLY -> String.format(ctx.getString(R.string.finances_frequency_weekFormat), DateFormatSymbols.getInstance().weekdays[obj.refDay!!])
         MovementSourcePrevision.Frequency.FIFTHLY -> String.format(ctx.getString(R.string.finances_frequency_fifthlyFormat), obj.refDay, obj.refDay!! + 15)
         MovementSourcePrevision.Frequency.DAILY -> ctx.getString(R.string.finances_frequency_dayFormat)
         MovementSourcePrevision.Frequency.YEARLY -> String.format(ctx.getString(R.string.finances_frequency_anualFormat), obj.refDay, DateFormatSymbols.getInstance().months[obj.refMonth!!])
-        MovementSourcePrevision.Frequency.NONE -> String.format(ctx.getString(R.string.finances_frequency_oneshotFormat), android.icu.text.DateFormat.getInstance().format(obj.startDate))
+        MovementSourcePrevision.Frequency.ONCE -> String.format(ctx.getString(R.string.finances_frequency_oneshotFormat), android.icu.text.DateFormat.getInstance().format(obj.startDate))
+        MovementSourcePrevision.Frequency.DISABLED -> ctx.getString(R.string.finances_frequency_disableFormat)
     }
 }
 
 fun MovementSourcePrevision.Frequency.getOptions(): Pair<List<String>?, List<String>?> {
     return when (this) {
-        MovementSourcePrevision.Frequency.DAILY, MovementSourcePrevision.Frequency.NONE -> Pair(null, null)
+        MovementSourcePrevision.Frequency.DAILY, MovementSourcePrevision.Frequency.ONCE, MovementSourcePrevision.Frequency.DISABLED -> Pair(null, null)
         MovementSourcePrevision.Frequency.MONTHLY, MovementSourcePrevision.Frequency.FIFTHLY, MovementSourcePrevision.Frequency.YEARLY -> {
             val listDays = ArrayList<String>()
             var i = this.minDay!!

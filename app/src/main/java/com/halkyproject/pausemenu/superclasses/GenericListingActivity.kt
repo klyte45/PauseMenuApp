@@ -8,7 +8,7 @@ import android.widget.LinearLayout
 import com.halkyproject.lifehack.interfaces.BasicEntityModel
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.R
-import com.halkyproject.pausemenu.adapter.SpinnerTypeAdapter
+import com.halkyproject.pausemenu.adapter.SimpleSpinnerTypeAdapter
 import kotlinx.android.synthetic.main.activity__basic_listing_2filters.*
 
 
@@ -58,13 +58,13 @@ abstract class GenericListingActivity<Entity, Activity, Fragment> : BasicListing
         val options1 = getOptionsFilter1()
         val options2 = getOptionsFilter2()
         if (options1 != null) {
-            m_spinnerFilter1.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, options1)
+            m_spinnerFilter1.adapter = SimpleSpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, options1)
             m_spinnerFilter1.onItemSelectedListener = defaultSpinnerListener
         } else {
             m_spinnerFilter1.visibility = View.GONE
         }
         if (options2 != null) {
-            m_spinnerFilter2.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, options2)
+            m_spinnerFilter2.adapter = SimpleSpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, options2)
             m_spinnerFilter2.onItemSelectedListener = defaultSpinnerListener
         } else {
             m_spinnerFilter2.visibility = View.GONE

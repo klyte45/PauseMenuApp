@@ -1,5 +1,6 @@
 package com.halkyproject.pausemenu.activities.finances
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.icu.text.DecimalFormat
 import android.icu.text.NumberFormat
@@ -7,8 +8,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
+import com.halkyproject.lifehack.model.finances.MovementSource
 import com.halkyproject.lifehack.model.finances.MovementSourcePrevision
 import com.halkyproject.pausemenu.R
+import com.halkyproject.pausemenu.adapter.SimpleSpinnerTypeAdapter
 import com.halkyproject.pausemenu.adapter.SpinnerTypeAdapter
 import com.halkyproject.pausemenu.extensions.getOptions
 import com.halkyproject.pausemenu.fragments.DatePickerFragment
@@ -25,7 +28,7 @@ import kotlin.math.min
 class MovementSourcePrevisionEdit : BasicActivity() {
 
     private var editingObject: MovementSourcePrevision? = null
-    private var parentId: Int = -1
+    private var parentObj: MovementSource? = null
 
     private var dtInit: Calendar? = null
         set(value) {
@@ -33,26 +36,28 @@ class MovementSourcePrevisionEdit : BasicActivity() {
             field = value
         }
 
-    private val defaultListenerFrequency = object : AdapterView.OnItemSelectedListener {
+    private val defaultListener = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parentView: AdapterView<*>?, selectedItemView: View?, position: Int, id: Long) = safeExecute({}()) {
-            redrawForm((m_spinnerFreq.selectedItem as DefaultI18nWrapper<MovementSourcePrevision.Frequency>).item)
+            redrawForm()
         }
 
         override fun onNothingSelected(parentView: AdapterView<*>?) = safeExecute({}()) {
-            redrawForm(MovementSourcePrevision.Frequency.NONE)
+            redrawForm()
         }
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) = safeExecute({}(), true) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_finances_movement_source_prevision_edit)
 
-        m_spinnerFreq.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, MovementSourcePrevision.Frequency.values().map { DefaultI18nWrapper(this, it) }, 14f)
-        m_spinnerFreq.onItemSelectedListener = defaultListenerFrequency
+        m_spinnerFreq.adapter = SimpleSpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, MovementSourcePrevision.Frequency.values().map { DefaultI18nWrapper(this, it) }, 14f)
+        m_spinnerFreq.onItemSelectedListener = defaultListener
+        parentObj = intent?.extras?.getSerializable(MovementSourcePrevisionList.KEY_PARENT) as MovementSource?
+        m_spinnerValueType.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, MovementSourcePrevision.ValueType.values().map { DefaultI18nWrapper(this, it) }, 14f, R.color.defaultMenuItemColor, { parentObj }, MovementSourcePrevision.ValueType::class.java)
+        m_spinnerValueType.onItemSelectedListener = defaultListener
         m_value.addTextChangedListener(FormatSingleton.maskNumberInput(m_value, resources.configuration.locale))
         val editId: Int = intent?.extras?.getInt(BasicFragment.KEY_EDIT_ID) ?: -1
-        parentId = intent?.extras?.getInt(MovementSourcePrevisionList.KEY_PARENT_ID) ?: -1
-        val parentName = intent?.extras?.getString(MovementSourcePrevisionList.KEY_PARENT_NAME)
         if (editId != -1) {
             editingObject = MovementSourcePrevisionService.findById(editId)
         }
@@ -62,30 +67,25 @@ class MovementSourcePrevisionEdit : BasicActivity() {
                     dtInit = Calendar.getInstance()
                     dtInit!!.time = startDate
                     m_spinnerFreq.setSelection(frequency.ordinal)
-                    redrawForm(frequency)
+                    m_spinnerValueType.setSelection(valueType.ordinal)
                     m_utilDays.isChecked = refDayUtil
-                    m_value.setText(if ((percValue?.toFloat()
-                                    ?: 0f) <= 0f) value!!.setScale(2).toString() else percValue!!.setScale(2).toString())
-                    if (percValue != null) {
-                        op_percentage.isChecked = true
-                    } else {
-                        op_valueAbsolute.isChecked = true
-                    }
+                    m_value.setText(value?.setScale(2)?.toString())
+                    redrawForm()
                 }
-                for (x in arrayOf(m_layoutDate, m_dtInit, m_utilDays, m_value, m_spinnerFrequencyDay, m_spinnerFrequencyMonth, m_spinnerFreq, op_valueAbsolute, op_percentage)) {
+                for (x in arrayOf(m_layoutDate, m_dtInit, m_utilDays, m_value, m_spinnerFrequencyDay, m_spinnerFrequencyMonth, m_spinnerFreq, m_spinnerValueType)) {
                     x.isEnabled = false
                 }
                 m_dtInit.setTextColor(Color.GRAY)
                 m_saveButton.visibility = View.GONE
             }
-            parentId != -1 -> {
+            parentObj != null -> {
                 dtInit = null
                 m_value.setText("0")
             }
             else -> finish()
         }
 
-        m_title.text = String.format(getString(R.string.finances_previsionOf), parentName)
+        m_title.text = String.format(getString(R.string.finances_previsionOf), parentObj!!.name)
         closeLoadingScreen()
     }
 
@@ -109,7 +109,8 @@ class MovementSourcePrevisionEdit : BasicActivity() {
         newFragment.show(supportFragmentManager, "dtInit")
     }
 
-    private fun redrawForm(frequencySelected: MovementSourcePrevision.Frequency) = safeExecute({}()) {
+    private fun redrawForm() = safeExecute({}()) {
+        val frequencySelected = (m_spinnerFreq.selectedItem as DefaultI18nWrapper<MovementSourcePrevision.Frequency>).item
         val selValDay = m_spinnerFrequencyDay.selectedItemPosition
         val selValMonth = m_spinnerFrequencyMonth.selectedItemPosition
         when (frequencySelected) {
@@ -125,10 +126,17 @@ class MovementSourcePrevisionEdit : BasicActivity() {
                 m_layoutMonthFreq.visibility = View.VISIBLE
 
             }
-            MovementSourcePrevision.Frequency.DAILY, MovementSourcePrevision.Frequency.NONE -> {
+            MovementSourcePrevision.Frequency.DAILY,
+            MovementSourcePrevision.Frequency.ONCE,
+            MovementSourcePrevision.Frequency.DISABLED -> {
                 m_layoutDayFreq.visibility = View.GONE
                 m_layoutMonthFreq.visibility = View.GONE
             }
+        }
+        if (frequencySelected == MovementSourcePrevision.Frequency.DISABLED) {
+            m_valueLayout.visibility = View.GONE
+        } else {
+            m_valueLayout.visibility = View.VISIBLE
         }
         m_utilDays.visibility =
                 if (frequencySelected == MovementSourcePrevision.Frequency.MONTHLY) {
@@ -137,13 +145,21 @@ class MovementSourcePrevisionEdit : BasicActivity() {
                     View.GONE
                 }
         val newOptions = frequencySelected.getOptions()
-        m_spinnerFrequencyDay.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, newOptions.first
+        m_spinnerFrequencyDay.adapter = SimpleSpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, newOptions.first
                 ?: arrayListOf(), 14f)
-        m_spinnerFrequencyMonth.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, newOptions.second
+        m_spinnerFrequencyMonth.adapter = SimpleSpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, newOptions.second
                 ?: arrayListOf(), 14f)
 
         m_spinnerFrequencyDay.setSelection(min(selValDay, (newOptions.first?.size ?: 0) - 1))
         m_spinnerFrequencyMonth.setSelection(min(selValMonth, (newOptions.second?.size ?: 0) - 1))
+        when ((m_spinnerValueType.selectedItem as DefaultI18nWrapper<MovementSourcePrevision.ValueType>).item) {
+            MovementSourcePrevision.ValueType.ABSOLUTE_IN,
+            MovementSourcePrevision.ValueType.ABSOLUTE_OUT,
+            MovementSourcePrevision.ValueType.PERCENTAGE_IN,
+            MovementSourcePrevision.ValueType.PERCENTAGE_OUT -> m_value.visibility = View.VISIBLE
+            MovementSourcePrevision.ValueType.RESET_IN,
+            MovementSourcePrevision.ValueType.RESET_OUT -> m_value.visibility = View.GONE
+        }
     }
 
     fun save(v: View) = safeExecute({}()) {
@@ -156,17 +172,16 @@ class MovementSourcePrevisionEdit : BasicActivity() {
         val decSep = nf.decimalFormatSymbols.decimalSeparator
         val tsdSep = nf.decimalFormatSymbols.groupingSeparator
 
-        val currentValue: BigDecimal = FormatSingleton.toBigDecimal(m_value.text.toString(), decSep, tsdSep)
-
-        if (currentValue.toFloat() < 0.01f) throw IllegalStateException("Valor não pode ser zero!")
+        val currentValue: BigDecimal?
 
         val freq = (m_spinnerFreq.selectedItem as DefaultI18nWrapper<MovementSourcePrevision.Frequency>).item
+        val valType = (m_spinnerValueType.selectedItem as DefaultI18nWrapper<MovementSourcePrevision.ValueType>).item
         var dayVal: Int? = null
         var monthVal: Int? = null
         var utilDays = false
         when (freq) {
             MovementSourcePrevision.Frequency.WEEKLY -> dayVal = m_spinnerFrequencyDay.selectedItemPosition
-            MovementSourcePrevision.Frequency.FIFTHLY,
+            MovementSourcePrevision.Frequency.FIFTHLY -> dayVal = m_spinnerFrequencyDay.selectedItemPosition + 1
             MovementSourcePrevision.Frequency.MONTHLY -> {
                 dayVal = m_spinnerFrequencyDay.selectedItemPosition + 1
                 utilDays = m_utilDays.isChecked
@@ -175,8 +190,24 @@ class MovementSourcePrevisionEdit : BasicActivity() {
                 dayVal = m_spinnerFrequencyDay.selectedItemPosition + 1
                 monthVal = m_spinnerFrequencyMonth.selectedItemPosition
             }
-            else -> {
+            MovementSourcePrevision.Frequency.DAILY,
+            MovementSourcePrevision.Frequency.ONCE,
+            MovementSourcePrevision.Frequency.DISABLED -> {
             }
+        }
+
+        when (valType) {
+
+            MovementSourcePrevision.ValueType.ABSOLUTE_IN,
+            MovementSourcePrevision.ValueType.ABSOLUTE_OUT,
+            MovementSourcePrevision.ValueType.PERCENTAGE_IN,
+            MovementSourcePrevision.ValueType.PERCENTAGE_OUT -> {
+                currentValue = FormatSingleton.toBigDecimal(m_value.text.toString(), decSep, tsdSep)
+                if (currentValue.toFloat() < 0.01f) throw IllegalStateException("Valor não pode ser zero!")
+            }
+            MovementSourcePrevision.ValueType.RESET_IN,
+            MovementSourcePrevision.ValueType.RESET_OUT -> currentValue = null
+
         }
 
         showLoadingScreen()
@@ -188,14 +219,13 @@ class MovementSourcePrevisionEdit : BasicActivity() {
             frequency = freq
             refDay = dayVal
             refMonth = monthVal
-            movSourceId = parentId
+            movSourceId = parentObj!!.id
             refDayUtil = utilDays
-            when (m_valueConfig.checkedRadioButtonId) {
-                op_valueAbsolute.id -> value = currentValue
-                op_percentage.id -> percValue = currentValue
-            }
-            if (!MovementSourcePrevisionService.insert(this).get()) {
+            value = currentValue
+            valueType = valType
 
+            if (!MovementSourcePrevisionService.insert(this).get()) {
+                return@safeExecute
             }
         }
         Toast.makeText(applicationContext, "Salvo com sucesso!", Toast.LENGTH_SHORT).show()

@@ -14,7 +14,7 @@ import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_BANK
 import com.halkyproject.lifehack.model.finances.FinancialAccount.Companion.ACCOUNT_VALUES_TYPE_NO_BALANCE
 import com.halkyproject.pausemenu.R
-import com.halkyproject.pausemenu.adapter.SpinnerTypeAdapter
+import com.halkyproject.pausemenu.adapter.SimpleSpinnerTypeAdapter
 import com.halkyproject.pausemenu.singletons.FormatSingleton
 import com.halkyproject.pausemenu.singletons.FormatSingleton.toBigDecimal
 import com.halkyproject.pausemenu.singletons.finances.AccountService
@@ -47,10 +47,10 @@ class FinancesAccountEdit : BasicActivity() {
         m_accountLimit.addTextChangedListener(FormatSingleton.maskNumberInput(m_accountLimit, resources.configuration.locale))
         m_accountNumber.addTextChangedListener(FormatSingleton.mask(m_accountNumber, FormatSingleton.FORMAT_FINANCIAL_ACCOUNT))
 
-        m_spinnerCurrency.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, Currency.values().map { DefaultI18nWrapper(this, Localizable.Adapter { "finances.currency.${it.name}" }) }, 14f, R.color.defaultMenuItemColor)
+        m_spinnerCurrency.adapter = SimpleSpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, Currency.values().map { DefaultI18nWrapper(this, Localizable.Adapter { "finances.currency.${it.name}" }) }, 14f, R.color.defaultMenuItemColor)
         m_spinnerCurrency.onItemSelectedListener = defaultListenerSpinners
 
-        m_spinnerType.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, FinancialAccount.AccountType.values().map { DefaultColorI18nWrapper(this, it) }, 14f)
+        m_spinnerType.adapter = SimpleSpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, FinancialAccount.AccountType.values().map { DefaultColorI18nWrapper(this, it) }, 14f)
         m_spinnerType.onItemSelectedListener = defaultListenerSpinners
 
         val editId: Int = intent?.extras?.getInt(KEY_EDIT_ID) ?: -1

@@ -4,6 +4,7 @@ import android.icu.text.NumberFormat
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.halkyproject.lifehack.model.finances.MovementSourcePrevision
+import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.activities.finances.MovementSourcePrevisionEdit
 import com.halkyproject.pausemenu.activities.finances.MovementSourcePrevisionList
 import com.halkyproject.pausemenu.extensions.formatDateValue
@@ -25,10 +26,14 @@ class MovementSourcePrevisionListFragment : GenericFragment<MovementSourcePrevis
     }
 
     override fun getBottomTextRight(): String {
-        return if (obj.value != null) {
-            NumberFormat.getCurrencyInstance(obj.currency.locale).format(obj.value)
-        } else {
-            NumberFormat.getInstance().format(obj.percValue!!.setScale(2)) + "%"
+        return when (obj.valueType) {
+
+            MovementSourcePrevision.ValueType.ABSOLUTE_IN,
+            MovementSourcePrevision.ValueType.ABSOLUTE_OUT -> NumberFormat.getCurrencyInstance(obj.currency.locale).format(obj.value)
+            MovementSourcePrevision.ValueType.PERCENTAGE_IN,
+            MovementSourcePrevision.ValueType.PERCENTAGE_OUT -> NumberFormat.getInstance().format(obj.value!!.setScale(2)) + "%"
+            MovementSourcePrevision.ValueType.RESET_IN -> getString(R.string.finances_valueType_resetIn)
+            MovementSourcePrevision.ValueType.RESET_OUT -> getString(R.string.finances_valueType_resetOut)
         }
     }
 
@@ -54,8 +59,7 @@ class MovementSourcePrevisionListFragment : GenericFragment<MovementSourcePrevis
 
     override fun addToBundle(): Bundle {
         val bundle: Bundle = super.addToBundle()
-        bundle.putInt(MovementSourcePrevisionList.KEY_PARENT_ID, obj.movSourceId!!)
-        bundle.putString(MovementSourcePrevisionList.KEY_PARENT_NAME, obj.movSource!!.name)
+        bundle.putSerializable(MovementSourcePrevisionList.KEY_PARENT, obj.movSource)
         return bundle
     }
 

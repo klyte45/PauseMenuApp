@@ -2,6 +2,7 @@ package com.halkyproject.pausemenu.activities.finances
 
 import android.os.Bundle
 import android.widget.LinearLayout
+import com.halkyproject.lifehack.model.finances.MovementSource
 import com.halkyproject.lifehack.model.finances.MovementSourcePrevision
 import com.halkyproject.pausemenu.fragments.MovementSourcePrevisionListFragment
 import com.halkyproject.pausemenu.singletons.finances.MovementSourcePrevisionService
@@ -11,20 +12,17 @@ import kotlinx.android.synthetic.main.activity__basic_listing_2filters.*
 
 class MovementSourcePrevisionList : GenericListingActivity<MovementSourcePrevision, MovementSourcePrevisionList, MovementSourcePrevisionListFragment>() {
     companion object {
-        const val KEY_PARENT_NAME = "PARENT_NAME"
-        const val KEY_PARENT_ID = "PARENT_ID"
+        const val KEY_PARENT = "PARENT"
     }
 
-    var movSourceId: Int? = null
-    lateinit var movSourceName: String
+    var movSource: MovementSource? = null
 
     override fun beforeCreate(savedInstanceState: Bundle?) {
-        movSourceId = intent?.extras?.getInt(KEY_PARENT_ID) ?: throw Exception("ID deve ser passado!")
-        movSourceName = intent?.extras?.getString(KEY_PARENT_NAME) ?: throw Exception("ID deve ser passado!")
+        movSource = (intent?.extras?.getSerializable(KEY_PARENT) as MovementSource?) ?: throw Exception("Objeto deve ser passado!")
     }
 
     override fun getListTitleStr(): String {
-        return movSourceName
+        return movSource!!.name
     }
 
     override fun getEditActivityClass(): Class<*> {
@@ -33,8 +31,7 @@ class MovementSourcePrevisionList : GenericListingActivity<MovementSourcePrevisi
 
     override fun addToBundle(): Bundle {
         val bundle: Bundle = super.addToBundle()
-        bundle.putInt(KEY_PARENT_ID, movSourceId!!)
-        bundle.putString(KEY_PARENT_NAME, movSourceName!!)
+        bundle.putSerializable(KEY_PARENT, movSource!!)
         return bundle
     }
 
@@ -47,7 +44,7 @@ class MovementSourcePrevisionList : GenericListingActivity<MovementSourcePrevisi
 //    }
 
     override fun runOnBackground(): List<MovementSourcePrevision> {
-        return MovementSourcePrevisionService.search(MovementSourcePrevisionService.Filter(movSourceId!!))
+        return MovementSourcePrevisionService.search(MovementSourcePrevisionService.Filter(movSource!!.id!!))
     }
 
     override fun getScrollLayout(): LinearLayout {

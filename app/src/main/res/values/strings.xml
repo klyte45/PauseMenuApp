@@ -82,9 +82,12 @@
     <string name="finances.frequency.daily">Diário</string>
     <string name="finances.frequency.yearly">Anual</string>
     <string name="finances.frequency.oneshot">Único</string>
+    <string name="finances.frequency.disable">Desabilitar</string>
     <string name="finances.frequency.dayFormat">Diário</string>
+    <string name="finances.frequency.disableFormat">Desabilitado</string>
     <string name="finances.frequency.weekFormat">Todo(a) %s</string>
     <string name="finances.frequency.monthFormat">Dia %s de cada mês</string>
+    <string name="finances.frequency.monthFormatUtil">%sº dia útil de cada mês</string>
     <string name="finances.frequency.fifthlyFormat">Dias %s e %s de cada mês</string>
     <string name="finances.frequency.anualFormat">Dia %s de %s de cada ano</string>
     <string name="finances.frequency.oneshotFormat">Apenas em %s</string>
@@ -100,4 +103,10 @@
     <string name="finances.previsionOf">Previsão para:\n%s</string>
     <string name="all.utilDays">Dias úteis</string>
     <string name="config.serverKey">Chave do Servidor</string>
+    <string name="finances.valueType.absoluteOut">Absoluto\n(Moeda de débito)</string>
+    <string name="finances.valueType.absoluteIn">Absoluto\n(Moeda de crédito)</string>
+    <string name="finances.valueType.percentageOut">Porcentagem sobre saldo de débito</string>
+    <string name="finances.valueType.percentageIn">Porcentagem sobre saldo de crédito</string>
+    <string name="finances.valueType.resetOut">Zerar saldo de débito\n(se positivo)</string>
+    <string name="finances.valueType.resetIn">Cobrir saldo de crédito\n(se negativo)</string>
 </resources>

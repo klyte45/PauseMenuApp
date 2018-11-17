@@ -8,7 +8,7 @@ import android.widget.Toast
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.lifehack.model.finances.MovementSource
 import com.halkyproject.pausemenu.R
-import com.halkyproject.pausemenu.adapter.SpinnerTypeAdapter
+import com.halkyproject.pausemenu.adapter.SimpleSpinnerTypeAdapter
 import com.halkyproject.pausemenu.singletons.finances.AccountService
 import com.halkyproject.pausemenu.singletons.finances.MovementSourceService
 import com.halkyproject.pausemenu.superclasses.BasicActivity
@@ -31,8 +31,8 @@ class MovementSourceEdit : BasicActivity() {
         if (editId != -1) {
             editingObject = MovementSourceService.findById(editId)
             if (editingObject != null) {
-                m_spinnerOut.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, pkOut, 14f)
-                m_spinnerIn.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, pkIn, 14f)
+                m_spinnerOut.adapter = SimpleSpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, pkOut, 14f)
+                m_spinnerIn.adapter = SimpleSpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, pkIn, 14f)
                 m_name.setText(editingObject!!.name, TextView.BufferType.EDITABLE)
                 m_spinnerIn.setSelection(pkIn.indexOfFirst { x -> x.id == editingObject!!.inAccountId })
                 m_spinnerOut.setSelection(pkOut.indexOfFirst { x -> x.id == editingObject!!.outAccountId })
@@ -43,8 +43,8 @@ class MovementSourceEdit : BasicActivity() {
             }
         }
         if (editingObject == null) {
-            m_spinnerOut.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, pkOut.filter { it.active }, 14f)
-            m_spinnerIn.adapter = SpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, pkIn.filter { it.active }, 14f)
+            m_spinnerOut.adapter = SimpleSpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, pkOut.filter { it.active }, 14f)
+            m_spinnerIn.adapter = SimpleSpinnerTypeAdapter(this, android.R.layout.simple_spinner_item, pkIn.filter { it.active }, 14f)
             m_viewValuesPrev.visibility = View.GONE
         }
         closeLoadingScreen()
@@ -89,8 +89,7 @@ class MovementSourceEdit : BasicActivity() {
     fun openPrevisions(v: View) = safeExecute({}()) {
         val intent = Intent(this, MovementSourcePrevisionList::class.java)
         val b = Bundle()
-        b.putInt(MovementSourcePrevisionList.KEY_PARENT_ID, editingObject!!.id!!)
-        b.putString(MovementSourcePrevisionList.KEY_PARENT_NAME, editingObject!!.name)
+        b.putSerializable(MovementSourcePrevisionList.KEY_PARENT, editingObject!!)
         intent.putExtras(b)
         startActivityForResult(intent, 0)
     }

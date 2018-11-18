@@ -53,6 +53,7 @@
         </activity>
         <activity android:name=".activities.finances.MovementSourcePrevisionList"/>
         <activity android:name=".activities.finances.MovementSourcePrevisionEdit"/>
+        <activity android:name=".activities.finances.reports.CurrentBalanceReport"/>
     </application>
 
 </manifest>

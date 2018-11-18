@@ -17,7 +17,7 @@ abstract class BasicEntityService<T, U> where T : BasicEntityModel<T> {
     abstract fun getClassEntityArray(): Class<Array<T>>
 
     companion object {
-        protected var gson: Gson? = null
+        var gson: Gson? = null
             get() {
                 if (field == null) {
                     val gsonBuilder = GsonBuilder()

@@ -7,6 +7,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.Transformations
 import android.content.Intent
 import android.graphics.Color
+import android.icu.text.NumberFormat
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.text.SpannableString
@@ -14,10 +15,12 @@ import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
 import android.view.View
 import android.widget.TextView
+import com.halkyproject.lifehack.model.enums.Currency
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.activities.finances.FinancesMain
 import com.halkyproject.pausemenu.components.CustomTextView
 import com.halkyproject.pausemenu.singletons.ConfigSingleton
+import com.halkyproject.pausemenu.singletons.finances.FinancesService.getCurrentBalancePhysicalLocal
 import com.halkyproject.pausemenu.superclasses.BasicActivity
 import org.apache.commons.lang3.StringUtils
 import java.util.*
@@ -48,12 +51,6 @@ class PauseMenuMain : BasicActivity() {
                                 findViewById<CustomTextView>(R.id.score).setText(spanScore, TextView.BufferType.SPANNABLE)
                             })
                             findViewById<CustomTextView>(R.id.dateZ).text = getCurrentDateFormat()
-
-                            val currentSaldo = String.format("%.2f", 50.7)
-                            val spanSaldo = SpannableString("R$ $currentSaldo");
-                            spanSaldo.setSpan(ForegroundColorSpan(Color.YELLOW), 0, 2, 0);
-                            findViewById<CustomTextView>(R.id.saldo).text = spanSaldo
-
                         }
                     }
                 } catch (e: InterruptedException) {
@@ -122,5 +119,14 @@ class PauseMenuMain : BasicActivity() {
                 startActivity(Intent(this, FinancesMain::class.java))
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val currencyFormatter = NumberFormat.getCurrencyInstance(Currency.BRL.locale)
+        val currentSaldo = currencyFormatter.format(getCurrentBalancePhysicalLocal())
+        val spanSaldo = SpannableString(currentSaldo);
+        spanSaldo.setSpan(ForegroundColorSpan(Color.YELLOW), currentSaldo.indexOf(currencyFormatter.currency.symbol), currencyFormatter.currency.symbol.length, 0);
+        findViewById<CustomTextView>(R.id.saldo).text = spanSaldo
     }
 }

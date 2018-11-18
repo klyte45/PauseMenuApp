@@ -1,10 +1,9 @@
 package com.halkyproject.pausemenu.activities.finances
 
-import android.support.constraint.ConstraintLayout
 import android.widget.LinearLayout
 import com.halkyproject.lifehack.model.finances.MovementSource
 import com.halkyproject.pausemenu.R
-import com.halkyproject.pausemenu.fragments.MovementSourceListFragment
+import com.halkyproject.pausemenu.fragments.finances.MovementSourceListFragment
 import com.halkyproject.pausemenu.singletons.finances.MovementSourceService
 import com.halkyproject.pausemenu.superclasses.GenericListingActivity
 import kotlinx.android.synthetic.main.activity__basic_listing_2filters.*

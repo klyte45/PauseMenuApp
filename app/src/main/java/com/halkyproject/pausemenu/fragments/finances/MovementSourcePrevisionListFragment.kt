@@ -1,4 +1,4 @@
-package com.halkyproject.pausemenu.fragments
+package com.halkyproject.pausemenu.fragments.finances
 
 import android.icu.text.NumberFormat
 import android.os.Bundle
@@ -8,7 +8,7 @@ import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.activities.finances.MovementSourcePrevisionEdit
 import com.halkyproject.pausemenu.activities.finances.MovementSourcePrevisionList
 import com.halkyproject.pausemenu.extensions.formatDateValue
-import com.halkyproject.pausemenu.superclasses.GenericFragment
+import com.halkyproject.pausemenu.superclasses.GenericEntityFragment
 import java.text.DateFormat
 
 /**
@@ -20,7 +20,7 @@ import java.text.DateFormat
  * create an instance of this fragment.
  *
  */
-class MovementSourcePrevisionListFragment : GenericFragment<MovementSourcePrevision>() {
+class MovementSourcePrevisionListFragment : GenericEntityFragment<MovementSourcePrevision>() {
     override fun getMainTitle(): String {
         return DateFormat.getDateInstance().format(obj.startDate)
     }

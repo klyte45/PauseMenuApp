@@ -3,19 +3,19 @@ package com.halkyproject.pausemenu.superclasses
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import com.halkyproject.lifehack.interfaces.BasicEntityModel
 import com.halkyproject.pausemenu.interfaces.OnFragmentInteractionListener
+import java.io.Serializable
 
-abstract class BasicFragment<Entity> : Fragment() where Entity : BasicEntityModel<Entity> {
+abstract class BasicFragment<ObjClass> : Fragment() where ObjClass : Serializable {
 
-    protected lateinit var obj: Entity
+    protected lateinit var obj: ObjClass
     protected var listener: OnFragmentInteractionListener? = null
 
     @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            obj = it.getSerializable(SERIAL_FIELD_NAME) as Entity
+            obj = it.getSerializable(SERIAL_FIELD_NAME) as ObjClass
         }
     }
 
@@ -44,7 +44,7 @@ abstract class BasicFragment<Entity> : Fragment() where Entity : BasicEntityMode
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun <Fragment, Entity> newInstance(obj: Entity, clazz: Class<Fragment>): Fragment where Fragment : BasicFragment<Entity>, Entity : BasicEntityModel<Entity> =
+        fun <Fragment, Entity> newInstance(obj: Entity, clazz: Class<Fragment>): Fragment where Fragment : BasicFragment<Entity>, Entity : Serializable =
                 clazz.newInstance().apply {
                     arguments = Bundle().apply {
                         putSerializable(SERIAL_FIELD_NAME, obj)

@@ -1,6 +1,8 @@
 package com.halkyproject.pausemenu.singletons
 
+import android.os.AsyncTask
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.halkyproject.lifehack.model.entities.ErrorModel
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -13,8 +15,24 @@ object HttpService {
     private val READ_TIMEOUT = 15000
     private val CONNECTION_TIMEOUT = 15000
 
+    class MakeGetTo<U>(private val url: String, private val typeToken: TypeToken<U>) : AsyncTask<Unit, Void, Pair<U?, Int?>>() {
+        override fun doInBackground(vararg arr: Unit): Pair<U?, Int?> {
+            return HttpService.doRequest(url, typeToken, HttpService.HttpRequestMethod.GET)
+        }
+    }
+
+    class MakePostTo<U>(private val url: String, private val typeToken: TypeToken<U>, private val body: String) : AsyncTask<Void, Void, Pair<U?, Int?>>() {
+        override fun doInBackground(vararg arr: Void): Pair<U?, Int?> {
+            return HttpService.doRequest(url, typeToken, HttpService.HttpRequestMethod.POST, body)
+        }
+    }
+
 
     fun <T> doRequest(stringUrl: String, resultClass: Class<T>, requestMethod: HttpRequestMethod, body: String? = null, contentType: String = "application/json"): Pair<T?, Int> {
+        return doRequest(stringUrl, TypeToken.get(resultClass), requestMethod, body, contentType)
+    }
+
+    fun <T> doRequest(stringUrl: String, resultClass: TypeToken<T>, requestMethod: HttpRequestMethod, body: String? = null, contentType: String = "application/json"): Pair<T?, Int> {
 
         val reader: BufferedReader? = null
         var streamReader: InputStreamReader? = null
@@ -25,7 +43,10 @@ object HttpService {
             connection = pair.first
             streamReader = pair.second
 
-            return Pair(if (resultClass == Void::class.java || connection!!.responseCode == 204) null else Gson().fromJson<T>(streamReader, resultClass), connection!!.responseCode)
+            return Pair(
+                    if (resultClass == TypeToken.get(Void::class.java) || connection!!.responseCode == 204) null
+                    else Gson().fromJson<T>(streamReader, resultClass.type),
+                    connection!!.responseCode)
         } catch (e: Exception) {
             e.printStackTrace()
             throw e

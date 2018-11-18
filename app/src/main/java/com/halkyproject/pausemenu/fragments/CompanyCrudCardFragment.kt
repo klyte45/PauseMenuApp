@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment
 import com.halkyproject.lifehack.model.Company
 import com.halkyproject.pausemenu.activities.CompanyEdit
 import com.halkyproject.pausemenu.singletons.FormatSingleton
-import com.halkyproject.pausemenu.superclasses.GenericFragment
+import com.halkyproject.pausemenu.superclasses.GenericEntityFragment
 
 /**
  * A simple [Fragment] subclass.
@@ -15,7 +15,7 @@ import com.halkyproject.pausemenu.superclasses.GenericFragment
  * create an instance of this fragment.
  *
  */
-class CompanyCrudCardFragment : GenericFragment<Company>() {
+class CompanyCrudCardFragment : GenericEntityFragment<Company>() {
     override fun getMainTitle(): String {
         return obj.mainName
     }

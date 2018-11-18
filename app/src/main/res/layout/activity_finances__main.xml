@@ -42,37 +42,110 @@
 
             <com.halkyproject.pausemenu.components.CustomTextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:id="@+id/customTextView"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tt_crud"
                     android:layout_weight="1"
-                    android:text="@string/finances.accounts"
+                    android:text="@string/all.crud"
                     app:font_name="Sva"
                     android:textAlignment="center"
                     android:textSize="36sp"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorSubtitle"
                     app:textAllCaps="false"
-                    android:maxLines="1"
-                    tools:layout_editor_absoluteY="324dp"
-                    tools:layout_editor_absoluteX="8dp"
-                    android:singleLine="true"
-                    android:onClick="openAccountScreen"/>
+                    android:maxLines="1"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/finances.accounts"
+                    app:font_name="VideoGame"
+                    android:textSize="@dimen/mainMenu.listItem.fontSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:textAllCaps="true"
+                    android:textColor="@color/defaultMenuItemColor"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/it_accounts"
+                    android:onClick="openAccountScreen"
+                    android:layout_weight="1"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/finances.movSources"
+                    app:font_name="VideoGame"
+                    android:textSize="@dimen/mainMenu.listItem.fontSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:textAllCaps="true"
+                    android:textColor="@color/defaultMenuItemColor"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/it_movSources"
+                    android:onClick="openMovementSourcesScreen"
+                    android:layout_weight="1"/>
 
             <com.halkyproject.pausemenu.components.CustomTextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:id="@+id/customTextView4"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tt_reports"
                     android:layout_weight="1"
-                    android:text="@string/finances.movSources"
+                    android:text="@string/all.reports"
                     app:font_name="Sva"
                     android:textAlignment="center"
                     android:textSize="36sp"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/colorSubtitle"
                     app:textAllCaps="false"
-                    android:maxLines="1"
-                    tools:layout_editor_absoluteY="324dp"
-                    tools:layout_editor_absoluteX="8dp"
-                    android:singleLine="true"
-                    android:onClick="openMovementSourcesScreen"/>
+                    android:maxLines="1"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/finances.currentBalance"
+                    app:font_name="VideoGame"
+                    android:textSize="@dimen/mainMenu.listItem.fontSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:textAllCaps="true"
+                    android:textColor="@color/defaultMenuItemColor"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/it_currentBalance"
+                    android:layout_weight="1"
+                    android:enabled="true"
+                    android:onClick="openCurrentBalanceRelatory"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/finances.projection6months"
+                    app:font_name="VideoGame"
+                    android:textSize="@dimen/mainMenu.listItem.fontSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:textAllCaps="true"
+                    android:textColor="@color/defaultMenuItemColor"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/it_proj6month"
+                    android:layout_weight="1"
+                    android:enabled="false"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/finances.projection12months"
+                    app:font_name="VideoGame"
+                    android:textSize="@dimen/mainMenu.listItem.fontSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:textAllCaps="true"
+                    android:textColor="@color/defaultMenuItemColor"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/it_proj12month"
+                    android:layout_weight="1"
+                    android:enabled="false"/>
 
 
         </LinearLayout>

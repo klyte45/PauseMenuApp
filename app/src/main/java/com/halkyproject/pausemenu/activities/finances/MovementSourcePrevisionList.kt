@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.LinearLayout
 import com.halkyproject.lifehack.model.finances.MovementSource
 import com.halkyproject.lifehack.model.finances.MovementSourcePrevision
-import com.halkyproject.pausemenu.fragments.MovementSourcePrevisionListFragment
+import com.halkyproject.pausemenu.fragments.finances.MovementSourcePrevisionListFragment
 import com.halkyproject.pausemenu.singletons.finances.MovementSourcePrevisionService
 import com.halkyproject.pausemenu.superclasses.GenericListingActivity
 import kotlinx.android.synthetic.main.activity__basic_listing_2filters.*

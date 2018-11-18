@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingLeft="4dp"
+              android:paddingRight="4dp"
+              android:id="@+id/m_bgLayer"
+              android:paddingTop="4dp"
+              android:paddingBottom="4dp">
+
+    <com.halkyproject.pausemenu.components.CustomTextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/tt_title"
+            android:layout_weight="1"
+            android:text="@string/all.reports"
+            app:font_name="Sva"
+            android:textAlignment="center"
+            android:textSize="36sp"
+            android:textColor="@color/colorSubtitle"
+            app:textAllCaps="false"
+            android:maxLines="1"/>
+</LinearLayout>

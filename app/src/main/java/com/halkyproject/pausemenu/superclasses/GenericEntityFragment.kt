@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Html
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -24,7 +23,7 @@ import com.halkyproject.pausemenu.components.CustomTextView
  * create an instance of this fragment.
  *
  */
-abstract class GenericFragment<Entity> : BasicFragment<Entity>() where Entity : BasicEntityModel<Entity> {
+abstract class GenericEntityFragment<Entity> : BasicFragment<Entity>() where Entity : BasicEntityModel<Entity> {
 
 
     abstract fun getMainTitle(): String

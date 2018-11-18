@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.halkyproject.pausemenu.R
+import com.halkyproject.pausemenu.activities.finances.reports.CurrentBalanceReport
 import com.halkyproject.pausemenu.superclasses.BasicActivity
 
 class FinancesMain : BasicActivity() {
@@ -19,6 +20,10 @@ class FinancesMain : BasicActivity() {
 
     fun openMovementSourcesScreen(v: View) {
         startActivity(Intent(this, MovementSourceList::class.java))
+    }
+
+    fun openCurrentBalanceRelatory(v: View) {
+        startActivity(Intent(this, CurrentBalanceReport::class.java))
     }
 
 }

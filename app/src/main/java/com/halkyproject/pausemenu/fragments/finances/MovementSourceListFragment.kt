@@ -1,11 +1,11 @@
-package com.halkyproject.pausemenu.fragments
+package com.halkyproject.pausemenu.fragments.finances
 
 import android.support.v4.app.Fragment
 import com.halkyproject.lifehack.model.finances.MovementSource
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.activities.finances.MovementSourceEdit
 import com.halkyproject.pausemenu.interfaces.getResourceId
-import com.halkyproject.pausemenu.superclasses.GenericFragment
+import com.halkyproject.pausemenu.superclasses.GenericEntityFragment
 
 /**
  * A simple [Fragment] subclass.
@@ -16,7 +16,7 @@ import com.halkyproject.pausemenu.superclasses.GenericFragment
  * create an instance of this fragment.
  *
  */
-class MovementSourceListFragment : GenericFragment<MovementSource>() {
+class MovementSourceListFragment : GenericEntityFragment<MovementSource>() {
     override fun getMainTitle(): String {
         return obj.name
     }

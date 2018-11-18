@@ -109,4 +109,9 @@
     <string name="finances.valueType.percentageIn">Porcentagem sobre saldo de crédito</string>
     <string name="finances.valueType.resetOut">Zerar saldo de débito\n(se positivo)</string>
     <string name="finances.valueType.resetIn">Cobrir saldo de crédito\n(se negativo)</string>
+    <string name="all.crud">Cadastro</string>
+    <string name="all.reports">Relatórios</string>
+    <string name="finances.projection6months">Projeção 6 meses</string>
+    <string name="finances.projection12months">Projeção 12 meses</string>
+    <string name="all.total">Total</string>
 </resources>

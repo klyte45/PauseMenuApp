@@ -1,11 +1,10 @@
 package com.halkyproject.pausemenu.activities.finances
 
-import android.support.constraint.ConstraintLayout
 import android.widget.LinearLayout
 import com.halkyproject.lifehack.interfaces.Localizable
 import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.R
-import com.halkyproject.pausemenu.fragments.AccountCrudCardFragment
+import com.halkyproject.pausemenu.fragments.finances.AccountCrudCardFragment
 import com.halkyproject.pausemenu.singletons.finances.AccountService
 import com.halkyproject.pausemenu.superclasses.GenericListingActivity
 import com.halkyproject.pausemenu.wrappers.DefaultColorI18nWrapper

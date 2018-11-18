@@ -20,7 +20,7 @@
     <color name="colourizableGreen">#00ff00</color>
     <color name="colourizableEmerald">#00ff88</color>
     <color name="colourizableCyan">#00ffff</color>
-    <color name="colourizableLightBlue">#0088ff</color>
+    <color name="colourizableLgtBlue">#0088ff</color>
     <color name="colourizableBlue">#0000ff</color>
     <color name="colourizablePurple">#8800ff</color>
     <color name="colourizableMagenta">#ff00ff</color>
@@ -28,4 +28,40 @@
     <color name="colourizableWhite">#ffffff</color>
     <color name="colourizableGray">#888888</color>
     <color name="colourizableBlack">#000000</color>
+
+    <!-- Dark Versions -->
+
+    <color name="colourizableDarkRed">#880000</color>
+    <color name="colourizableDarkOrange">#884400</color>
+    <color name="colourizableDarkYellow">#888800</color>
+    <color name="colourizableDarkLime">#448800</color>
+    <color name="colourizableDarkGreen">#008800</color>
+    <color name="colourizableDarkEmerald">#008844</color>
+    <color name="colourizableDarkCyan">#008888</color>
+    <color name="colourizableDarkLgtBlue">#004488</color>
+    <color name="colourizableDarkBlue">#000088</color>
+    <color name="colourizableDarkPurple">#440088</color>
+    <color name="colourizableDarkMagenta">#880088</color>
+    <color name="colourizableDarkPink">#880044</color>
+    <color name="colourizableDarkWhite">#888888</color>
+    <color name="colourizableDarkGray">#444444</color>
+    <color name="colourizableDarkBlack">#000000</color>
+
+    <!-- Light Versions -->
+
+    <color name="colourizableLighterRed">#FF8888</color>
+    <color name="colourizableLighterOrange">#FFCC88</color>
+    <color name="colourizableLighterYellow">#FFFF88</color>
+    <color name="colourizableLighterLime">#CCFF88</color>
+    <color name="colourizableLighterGreen">#88FF88</color>
+    <color name="colourizableLighterEmerald">#88FFCC</color>
+    <color name="colourizableLighterCyan">#88FFFF</color>
+    <color name="colourizableLighterLgtBlue">#88CCFF</color>
+    <color name="colourizableLighterBlue">#8888FF</color>
+    <color name="colourizableLighterPurple">#CC88FF</color>
+    <color name="colourizableLighterMagenta">#FF88FF</color>
+    <color name="colourizableLighterPink">#FF88CC</color>
+    <color name="colourizableLighterWhite">#FFFFFF</color>
+    <color name="colourizableLighterGray">#CCCCCC</color>
+    <color name="colourizableLighterBlack">#888888</color>
 </resources>

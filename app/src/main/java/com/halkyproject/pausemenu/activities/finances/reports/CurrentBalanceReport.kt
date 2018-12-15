@@ -4,22 +4,27 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import com.halkyproject.lifehack.model.aggregation.finances.CurrentBalanceReportItem
 import com.halkyproject.lifehack.model.enums.Currency
 import com.halkyproject.pausemenu.R
+import com.halkyproject.pausemenu.adapter.DefaultListPageAdapter
 import com.halkyproject.pausemenu.fragments.BasicTableTitleFragment
+import com.halkyproject.pausemenu.fragments.finances.report.BasicAccountingTotal
 import com.halkyproject.pausemenu.fragments.finances.report.CurrentBalanceItemFragment
-import com.halkyproject.pausemenu.fragments.finances.report.CurrentBalanceTotalFragment
 import com.halkyproject.pausemenu.interfaces.OnFragmentInteractionListener
 import com.halkyproject.pausemenu.singletons.finances.FinancesService
 import com.halkyproject.pausemenu.superclasses.BasicActivity
 import com.halkyproject.pausemenu.superclasses.BasicFragment
-import kotlinx.android.synthetic.main.activity_finances_report_balances.*
+import kotlinx.android.synthetic.main.activity__basic_report.*
 
 class CurrentBalanceReport : BasicActivity(), OnFragmentInteractionListener {
     override fun onFragmentInteraction(uri: Uri) {
 
     }
+
+    private lateinit var viewListing: LinearLayout
 
     private class GetData : AsyncTask<CurrentBalanceReport, Void, CurrentBalanceReport>() {
         private lateinit var balances: Map<Currency, List<CurrentBalanceReportItem>>
@@ -46,15 +51,20 @@ class CurrentBalanceReport : BasicActivity(), OnFragmentInteractionListener {
                         for ((currency, values) in balances) {
                             val valuesOrd = values.sortedBy { it._id.type.ordinal }
                             val fragTt = BasicFragment.newInstance(getString(resources.getIdentifier("finances.currency.${currency.name}", "string", "com.halkyproject.pausemenu")), BasicTableTitleFragment::class.java)
-                            trAdd.add(m_listing.id, fragTt, "title" + currency.name)
+                            trAdd.add(R.id.tt_title, fragTt, "title" + currency.name)
+
+                            viewListing.addView(fragTt.view)
+
                             var sum = 0.0f
                             for (value in valuesOrd) {
                                 val fragIt = BasicFragment.newInstance(value, CurrentBalanceItemFragment::class.java)
-                                trAdd.add(m_listing.id, fragIt, "it" + value.toString())
+                                trAdd.add(R.id.tt_title, fragIt, "it" + value.toString())
                                 sum += value.currentBalance.toFloat()
+                                viewListing.addView(fragIt.view)
                             }
-                            val fragIt = BasicFragment.newInstance(Pair(currency, sum), CurrentBalanceTotalFragment::class.java)
-                            trAdd.add(m_listing.id, fragIt, "tot" + currency.name)
+                            val fragIt = BasicFragment.newInstance(sum, BasicAccountingTotal::class.java)
+                            trAdd.add(R.id.tt_title, fragIt, "tot" + currency.name)
+                            viewListing.addView(fragIt.view)
                         }
                         trAdd.commit()
                     }
@@ -62,7 +72,7 @@ class CurrentBalanceReport : BasicActivity(), OnFragmentInteractionListener {
                 }
 
             } catch (e: Exception) {
-                Log.e("ERR!", "Erro post Execute: CurrentBalanceReport!", e)
+                result!!.runOnUiThread { result.onErrorThrown(e) }
             } finally {
                 result?.closeLoadingScreen()
             }
@@ -72,12 +82,14 @@ class CurrentBalanceReport : BasicActivity(), OnFragmentInteractionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) = safeExecute({}(), true) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_finances_report_balances)
-        showLoadingScreen()
-    }
-
-    override fun onStart() = safeExecute({}(), true) {
-        super.onStart()
+        setContentView(R.layout.activity__basic_report)
+        tt_title.text = getString(R.string.finances_currentBalance)
         GetData().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, this)
+        showLoadingScreen()
+        m_pager.adapter = DefaultListPageAdapter(this)
+        val item = ((m_pager.adapter as DefaultListPageAdapter).instantiateItem(this.m_pager, 0) as ViewGroup)
+        Log.w("XXX", "$item")
+        viewListing = item.findViewById(R.id.m_listing)
+
     }
 }

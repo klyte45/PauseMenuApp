@@ -66,6 +66,21 @@
             android:id="@+id/item_financas"
             android:onClick="goToFinances"/>
 
+    <com.halkyproject.pausemenu.components.CustomTextView
+            android:text="@string/pauseMenu.menuItem.oggPlayer"
+            app:font_name="VideoGame"
+            android:textSize="@dimen/mainMenu.listItem.fontSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textAllCaps="true"
+            android:textColor="@color/defaultMenuItemColor"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
+            android:id="@+id/item_oggPlayer"
+            android:onClick="goToLoggPlayer"/>
+
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"

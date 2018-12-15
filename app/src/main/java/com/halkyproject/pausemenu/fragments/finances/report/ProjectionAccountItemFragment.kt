@@ -1,16 +1,16 @@
 package com.halkyproject.pausemenu.fragments.finances.report
 
+import android.icu.text.NumberFormat
 import com.halkyproject.lifehack.interfaces.Colourizable
-import com.halkyproject.lifehack.model.aggregation.finances.CurrentBalanceReportItem
+import com.halkyproject.lifehack.model.finances.FinancialAccount
 import com.halkyproject.pausemenu.interfaces.getDarkResourceId
 import com.halkyproject.pausemenu.interfaces.getLightResourceId
-import com.halkyproject.pausemenu.singletons.finances.FinancesService.DEFAULT_FORMATTER
 import com.halkyproject.pausemenu.superclasses.GenericTableItemFragment
 
-class CurrentBalanceItemFragment : GenericTableItemFragment<CurrentBalanceReportItem>() {
+class ProjectionAccountItemFragment : GenericTableItemFragment<FinancialAccount>() {
 
     override fun getBgColor(): Int {
-        return obj._id.type.getColor().getDarkResourceId()
+        return obj.type.getColor().getDarkResourceId()
     }
 
     override fun getFgColor(): Int {
@@ -18,6 +18,10 @@ class CurrentBalanceItemFragment : GenericTableItemFragment<CurrentBalanceReport
     }
 
     override fun getTextColumns(): List<String> {
-        return listOf(getString(resources.getIdentifier(obj._id.type.getLocaleId(), "string", "com.halkyproject.pausemenu")), DEFAULT_FORMATTER.format(obj.currentBalance))
+        return listOf(
+                obj.name,
+                getString(resources.getIdentifier(obj.type.getLocaleId(), "string", "com.halkyproject.pausemenu")),
+                NumberFormat.getCurrencyInstance(obj.currency.locale).format(obj.balance)
+        )
     }
 }

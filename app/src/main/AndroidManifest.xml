@@ -5,8 +5,15 @@
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <permission android:name="android.permission.MEDIA_CONTENT_CONTROL"/>
+
 
     <application
             android:name=".PauseApp"
@@ -54,6 +61,19 @@
         <activity android:name=".activities.finances.MovementSourcePrevisionList"/>
         <activity android:name=".activities.finances.MovementSourcePrevisionEdit"/>
         <activity android:name=".activities.finances.reports.CurrentBalanceReport"/>
+        <activity
+                android:screenOrientation="landscape"
+                android:name=".activities.finances.reports.ProjectBalanceReport"/>
+        <activity android:name=".activities.player.LoggPlayer">
+        </activity>
+
+        <service android:name=".service.LoggPlayerService">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:pathPattern=".*\\.logg"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

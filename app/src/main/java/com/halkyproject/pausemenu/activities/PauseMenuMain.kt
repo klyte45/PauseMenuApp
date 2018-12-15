@@ -18,6 +18,7 @@ import android.widget.TextView
 import com.halkyproject.lifehack.model.enums.Currency
 import com.halkyproject.pausemenu.R
 import com.halkyproject.pausemenu.activities.finances.FinancesMain
+import com.halkyproject.pausemenu.activities.player.LoggPlayer
 import com.halkyproject.pausemenu.components.CustomTextView
 import com.halkyproject.pausemenu.singletons.ConfigSingleton
 import com.halkyproject.pausemenu.singletons.finances.FinancesService.getCurrentBalancePhysicalLocal
@@ -30,6 +31,7 @@ class PauseMenuMain : BasicActivity() {
 
     companion object {
         private const val FINANCES_PIN_REQUEST_CODE = 1
+        private val ZCA_MONTHS = arrayOf("DOM", "KLY", "NAT")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) = safeExecute({}()) {
@@ -46,7 +48,7 @@ class PauseMenuMain : BasicActivity() {
                         runOnUiThread {
                             getCurrentScore().observe(this@PauseMenuMain, Observer<Long> {
                                 val currentScore = StringUtils.leftPad(it.toString(), 10, '0')
-                                val spanScore = SpannableString("SCORE $currentScore");
+                                val spanScore = SpannableString("SCORE $currentScore")
                                 spanScore.setSpan(ForegroundColorSpan(Color.YELLOW), 0, 5, 0);
                                 findViewById<CustomTextView>(R.id.score).setText(spanScore, TextView.BufferType.SPANNABLE)
                             })
@@ -82,8 +84,6 @@ class PauseMenuMain : BasicActivity() {
         }
     }
 
-    val ZCA_MONTHS = arrayOf("DOM", "KLY", "NAT")
-
     private fun getCurrentDateFormat(): SpannableString {
         val date = Date();
         val day = StringUtils.leftPad(date.date.toString(), 2, '0')
@@ -108,6 +108,10 @@ class PauseMenuMain : BasicActivity() {
         startActivity(Intent(this, Configurations::class.java))
     }
 
+
+    fun goToLoggPlayer(v: View) = safeExecute({}()) {
+        startActivity(Intent(this, LoggPlayer::class.java))
+    }
 
     fun goToFinances(v: View) = safeExecute({}()) {
         startActivityForResult(Intent(this, PinInput::class.java), FINANCES_PIN_REQUEST_CODE)

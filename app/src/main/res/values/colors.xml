@@ -64,4 +64,5 @@
     <color name="colourizableLighterWhite">#FFFFFF</color>
     <color name="colourizableLighterGray">#CCCCCC</color>
     <color name="colourizableLighterBlack">#888888</color>
+    <color name="colorTransparent">#00000000</color>
 </resources>

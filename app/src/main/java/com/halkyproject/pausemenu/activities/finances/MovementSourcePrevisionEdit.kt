@@ -1,7 +1,6 @@
 package com.halkyproject.pausemenu.activities.finances
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.icu.text.DecimalFormat
 import android.icu.text.NumberFormat
 import android.os.Bundle
@@ -72,11 +71,6 @@ class MovementSourcePrevisionEdit : BasicActivity() {
                     m_value.setText(value?.setScale(2)?.toString())
                     redrawForm()
                 }
-                for (x in arrayOf(m_layoutDate, m_dtInit, m_utilDays, m_value, m_spinnerFrequencyDay, m_spinnerFrequencyMonth, m_spinnerFreq, m_spinnerValueType)) {
-                    x.isEnabled = false
-                }
-                m_dtInit.setTextColor(Color.GRAY)
-                m_saveButton.visibility = View.GONE
             }
             parentObj != null -> {
                 dtInit = null
@@ -212,7 +206,7 @@ class MovementSourcePrevisionEdit : BasicActivity() {
 
         showLoadingScreen()
 
-        val obj = MovementSourcePrevision()
+        val obj = editingObject ?: MovementSourcePrevision()
         with(obj) {
             startDate = dtInit!!.time
 
@@ -224,8 +218,14 @@ class MovementSourcePrevisionEdit : BasicActivity() {
             value = currentValue
             valueType = valType
 
-            if (!MovementSourcePrevisionService.insert(this).get()) {
-                return@safeExecute
+            if (id != null) {
+                if (!MovementSourcePrevisionService.update(this).get()) {
+                    return@safeExecute
+                }
+            } else {
+                if (!MovementSourcePrevisionService.insert(this).get()) {
+                    return@safeExecute
+                }
             }
         }
         Toast.makeText(applicationContext, "Salvo com sucesso!", Toast.LENGTH_SHORT).show()

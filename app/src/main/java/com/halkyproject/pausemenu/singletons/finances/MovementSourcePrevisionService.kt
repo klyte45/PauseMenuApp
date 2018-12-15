@@ -21,5 +21,11 @@ object MovementSourcePrevisionService : BasicEntityService<MovementSourcePrevisi
         return MovementSourcePrevision.BASE_URL
     }
 
-    class Filter(val movSourceId: Int)
+    fun listAllActivePrevisions(): List<MovementSourcePrevision> {
+        return MovementSourcePrevisionService.search(MovementSourcePrevisionService.Filter(null, MovementSourcePrevisionService.MovSourceFilter(true)))
+    }
+
+    class Filter(val movSourceId: Int? = null, val movSource: MovSourceFilter? = null)
+
+    class MovSourceFilter(val _active: Boolean? = null)
 }

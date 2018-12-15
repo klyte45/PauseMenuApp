@@ -46,6 +46,7 @@
     <string name="all.insertPin">Insira a Senha</string>
     <string name="all.validate">Validar</string>
     <string name="finances.accounts">Contas</string>
+    <string name="finances.accountBalancesAt">Saldos em %s</string>
     <string name="finances.movSources">Fontes de Movimentação</string>
     <string name="finances.editAccount">Editar Conta</string>
     <string name="finances.bankNumber">Código Bancário</string>
@@ -113,5 +114,12 @@
     <string name="all.reports">Relatórios</string>
     <string name="finances.projection6months">Projeção 6 meses</string>
     <string name="finances.projection12months">Projeção 12 meses</string>
+    <string name="finances.projection24months">Projeção 24 meses (!!)</string>
+    <string name="finances.projection36months">Projeção 36 meses (!!!)</string>
+    <string name="finances.projection60months">Projeção 60 meses (!!!!!)</string>
+    <string name="finances.projectionMonths">Projeção %s meses</string>
     <string name="all.total">Total</string>
+    <string name="finances.extract">Extrato</string>
+    <string name="pauseMenu.menuItem.oggPlayer">Logg Player</string>
+    <string name="all.openFolder">Abrir pasta</string>
 </resources>

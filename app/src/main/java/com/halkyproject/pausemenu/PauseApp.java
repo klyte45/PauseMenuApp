@@ -2,6 +2,7 @@ package com.halkyproject.pausemenu;
 
 import android.app.Application;
 import android.graphics.Typeface;
+import com.halkyproject.pausemenu.singletons.MusicServiceSingleton;
 import com.halkyproject.pausemenu.util.TypeFactory;
 
 public class PauseApp extends Application {
@@ -14,6 +15,13 @@ public class PauseApp extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+    }
+
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        MusicServiceSingleton.INSTANCE.finalize();
     }
 
     public static synchronized PauseApp getApp() {

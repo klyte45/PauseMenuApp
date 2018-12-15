@@ -1,6 +1,7 @@
 package com.halkyproject.pausemenu.singletons
 
 import android.os.AsyncTask
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.halkyproject.lifehack.model.entities.ErrorModel
@@ -15,9 +16,14 @@ object HttpService {
     private val READ_TIMEOUT = 15000
     private val CONNECTION_TIMEOUT = 15000
 
-    class MakeGetTo<U>(private val url: String, private val typeToken: TypeToken<U>) : AsyncTask<Unit, Void, Pair<U?, Int?>>() {
-        override fun doInBackground(vararg arr: Unit): Pair<U?, Int?> {
-            return HttpService.doRequest(url, typeToken, HttpService.HttpRequestMethod.GET)
+    class MakeGetTo<U>(private val url: String, private val typeToken: TypeToken<U>) : AsyncTask<Unit, Void, Pair<U?, Int?>?>() {
+        override fun doInBackground(vararg arr: Unit): Pair<U?, Int?>? {
+            return try {
+                HttpService.doRequest(url, typeToken, HttpService.HttpRequestMethod.GET)
+            } catch (e: Exception) {
+                Log.e("ERR!", "MakeGetTo $url", e)
+                null
+            }
         }
     }
 

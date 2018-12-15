@@ -15,8 +15,7 @@
             >
 
         <com.halkyproject.pausemenu.components.CustomTextView
-                android:id="@+id/titleLbl"
-                android:text="@string/finances.currentBalance"
+                android:id="@+id/tt_title"
                 app:font_name="Sva"
                 android:textSize="60sp"
                 android:layout_width="0dp"
@@ -32,24 +31,16 @@
                 android:singleLine="true"
                 android:textAlignment="center"/>
 
-        <ScrollView
+        <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@+id/titleLbl"
-                android:id="@+id/scrollView3"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tt_title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/m_pager">
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/m_listing">
-
-
-            </LinearLayout>
-        </ScrollView>
+        </android.support.v4.view.ViewPager>
 
 
     </android.support.constraint.ConstraintLayout>

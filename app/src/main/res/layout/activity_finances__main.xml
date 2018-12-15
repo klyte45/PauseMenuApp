@@ -112,7 +112,6 @@
                     android:layout_marginTop="2dp"
                     android:id="@+id/it_currentBalance"
                     android:layout_weight="1"
-                    android:enabled="true"
                     android:onClick="openCurrentBalanceRelatory"/>
 
             <com.halkyproject.pausemenu.components.CustomTextView
@@ -129,7 +128,7 @@
                     android:layout_marginTop="2dp"
                     android:id="@+id/it_proj6month"
                     android:layout_weight="1"
-                    android:enabled="false"/>
+                    android:onClick="openProjection6m"/>
 
             <com.halkyproject.pausemenu.components.CustomTextView
                     android:text="@string/finances.projection12months"
@@ -145,7 +144,55 @@
                     android:layout_marginTop="2dp"
                     android:id="@+id/it_proj12month"
                     android:layout_weight="1"
-                    android:enabled="false"/>
+                    android:onClick="openProjection12m"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/finances.projection24months"
+                    app:font_name="VideoGame"
+                    android:textSize="@dimen/mainMenu.listItem.fontSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:textAllCaps="true"
+                    android:textColor="@color/defaultMenuItemColor"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/it_proj24month"
+                    android:layout_weight="1"
+                    android:onClick="openProjection24m"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/finances.projection36months"
+                    app:font_name="VideoGame"
+                    android:textSize="@dimen/mainMenu.listItem.fontSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:textAllCaps="true"
+                    android:textColor="@color/defaultMenuItemColor"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/it_proj36month"
+                    android:layout_weight="1"
+                    android:onClick="openProjection36m"/>
+
+            <com.halkyproject.pausemenu.components.CustomTextView
+                    android:text="@string/finances.projection60months"
+                    app:font_name="VideoGame"
+                    android:textSize="@dimen/mainMenu.listItem.fontSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:textAllCaps="true"
+                    android:textColor="@color/defaultMenuItemColor"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="2dp"
+                    android:id="@+id/it_proj60month"
+                    android:layout_weight="1"
+                    android:onClick="openProjection60m"/>
 
 
         </LinearLayout>

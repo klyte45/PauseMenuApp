@@ -32,6 +32,10 @@ abstract class GenericTableItemFragment<Entity> : BasicFragment<Entity>() where 
         return 10f
     }
 
+    open fun getDefaultColumnAlignment(): List<Int> {
+        return listOf(View.TEXT_ALIGNMENT_TEXT_START, View.TEXT_ALIGNMENT_CENTER, View.TEXT_ALIGNMENT_CENTER, View.TEXT_ALIGNMENT_CENTER, View.TEXT_ALIGNMENT_TEXT_END)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment__basic_table_line, container, false)
@@ -50,8 +54,10 @@ abstract class GenericTableItemFragment<Entity> : BasicFragment<Entity>() where 
                     text = Html.fromHtml(texts[idx], 0)
                     setTextSize(TypedValue.COMPLEX_UNIT_SP, getFontHeightSp())
 
-                    if (idx == texts.size - 1) {
-                        textAlignment = View.TEXT_ALIGNMENT_TEXT_END
+                    textAlignment = if (idx == texts.size - 1) {
+                        getDefaultColumnAlignment().last()
+                    } else {
+                        getDefaultColumnAlignment()[idx]
                     }
                 } else {
                     visibility = View.GONE

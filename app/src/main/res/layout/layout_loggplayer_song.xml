@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:onClick="songPicked"
+              android:orientation="vertical"
+              android:padding="5dp"
+              android:background="@drawable/default_bg"
+              android:backgroundTint="@color/colorTransparent">
+
+    <com.halkyproject.pausemenu.components.CustomTextView
+            android:id="@+id/song_title"
+            android:text="@string/config.dtNasc"
+            app:font_name="VideoGame"
+            android:textSize="12sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:textAllCaps="true"
+            android:textColor="@color/colourizableWhite"
+            android:layout_weight="1"
+            tools:ignore="SmallSp"
+            tools:layout_editor_absoluteY="5dp"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        <com.halkyproject.pausemenu.components.CustomTextView
+                android:id="@+id/song_artist"
+                android:text="@string/config.dtNasc"
+                app:font_name="VideoGame"
+                android:textSize="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:textAllCaps="true"
+                android:textColor="@color/colourizableYellow"
+                android:layout_weight="1"
+                tools:ignore="SmallSp"
+                tools:layout_editor_absoluteY="5dp"/>
+
+        <com.halkyproject.pausemenu.components.CustomTextView
+                android:id="@+id/m_duration"
+                android:text="@string/config.dtNasc"
+                app:font_name="VideoGame"
+                android:textSize="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:textAllCaps="true"
+                android:textColor="@color/colourizableCyan"
+                android:layout_weight="1"
+                tools:ignore="SmallSp"
+                tools:layout_editor_absoluteY="5dp"
+                android:textAlignment="viewEnd"/>
+    </LinearLayout>
+
+</LinearLayout>
